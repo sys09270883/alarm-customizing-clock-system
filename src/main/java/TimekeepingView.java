@@ -5,8 +5,10 @@ public class TimekeepingView extends DefaultLayout {
 
     final static int ALARM_WIDTH = 50;
     final static int ALARM_HEIGHT = 50;
+    final static int ALARM_SIZE_WIDTH = 25;
+    final static int ALARM_SIZE_HEIGHT = 25;
     final static String ALARM_IMG_NAME = "src/main/java/alarmlayout.jpg";
-    final static int D_DAY_WIDTH = 245;
+    final static int D_DAY_WIDTH = 235;
     final static int D_DAY_HEIGHT = 50;
     final static int CUR_TIME1_WIDTH = 270;
     final static int CUR_TIME1_HEIGHT = 65;
@@ -23,6 +25,7 @@ public class TimekeepingView extends DefaultLayout {
     JPanel datePanel;           // 날짜
     JPanel dayofweekPanel;      // 요일
     JPanel alarmPanel;
+    JPanel alarmSizePanel;
     ImageIcon alarmImage;
     JLabel alarmLabel;
 
@@ -42,9 +45,14 @@ public class TimekeepingView extends DefaultLayout {
         alarmPanel.add(alarmLabel);
         alarmPanel.setVisible(true);
 
+        alarmSizePanel = new JPanel();
+        alarmSizePanel.setLayout(null);
+        alarmSizePanel.setBounds(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT);
+        alarmSizePanel.setVisible(true);
+
         d_dayPanel = new JPanel();
         d_dayPanel.setLayout(null);
-        d_dayPanel.setBounds(410, 175, D_DAY_WIDTH, D_DAY_HEIGHT);
+        d_dayPanel.setBounds(420, 175, D_DAY_WIDTH, D_DAY_HEIGHT);
         d_dayPanel.setVisible(true);
 
         curTimePanel1 = new JPanel();
@@ -67,6 +75,7 @@ public class TimekeepingView extends DefaultLayout {
         dayofweekPanel.setBounds(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT);
         dayofweekPanel.setVisible(true);
 
+        add(alarmSizePanel, new Integer(1));
         add(datePanel, new Integer(1));
         add(d_dayPanel, new Integer(1));
         add(curTimePanel1, new Integer(1));

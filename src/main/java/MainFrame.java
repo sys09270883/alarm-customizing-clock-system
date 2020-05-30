@@ -32,18 +32,18 @@ public class MainFrame extends JFrame {
         alarmView = new AlarmView(system);
         alarmCustomView = new AlarmCustomView(system);
 
-//        setView(timekeepingView);
+        setView(timekeepingView);
 //        setView(stopwatchView);
 //        setView(alarmView);
 //        setView(timerView);
 //        setView(d_dayView);
-        setView(alarmCustomView);
+//        setView(alarmCustomView);
     }
 
 
     /**
      * view를 바꿔 껴주는 함수
-     * @param view: TimekeepingView, StopwatchView, ...
+     * @param view: JLayeredPane
      */
     public void setView(JLayeredPane view) {
         setContentPane(view);
