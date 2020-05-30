@@ -8,7 +8,7 @@ public class Stopwatch extends Function {
      * Default constructor
      */
     public Stopwatch() {
-    }
+    } //branch test
 
     /**
      * 
