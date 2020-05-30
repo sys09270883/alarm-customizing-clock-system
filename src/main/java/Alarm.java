@@ -1,76 +1,75 @@
-package Model;
 
 /**
  * @author Yoonseop Shin
  */
-public class Stopwatch extends Function {
+public class Alarm extends Function {
 
     /**
      * Default constructor
      */
-    public Stopwatch() {
+    public Alarm() {
     }
+//
+    /**
+     * 
+     */
+    private AlarmData curAlarm;
+
+    /**
+     * 
+     */
+    private AlarmData[] alarmList;
+
+    /**
+     * 
+     */
+    private int alarmPointer;
 
     /**
      * 
      */
     private int mode;
 
-    /**
-     * 
-     */
-    private Time stopwatch;
 
     /**
      * 
      */
-    private Time[] stopwatchRecord;
-
-    /**
-     * 
-     */
-    private int recordPointer;
-
-
-    /**
-     * 
-     */
-    public void requestStartStopwatch() {
+    public void requestAlarmSettingMode() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestPauseStopwatch() {
+    public void requestSave() {
+        // TODO implement here
+    }
+
+    /**
+     * @param alarmTime
+     */
+    public void addTimeToAlarmList(Time alarmTime) {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void clearList() {
+    public void requestDeleteAlarm() {
+        // TODO implement here
+    }
+
+    /**
+     * @param alarmIdx
+     */
+    public void deleteAlarm(int alarmIdx) {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestSaveRecord() {
-        // TODO implement here
-    }
-
-    /**
-     * @param stopwatchTime
-     */
-    public void record(Time stopwatchTime) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void requestRecordCheckMode() {
+    public void requestStopAlarmBuzzer() {
         // TODO implement here
     }
 
@@ -84,9 +83,15 @@ public class Stopwatch extends Function {
     /**
      * 
      */
-    public void timeout() {
-
+    public void requestAlarmSelectMode() {
+        // TODO implement here
     }
+
+    /**
+     * 
+     */
+    public void timeout() {}
+
 
     /**
      * 

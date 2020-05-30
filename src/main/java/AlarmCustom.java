@@ -1,4 +1,3 @@
-package Model;
 
 /**
  * @author Yoonseop Shin

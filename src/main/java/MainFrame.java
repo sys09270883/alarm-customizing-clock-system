@@ -1,6 +1,4 @@
-package View;
 
-import Controller.Controller;
 
 import javax.swing.*;
 
@@ -9,13 +7,11 @@ public class MainFrame extends JFrame {
     final static int FRAME_WIDTH = 1000;
     final static int FRAME_HEIGHT = 550;
 
-    Controller c;
     TimekeepingView timekeepingView;
     StopwatchView stopwatchView;
     TimerView timerView;
 
-    public MainFrame(Controller c) {
-        this.c = c;
+    public MainFrame() {
         setTitle("Alarm Customizing Clock System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);

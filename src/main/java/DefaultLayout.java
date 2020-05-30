@@ -1,5 +1,3 @@
-package View;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -72,5 +70,7 @@ public class DefaultLayout extends JPanel implements ActionListener {
             idx = 2;
         else if (e.getSource() == modeBtn)
             idx = 3;
+
+
     }
 }

@@ -1,40 +1,30 @@
-package Model;
 
 /**
  * @author Yoonseop Shin
  */
-public class D_day extends Function {
+public class Timer extends Function {
 
     /**
      * Default constructor
      */
-    public D_day() {
+    public Timer() {
     }
-
-    /**
-     * 
-     */
-    private int d_day;
-
-    /**
-     * 
-     */
-    private Date d_dayDate;
-
-    /**
-     * 
-     */
 
     /**
      * 
      */
     private int mode;
 
+    /**
+     * 
+     */
+    private Time timer;
+
 
     /**
      * 
      */
-    public void requestDdaySettingMode() {
+    public void requestTimerSettingMode() {
         // TODO implement here
     }
 
@@ -46,24 +36,23 @@ public class D_day extends Function {
     }
 
     /**
-     * @param date 
-     * @param d_day
+     * 
      */
-    public void setDate(Date date, int d_day) {
+    public void requestStartTimer() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestStopDdayBlink() {
+    public void requestResetTimer() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestDeleteDday() {
+    public void requestPauseTimer() {
         // TODO implement here
     }
 

@@ -1,14 +1,13 @@
-package Model;
 
 /**
  * @author Yoonseop Shin
  */
-public class Timer extends Function {
+public class TimeKeeping extends Function {
 
     /**
      * Default constructor
      */
-    public Timer() {
+    public TimeKeeping() {
     }
 
     /**
@@ -19,43 +18,32 @@ public class Timer extends Function {
     /**
      * 
      */
-    private Time timer;
-
-
-    /**
-     * 
-     */
-    public void requestTimerSettingMode() {
-        // TODO implement here
-    }
+    private Time curTime;
 
     /**
      * 
      */
-    public void requestSave() {
-        // TODO implement here
-    }
+    private Date curDate;
 
     /**
      * 
      */
-    public void requestStartTimer() {
-        // TODO implement here
-    }
+    private int d_day;
 
     /**
      * 
      */
-    public void requestResetTimer() {
-        // TODO implement here
-    }
+    private int alarmCnt;
 
     /**
      * 
      */
-    public void requestPauseTimer() {
-        // TODO implement here
-    }
+    private int dayOfTheWeek;
+
+    /**
+     * 
+     */
+    private int type;
 
     /**
      * 
