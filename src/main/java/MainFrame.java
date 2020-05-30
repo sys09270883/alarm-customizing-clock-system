@@ -33,8 +33,10 @@ public class MainFrame extends JFrame {
 //        setView(timekeepingView);
 //        setView(stopwatchView);
 //        setView(alarmView);
-        setView(timerView);
+//        setView(timerView);
+        setView(d_dayView);
     }
+
 
     /**
      * view를 바꿔 껴주는 함수
