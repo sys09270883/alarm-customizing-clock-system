@@ -32,7 +32,8 @@ public class MainFrame extends JFrame {
 
 //        setView(timekeepingView);
 //        setView(stopwatchView);
-        setView(alarmView);
+//        setView(alarmView);
+        setView(timerView);
     }
 
     /**
