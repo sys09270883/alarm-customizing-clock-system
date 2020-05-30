@@ -30,8 +30,9 @@ public class MainFrame extends JFrame {
         d_dayView = new DDayView(system);
         alarmView = new AlarmView(system);
 
-        // Default view: TimekeepingView
-        setView(timekeepingView);
+//        setView(timekeepingView);
+//        setView(stopwatchView);
+        setView(alarmView);
     }
 
     /**
