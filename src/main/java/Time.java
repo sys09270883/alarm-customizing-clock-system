@@ -1,38 +1,21 @@
+import javafx.util.Pair;
 
 /**
  * @author Yoonseop Shin
  */
 public class Time implements Runnable {
 
+    private int hour;
+    private int min;
+    private int sec;
+    private int timeFlag;
+
     /**
      * Default constructor
      */
     private Time() {
+
     }
-
-    /**
-     * 
-     */
-    private int hour;
-
-    /**
-     * 
-     */
-    private int min;
-
-    /**
-     * 
-     */
-    private int sec;
-
-    /**
-     * 
-     */
-    private int timeFlag;
-
-
-
-
 
     /**
      * 
@@ -44,8 +27,8 @@ public class Time implements Runnable {
     /**
      * 
      */
-    public static void getCurrentTime() {
-        // TODO implement here
+    public Pair<Pair<String, String>, String> getCurrentTime() {
+        return new Pair<new Pair<Integer.toString(hour), Integer.toString(min)>, Integer.toString(sec)>;
     }
 
     /**
