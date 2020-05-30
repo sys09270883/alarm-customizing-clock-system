@@ -1,92 +1,75 @@
-package Model;
 
 /**
  * @author Yoonseop Shin
  */
-public class Stopwatch extends Function {
+public class D_day extends Function {
 
     /**
      * Default constructor
      */
-    public Stopwatch() {
+    public D_day() {
     }
+
+    /**
+     * 
+     */
+    private int d_day;
+
+    /**
+     * 
+     */
+    private Date d_dayDate;
+
+    /**
+     * 
+     */
 
     /**
      * 
      */
     private int mode;
 
-    /**
-     * 
-     */
-    private Time stopwatch;
 
     /**
      * 
      */
-    private Time[] stopwatchRecord;
-
-    /**
-     * 
-     */
-    private int recordPointer;
-
-
-    /**
-     * 
-     */
-    public void requestStartStopwatch() {
+    public void requestDdaySettingMode() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestPauseStopwatch() {
+    public void requestSave() {
+        // TODO implement here
+    }
+
+    /**
+     * @param date 
+     * @param d_day
+     */
+    public void setDate(Date date, int d_day) {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void clearList() {
+    public void requestStopDdayBlink() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestSaveRecord() {
-        // TODO implement here
-    }
-
-    /**
-     * @param stopwatchTime
-     */
-    public void record(Time stopwatchTime) {
+    public void requestDeleteDday() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestRecordCheckMode() {
-        // TODO implement here
-    }
-
-    /**
-     * @param diff
-     */
-    public void movePointer(int diff) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void timeout() {
-
-    }
+    public void timeout() {}
 
     /**
      * 

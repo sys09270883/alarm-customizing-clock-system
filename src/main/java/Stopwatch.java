@@ -1,76 +1,75 @@
-package Model;
 
 /**
  * @author Yoonseop Shin
  */
-public class Alarm extends Function {
+public class Stopwatch extends Function {
 
     /**
      * Default constructor
      */
-    public Alarm() {
+    public Stopwatch() {
     }
-
-    /**
-     * 
-     */
-    private AlarmData curAlarm;
-
-    /**
-     * 
-     */
-    private AlarmData[] alarmList;
-
-    /**
-     * 
-     */
-    private int alarmPointer;
 
     /**
      * 
      */
     private int mode;
 
+    /**
+     * 
+     */
+    private Time stopwatch;
 
     /**
      * 
      */
-    public void requestAlarmSettingMode() {
-        // TODO implement here
-    }
+    private Time[] stopwatchRecord;
 
     /**
      * 
      */
-    public void requestSave() {
-        // TODO implement here
-    }
+    private int recordPointer;
 
-    /**
-     * @param alarmTime
-     */
-    public void addTimeToAlarmList(Time alarmTime) {
-        // TODO implement here
-    }
 
     /**
      * 
      */
-    public void requestDeleteAlarm() {
-        // TODO implement here
-    }
-
-    /**
-     * @param alarmIdx
-     */
-    public void deleteAlarm(int alarmIdx) {
+    public void requestStartStopwatch() {
         // TODO implement here
     }
 
     /**
      * 
      */
-    public void requestStopAlarmBuzzer() {
+    public void requestPauseStopwatch() {
+        // TODO implement here
+    }
+
+    /**
+     * 
+     */
+    public void clearList() {
+        // TODO implement here
+    }
+
+    /**
+     * 
+     */
+    public void requestSaveRecord() {
+        // TODO implement here
+    }
+
+    /**
+     * @param stopwatchTime
+     */
+    public void record(Time stopwatchTime) {
+        // TODO implement here
+    }
+
+    /**
+     * 
+     */
+    public void requestRecordCheckMode() {
         // TODO implement here
     }
 
@@ -84,15 +83,9 @@ public class Alarm extends Function {
     /**
      * 
      */
-    public void requestAlarmSelectMode() {
-        // TODO implement here
+    public void timeout() {
+
     }
-
-    /**
-     * 
-     */
-    public void timeout() {}
-
 
     /**
      * 
