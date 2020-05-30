@@ -8,7 +8,10 @@ public class Stopwatch extends Function {
      * Default constructor
      */
     public Stopwatch() {
-    } //branch test
+        mode = 4; //Stopwatch의 모드는 4
+        stopwatchRecord = null;
+        stopwatch = new Time();
+    }
 
     /**
      * 
@@ -32,38 +35,61 @@ public class Stopwatch extends Function {
 
 
     /**
-     * 
+     * Stopwatch 실행 요청
      */
     public void requestStartStopwatch() {
-        // TODO implement here
+        stopwatch.run();
     }
 
     /**
-     * 
+     * Stopwatch 멈춤 요청
      */
     public void requestPauseStopwatch() {
-        // TODO implement here
+        stopwatch.pauseTime();
+    }
+
+    /*
+     * requestResetStopwatch() Class Diagram에 추가해야합니다
+     */
+    public void requestResetStopwatch() {
+        stopwatch.clearTime();
     }
 
     /**
-     * 
+     * stopwatch record list를 초기화
      */
     public void clearList() {
-        // TODO implement here
+        for(int i=0; i<10; i++) {
+            stopwatchRecord[i] = null;
+        }
     }
 
     /**
-     * 
+     * record(Time stopwatchTime)를 단순히 호출하는 방식이라
+     * requestSaveRecord()를 삭제해도 좋을 것 같습니다.
      */
     public void requestSaveRecord() {
-        // TODO implement here
     }
 
     /**
      * @param stopwatchTime
      */
     public void record(Time stopwatchTime) {
-        // TODO implement here
+
+        for(int i=0; i<10; i++) {
+            //stopwatch의 기록이 10개 미만일 때
+            if(stopwatchRecord[i] == null) {
+                stopwatchRecord[i] = stopwatchTime; //주석 수정해야합니다.
+            }
+
+            //stopwatch의 기록이 10개일 때
+            if(i==9 || stopwatchRecord[i] != null) {
+                for(int j=0; j<9; j++) {
+                    stopwatchRecord[j] = stopwatchRecord[j+1];
+                }
+                stopwatchRecord[9] = stopwatchTime;
+            }
+        }
     }
 
     /**
