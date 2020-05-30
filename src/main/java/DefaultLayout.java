@@ -59,17 +59,18 @@ public class DefaultLayout extends JPanel implements ActionListener {
         btn.setBackground(Color.lightGray);
     }
 
+    // 버튼 이벤트 처리할 부분
     @Override
     public void actionPerformed(ActionEvent e) {
-        int idx = -1;
+        int btnFlag = -1;
         if (e.getSource() == startBtn)
-            idx = 0;
+            btnFlag = 0;
         else if (e.getSource() == resetBtn)
-            idx = 1;
+            btnFlag = 1;
         else if (e.getSource() == selectBtn)
-            idx = 2;
+            btnFlag = 2;
         else if (e.getSource() == modeBtn)
-            idx = 3;
+            btnFlag = 3;
 
 
     }

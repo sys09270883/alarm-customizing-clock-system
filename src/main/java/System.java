@@ -5,6 +5,7 @@ import java.util.Arrays;
  */
 public class System extends Function {
 
+    MainFrame GUI;
     /**
      * Default constructor
      */
@@ -20,6 +21,12 @@ public class System extends Function {
         selectedFunction = 0;
         buzzer = new Buzzer();
         blink = new Blink();
+
+        GUI = new MainFrame();
+    }
+
+    public static void main(String[] args) {
+        System system = new System();
     }
 
     @Override
