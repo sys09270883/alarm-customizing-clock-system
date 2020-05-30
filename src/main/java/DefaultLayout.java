@@ -2,8 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class DefaultLayout extends JPanel implements ActionListener {
+public class DefaultLayout extends JLayeredPane implements ActionListener {
 
     final static int FRAME_WIDTH = 1000;
     final static int FRAME_HEIGHT = 550;
@@ -11,18 +12,28 @@ public class DefaultLayout extends JPanel implements ActionListener {
     final static int PADDING_Y = 120;
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
-    final static String CLOCK_IMG_NAME = "clocklayout.jpg";
+    final static String CLOCK_IMG_NAME = "src/main/java/clocklayout.jpg";
 
+    protected JPanel mainPanel;
+    System system;
     ImageIcon clockImage;
     JButton startBtn;
     JButton resetBtn;
     JButton selectBtn;
     JButton modeBtn;
+    JLabel clockLabel;
 
-    public DefaultLayout() {
+    public DefaultLayout(System system) {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setVisible(true);
         setLayout(null);
+
+        this.system = system;
+
+        clockImage = new ImageIcon(CLOCK_IMG_NAME);
+        clockImage = new ImageIcon(clockImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
+        clockLabel = new JLabel(clockImage);
+        clockLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
         startBtn = new JButton("START");
         startBtn.setBounds(PADDING_X, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
@@ -41,16 +52,17 @@ public class DefaultLayout extends JPanel implements ActionListener {
                 FRAME_HEIGHT - PADDING_Y - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
         setBtn(modeBtn);
 
-        add(startBtn);
-        add(resetBtn);
-        add(selectBtn);
-        add(modeBtn);
+        mainPanel = new JPanel();
+        mainPanel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+        mainPanel.setLayout(null);
+        mainPanel.add(startBtn);
+        mainPanel.add(resetBtn);
+        mainPanel.add(selectBtn);
+        mainPanel.add(modeBtn);
+        mainPanel.add(clockLabel);
+        mainPanel.setVisible(true);
 
-        clockImage = new ImageIcon(CLOCK_IMG_NAME);
-        clockImage = new ImageIcon(clockImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
-        JLabel clockLabel = new JLabel(clockImage);
-        clockLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-        add(clockLabel);
+        add(mainPanel, new Integer(0));
     }
 
     private static void setBtn(JButton btn) {
@@ -72,6 +84,13 @@ public class DefaultLayout extends JPanel implements ActionListener {
         else if (e.getSource() == modeBtn)
             btnFlag = 3;
 
+        if (btnFlag == -1)
+            return;
 
+        // 눌린 버튼을 System에게 전달한다.
+        // System이 선택된 버튼을 처리해야 한다.
     }
+
+
+
 }
