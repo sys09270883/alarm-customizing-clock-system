@@ -6,8 +6,8 @@ public class AlarmCustomView extends DefaultLayout {
     final static int ALARM_LIST_HEIGHT = 135;
     final static int _WIDTH = 60;
     final static int _HEIGHT = 60;
-    final static String VOLUME_IMG_NAME = "src/main/java/soundimage.jpg";
-    final static String INTERVAL_IMG_NAME = "src/main/java/intervalimage.jpg";
+    final static String VOLUME_IMG_NAME = "src/main/resources/soundimage.jpg";
+    final static String INTERVAL_IMG_NAME = "src/main/resources/intervalimage.jpg";
 
     ImageIcon volumeImage;
     ImageIcon intervalImage;

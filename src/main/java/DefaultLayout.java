@@ -12,7 +12,7 @@ public class DefaultLayout extends JLayeredPane implements ActionListener {
     final static int PADDING_Y = 120;
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
-    final static String CLOCK_IMG_NAME = "src/main/java/clocklayout.jpg";
+    final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
 
     protected JPanel mainPanel;
     System system;

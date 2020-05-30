@@ -32,12 +32,12 @@ public class MainFrame extends JFrame {
         alarmView = new AlarmView(system);
         alarmCustomView = new AlarmCustomView(system);
 
-        setView(timekeepingView);
+//        setView(timekeepingView);
 //        setView(stopwatchView);
 //        setView(alarmView);
 //        setView(timerView);
 //        setView(d_dayView);
-//        setView(alarmCustomView);
+        setView(alarmCustomView);
     }
 
 

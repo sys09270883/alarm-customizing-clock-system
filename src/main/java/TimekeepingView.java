@@ -7,7 +7,7 @@ public class TimekeepingView extends DefaultLayout {
     final static int ALARM_HEIGHT = 50;
     final static int ALARM_SIZE_WIDTH = 25;
     final static int ALARM_SIZE_HEIGHT = 25;
-    final static String ALARM_IMG_NAME = "src/main/java/alarmlayout.jpg";
+    final static String ALARM_IMG_NAME = "src/main/resources/alarmlayout.jpg";
     final static int D_DAY_WIDTH = 235;
     final static int D_DAY_HEIGHT = 50;
     final static int CUR_TIME1_WIDTH = 270;
