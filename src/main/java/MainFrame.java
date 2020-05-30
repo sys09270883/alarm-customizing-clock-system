@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
     TimerView timerView;
     DDayView d_dayView;
     AlarmView alarmView;
+    AlarmCustomView alarmCustomView;
 
     public MainFrame(System system) {
         setTitle("Alarm Customizing Clock System");
@@ -29,12 +30,14 @@ public class MainFrame extends JFrame {
         timerView = new TimerView(system);
         d_dayView = new DDayView(system);
         alarmView = new AlarmView(system);
+        alarmCustomView = new AlarmCustomView(system);
 
 //        setView(timekeepingView);
 //        setView(stopwatchView);
 //        setView(alarmView);
 //        setView(timerView);
-        setView(d_dayView);
+//        setView(d_dayView);
+        setView(alarmCustomView);
     }
 
 

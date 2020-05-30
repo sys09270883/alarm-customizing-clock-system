@@ -23,6 +23,5 @@ public class AlarmView extends DefaultLayout {
 
         add(alarmListPanel, new Integer(1));
         add(curAlarmPanel, new Integer(1));
-
     }
 }
