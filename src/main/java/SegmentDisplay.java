@@ -28,11 +28,13 @@ public class SegmentDisplay extends JPanel {
     final static String M = "src/main/resources/M.jpg";
     final static String D = "src/main/resources/D.jpg";
     final static String Y = "src/main/resources/Y.jpg";
+    final static String blank = "src/main/resources/blank.jpg";
 
     ImageIcon segmentImage;
     JLabel segmentLabel;
 
     public SegmentDisplay(int x, int y, int width, int height, char c) {
+        setVisible(true);
         setLayout(null);
         setBounds(x, y, width, height);
 
@@ -86,6 +88,8 @@ public class SegmentDisplay extends JPanel {
             segmentImage = new ImageIcon(D);
         else if (c == 'Y')
             segmentImage = new ImageIcon(Y);
+        else
+            segmentImage = new ImageIcon(blank);
 
         segmentImage = new ImageIcon(segmentImage.getImage()
                 .getScaledInstance(width, height, Image.SCALE_SMOOTH));
@@ -94,7 +98,6 @@ public class SegmentDisplay extends JPanel {
         segmentLabel.setVisible(true);
 
         add(segmentLabel);
-        setVisible(true);
     }
 
 }

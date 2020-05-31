@@ -1,19 +1,22 @@
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame {
 
     final static int FRAME_WIDTH = 1000;
     final static int FRAME_HEIGHT = 550;
 
+    static int viewIdx = 0;
+
     protected System system;
-    TimekeepingView timekeepingView;
-    StopwatchView stopwatchView;
-    TimerView timerView;
-    DDayView d_dayView;
-    AlarmView alarmView;
-    AlarmCustomView alarmCustomView;
+    public TimekeepingView timekeepingView;
+    public StopwatchView stopwatchView;
+    public TimerView timerView;
+    public DDayView d_dayView;
+    public AlarmView alarmView;
+    public AlarmCustomView alarmCustomView;
 
     public MainFrame(System system) {
         setTitle("Alarm Customizing Clock System");

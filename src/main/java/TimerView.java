@@ -14,6 +14,8 @@ public class TimerView extends DefaultLayout {
         timerPanel.setBounds(335, 190, TIMER_WIDTH, TIMER_HEIGHT);
         timerPanel.setVisible(true);
 
+        displaySegment(350, 180, TIMER_WIDTH, TIMER_HEIGHT, "000000");
+
         add(timerPanel, new Integer(1));
     }
 }
