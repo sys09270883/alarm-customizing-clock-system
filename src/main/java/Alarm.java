@@ -12,7 +12,7 @@ public class Alarm extends Function {
         curAlarm  = new AlarmData();
         alarmList = new ArrayList<AlarmData>();
         mode = 3;
-        state = 0;
+        state = false;
         alarmPointer = 0;
     }
 
@@ -21,10 +21,13 @@ public class Alarm extends Function {
 
     private int alarmPointer;
     private int mode;
-    private int state = 0;
+    private boolean state = false;
 
     private int typeindex = 1; // 시분초 구분
 
+    /*
+    * 아래 조건문 전부 pressBtn 상태에 따라 다 바꿔야함.
+    * */
 
     /**
      * 
@@ -32,7 +35,55 @@ public class Alarm extends Function {
     public void requestAlarmSettingMode() {
         // TODO implement here
         changeMode();
-        requestAlarmSelectMode();
+
+
+        while(true)
+        {
+            if(true) // type : Select 버튼
+            {
+                changeType(); // 시분초
+            }
+            else if(true) // Start Btn : +
+            {
+                changeValue(1);
+                if(typeindex == 1 && curAlarm.alarmTime.hour > 23)
+                {
+                    curAlarm.alarmTime.hour = 23;
+                }
+                else if (typeindex == 2 && curAlarm.alarmTime.min > 59)
+                {
+                    curAlarm.alarmTime.min = 59;
+                }
+                else if (typeindex == 3 && curAlarm.alarmTime.sec > 59)
+                {
+                    curAlarm.alarmTime.sec = 59;
+                }
+
+            }
+            else if(true) // reset Btn : -
+            {
+                changeValue(-1);
+                if(typeindex == 1 && curAlarm.alarmTime.hour < 0)
+                {
+                    curAlarm.alarmTime.hour = 0;
+                }
+                else if (typeindex == 2 && curAlarm.alarmTime.min < 0)
+                {
+                    curAlarm.alarmTime.min = 0;
+                }
+                else if (typeindex == 3 && curAlarm.alarmTime.sec < 0)
+                {
+                    curAlarm.alarmTime.sec = 0;
+                }
+
+            }
+            else if(true) // Mode 버튼 : 저장
+            {
+                break;
+            }
+        }
+
+        requestSave();
 
     }
 
@@ -42,7 +93,11 @@ public class Alarm extends Function {
      */
     public void requestSave() {
         // TODO implement here
-        //addTimeToAlarmList(curAlarm.);
+
+        // AlarmData alarmData = new AlarmData();
+        //alarmData.getTime();
+
+        addTimeToAlarmList(curAlarm.alarmTime);
 
     }
 
@@ -53,7 +108,7 @@ public class Alarm extends Function {
         // TODO implement here
 
         if (alarmList.size() >= 10) {
-            // 개수 초과되었다고 오류 메시지ㅣ 출력
+            // 개수 초과
             return;
         }
         else {
@@ -61,6 +116,8 @@ public class Alarm extends Function {
             alarmList.add(curAlarm);
 
         }
+
+        changeMode();
 
     }
 
@@ -119,6 +176,8 @@ public class Alarm extends Function {
                 break;
         }
 
+
+
     }
 
     /**
@@ -136,7 +195,14 @@ public class Alarm extends Function {
      * 
      */
     @Override
-    public void changeMode() {state = 1;}
+    public void changeMode() {
+        if(this.state)
+        {
+            this.state = false;
+        } else{
+            this.state = true;
+        }
+    }
 
     @Override
     public void changeValue(int diff) {
