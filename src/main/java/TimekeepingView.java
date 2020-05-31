@@ -25,7 +25,7 @@ public class TimekeepingView extends DefaultLayout {
     JPanel datePanel;           // 날짜
     JPanel dayofweekPanel;      // 요일
     JPanel alarmPanel;
-    JPanel alarmSizePanel;
+    JPanel alarmNumPanel;
     ImageIcon alarmImage;
     JLabel alarmLabel;
 
@@ -37,7 +37,6 @@ public class TimekeepingView extends DefaultLayout {
                 .getScaledInstance(ALARM_WIDTH, ALARM_HEIGHT, Image.SCALE_SMOOTH));
         alarmLabel = new JLabel(alarmImage);
         alarmLabel.setBounds(0, 0, ALARM_WIDTH, ALARM_HEIGHT);
-        alarmLabel.setVisible(true);
 
         alarmPanel = new JPanel();
         alarmPanel.setLayout(null);
@@ -45,42 +44,56 @@ public class TimekeepingView extends DefaultLayout {
         alarmPanel.add(alarmLabel);
         alarmPanel.setVisible(true);
 
-        alarmSizePanel = new JPanel();
-        alarmSizePanel.setLayout(null);
-        alarmSizePanel.setBounds(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT);
-        alarmSizePanel.setVisible(true);
+        alarmNumPanel = new JPanel();
+        alarmNumPanel.setLayout(null);
+        alarmNumPanel.setBounds(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT);
+        alarmNumPanel.setVisible(true);
+
+        displaySegment(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT, "0");
 
         d_dayPanel = new JPanel();
         d_dayPanel.setLayout(null);
         d_dayPanel.setBounds(420, 175, D_DAY_WIDTH, D_DAY_HEIGHT);
         d_dayPanel.setVisible(true);
 
+        displaySegment(420, 175, D_DAY_WIDTH, D_DAY_HEIGHT, "000");
+
         curTimePanel1 = new JPanel();
         curTimePanel1.setLayout(null);
         curTimePanel1.setBounds(310, 235, CUR_TIME1_WIDTH, CUR_TIME1_HEIGHT);
         curTimePanel1.setVisible(true);
+
+        displaySegment(310, 235, CUR_TIME1_WIDTH, CUR_TIME1_HEIGHT, "1234");
 
         curTimePanel2 = new JPanel();
         curTimePanel2.setLayout(null);
         curTimePanel2.setBounds(600, 250, CUR_TIME2_WIDTH, CUR_TIME2_HEIGHT);
         curTimePanel2.setVisible(true);
 
+        displaySegment(600, 250, CUR_TIME2_WIDTH, CUR_TIME2_HEIGHT, "56");
+
         datePanel = new JPanel();
         datePanel.setLayout(null);
         datePanel.setBounds(310, 310, DATE_WIDTH, DATE_HEIGHT);
         datePanel.setVisible(true);
+
+        displaySegment(310, 310, DATE_WIDTH, DATE_HEIGHT, "200531");
 
         dayofweekPanel = new JPanel();
         dayofweekPanel.setLayout(null);
         dayofweekPanel.setBounds(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT);
         dayofweekPanel.setVisible(true);
 
-        add(alarmSizePanel, new Integer(1));
+        displaySegment(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT, "SUN");
+
+        add(alarmNumPanel, new Integer(1));
         add(datePanel, new Integer(1));
         add(d_dayPanel, new Integer(1));
         add(curTimePanel1, new Integer(1));
         add(curTimePanel2, new Integer(1));
         add(alarmPanel, new Integer(1));
         add(dayofweekPanel, new Integer(1));
+
+
     }
 }

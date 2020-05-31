@@ -91,6 +91,12 @@ public class DefaultLayout extends JLayeredPane implements ActionListener {
         // System이 선택된 버튼을 처리해야 한다.
     }
 
-
+    protected void displaySegment(int x, int y, int w, int h, String str) {
+        w /= str.length();
+        for (int i = 0; i < str.length(); i++) {
+            add(new SegmentDisplay(x, y, w, h, str.charAt(i)), new Integer(2));
+            x += w;
+        }
+    }
 
 }
