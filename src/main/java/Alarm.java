@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * @author Yoonseop Shin
@@ -9,19 +10,20 @@ public class Alarm extends Function {
      */
     public Alarm() {  // 초기
         curAlarm  = new AlarmData();
-        alarmList = new AlarmData[10];
+        alarmList = new ArrayList<AlarmData>();
         mode = 3;
+        state = 0;
         alarmPointer = 0;
     }
 
     AlarmData curAlarm ;
-    AlarmData[] alarmList;
+    ArrayList<AlarmData> alarmList;
 
     private int alarmPointer;
     private int mode;
+    private int state = 0;
 
-
-
+    private int typeindex = 1; // 시분초 구분
 
 
     /**
@@ -30,8 +32,7 @@ public class Alarm extends Function {
     public void requestAlarmSettingMode() {
         // TODO implement here
         changeMode();
-
-
+        requestAlarmSelectMode();
 
     }
 
@@ -51,8 +52,15 @@ public class Alarm extends Function {
     public void addTimeToAlarmList(Time alarmTime) {
         // TODO implement here
 
-       // (alarmList.length);
+        if (alarmList.size() >= 10) {
+            // 개수 초과되었다고 오류 메시지ㅣ 출력
+            return;
+        }
+        else {
+            curAlarm.alarmTime = alarmTime;
+            alarmList.add(curAlarm);
 
+        }
 
     }
 
@@ -61,6 +69,7 @@ public class Alarm extends Function {
      */
     public void requestDeleteAlarm() {
         // TODO implement here
+        deleteAlarm(alarmPointer);
     }
 
     /**
@@ -68,7 +77,7 @@ public class Alarm extends Function {
      */
     public void deleteAlarm(int alarmIdx) {
         // TODO implement here
-        alarmList[alarmIdx] = null;
+        alarmList.set(alarmIdx, null);
     }
 
     /**
@@ -76,14 +85,16 @@ public class Alarm extends Function {
      */
     public void requestStopAlarmBuzzer() {
         // TODO implement here
+        Buzzer buzzer = new Buzzer();
+        buzzer.stopBuzzer();
     }
 
     /**
      * @param diff
      */
-    public void movePointer(int diff) {
+    public void movePointer(int diff, int pointer) {
         // TODO implement here
-        alarmPointer += diff;
+        pointer += diff;
     }
 
     /**
@@ -91,6 +102,23 @@ public class Alarm extends Function {
      */
     public void requestAlarmSelectMode() {
         // TODO implement here
+        changeMode();
+
+        while(true)
+        {
+            //start(+)
+            if (true) {
+                movePointer(1, alarmPointer);
+            }
+            //reset(-)
+            else if(true){
+                movePointer(-1, alarmPointer);
+            }
+
+            if(true) // 끝나면
+                break;
+        }
+
     }
 
     /**
@@ -108,30 +136,39 @@ public class Alarm extends Function {
      * 
      */
     @Override
-    public void changeMode() {mode = 1;}
+    public void changeMode() {state = 1;}
 
     @Override
     public void changeValue(int diff) {
-
-    }
-
-
-    public void changeValue(int diff, int Value) {
-
-        if(Value == 1)
+        if (typeindex == 1)
         {
-            Value += diff;
-        }else if(Value == 2)
+            curAlarm.alarmTime.hour += diff;
+        }
+        else if (typeindex == 2)
         {
-
+            curAlarm.alarmTime.min += diff;
+        }
+        else if(typeindex == 3)
+        {
+            curAlarm.alarmTime.sec += diff;
         }
 
+
     }
+
+
 
     /**
      * 
      */
     public void changeType() {
+
+        typeindex++;
+
+        if(typeindex == 4)
+        {
+            typeindex = 1;
+        }
 
     }
 

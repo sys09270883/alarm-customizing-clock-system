@@ -23,6 +23,8 @@ class AlarmData {
      */
 
     public void getTime(){
+        alarmTime = this.alarmTime;
+        alarmCustom = this.alarmCustom;
 
     }
 
