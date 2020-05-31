@@ -2,27 +2,30 @@
 /**
  * @author Yoonseop Shin
  */
-public class AlarmData {
+class AlarmData {
 
     /**
      * Default constructor
      */
-    public AlarmData() {
+    public  AlarmData() {
+        alarmTime = new Time();
+        alarmCustom = new AlarmCustom();
     }
 
     /**
      * 
      */
-    private Time alarmTime;
+    Time alarmTime;
+    AlarmCustom alarmCustom;
 
     /**
      * 
      */
-    private AlarmCustom alarmCustom;
 
-    /**
-     * 
-     */
+    public void getTime(){
+
+    }
+
 
 
 

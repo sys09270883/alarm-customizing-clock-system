@@ -7,28 +7,21 @@ public class Alarm extends Function {
     /**
      * Default constructor
      */
-    public Alarm() {
+    public Alarm() {  // 초기
+        curAlarm  = new AlarmData();
+        alarmList = new AlarmData[10];
+        mode = 3;
+        alarmPointer = 0;
     }
-//
-    /**
-     * 
-     */
-    private AlarmData curAlarm;
 
-    /**
-     * 
-     */
-    private AlarmData[] alarmList;
+    AlarmData curAlarm ;
+    AlarmData[] alarmList;
 
-    /**
-     * 
-     */
     private int alarmPointer;
-
-    /**
-     * 
-     */
     private int mode;
+
+
+
 
 
     /**
@@ -36,13 +29,20 @@ public class Alarm extends Function {
      */
     public void requestAlarmSettingMode() {
         // TODO implement here
+        changeMode();
+
+
+
     }
+
 
     /**
      * 
      */
     public void requestSave() {
         // TODO implement here
+        //addTimeToAlarmList(curAlarm.);
+
     }
 
     /**
@@ -50,6 +50,10 @@ public class Alarm extends Function {
      */
     public void addTimeToAlarmList(Time alarmTime) {
         // TODO implement here
+
+       // (alarmList.length);
+
+
     }
 
     /**
@@ -64,6 +68,7 @@ public class Alarm extends Function {
      */
     public void deleteAlarm(int alarmIdx) {
         // TODO implement here
+        alarmList[alarmIdx] = null;
     }
 
     /**
@@ -78,6 +83,7 @@ public class Alarm extends Function {
      */
     public void movePointer(int diff) {
         // TODO implement here
+        alarmPointer += diff;
     }
 
     /**
@@ -101,16 +107,32 @@ public class Alarm extends Function {
     /**
      * 
      */
-    public void changeMode() {}
+    @Override
+    public void changeMode() {mode = 1;}
 
-    /**
-     * @param diff
-     */
-    public void changeValue(int diff) {}
+    @Override
+    public void changeValue(int diff) {
+
+    }
+
+
+    public void changeValue(int diff, int Value) {
+
+        if(Value == 1)
+        {
+            Value += diff;
+        }else if(Value == 2)
+        {
+
+        }
+
+    }
 
     /**
      * 
      */
-    public void changeType() {}
+    public void changeType() {
+
+    }
 
 }
