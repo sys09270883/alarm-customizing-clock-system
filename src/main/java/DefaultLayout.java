@@ -83,7 +83,6 @@ public class DefaultLayout extends JLayeredPane implements ActionListener {
             btnFlag = 2;
         else if (e.getSource() == modeBtn)
             btnFlag = 3;
-
         if (btnFlag == -1)
             return;
 
