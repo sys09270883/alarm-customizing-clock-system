@@ -8,7 +8,8 @@ public class Timer extends Function {
      * Default constructor
      */
     public Timer() {
-        mode = 2;
+        fid = 3;
+        mode = 0;
         timer = new Time(0);
     }
 

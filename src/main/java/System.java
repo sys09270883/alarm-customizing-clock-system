@@ -7,10 +7,12 @@ public class System extends Function {
 
     // 6개 중 4개 인스턴스만 갖고있음.
     // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.
-    MainFrame GUI;
-
+    public MainFrame GUI;
+    public Function[] functions;
 
     public System() {
+        GUI = new MainFrame(this);
+
         functionNum = new int[6];
         Arrays.fill(functionNum, 0);
         functionNum[0] = 1;
@@ -21,14 +23,35 @@ public class System extends Function {
         type = 0;
         selectedFunction = 0;
 
+        functions = new Function[4];
+        for (int i = 0; i < 4; i++) {
+            switch (i) {
+                case 0:
+                    functions[i] = new TimeKeeping(this);
+                    break;
+                case 1:
+                    functions[i] = new Stopwatch();
+                    break;
+                case 2:
+                    functions[i] = new Timer();
+                    break;
+                case 3:
+                    functions[i] = new D_day();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         buzzer = new Buzzer();
         blink = new Blink();
 
-        GUI = new MainFrame(this);
     }
 
     public static void main(String[] args) {
-        new System();
+        System system = new System();
+
+
     }
 
     @Override

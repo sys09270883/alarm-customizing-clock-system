@@ -18,6 +18,7 @@ class Time implements Runnable {
     private boolean isPaused; // pause, start 표현 위한 boolean 변수 추가
     private final Object lock = new Object();
     private ConditionSatisfiedListener dateChangedListener;
+    private ConditionSatisfiedListener secondChangedListener;
 
     // TODO timeFlag가 시간을 증가시킬지, 감소시킬지를 의미하는 flag. Time 생성자에 필요할 듯
     public Time(int timeFlag) {
@@ -34,6 +35,7 @@ class Time implements Runnable {
         this.timeFlag = timeFlag;
 
         dateChangedListener = null;
+        secondChangedListener = null;
     }
 
     public void pauseTime() {
@@ -90,6 +92,7 @@ class Time implements Runnable {
                                 } else
                                     throw new NullListenerException();
                             }
+                            secondChangedListener.conditionSatisfied();
                         }
                     }
                     else {
@@ -112,6 +115,7 @@ class Time implements Runnable {
                                 } else
                                     throw new NullListenerException();
                             }
+                            secondChangedListener.conditionSatisfied();
                         }
                     }
                     std = cur;
@@ -125,11 +129,15 @@ class Time implements Runnable {
     }
 
     interface ConditionSatisfiedListener {
-        void conditionSatisfied();
+        void conditionSatisfied() throws InterruptedException;
     }
 
-    public void setListener(ConditionSatisfiedListener dateChangedListener) {
+    public void setDateListener(ConditionSatisfiedListener dateChangedListener) {
         this.dateChangedListener = dateChangedListener;
+    }
+
+    public void setSecondListener(ConditionSatisfiedListener secondChangedListener) {
+        this.secondChangedListener = secondChangedListener;
     }
 
     class NullListenerException extends Exception {

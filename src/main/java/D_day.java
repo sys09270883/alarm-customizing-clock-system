@@ -11,9 +11,14 @@ public class D_day extends Function {
      * Default constructor
      */
     public D_day() {
+        fid = 4;
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
         d_dayDate = null;
-        mode = 5; //d-day의 모드는 5
+        mode = 0;
+    }
+
+    public int getD_day() {
+        return d_day;
     }
 
     /**

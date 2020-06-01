@@ -8,6 +8,7 @@ public class Alarm extends Function {
      * Default constructor
      */
     public Alarm() {
+        fid = 5;
     }
 
     /**
@@ -19,6 +20,16 @@ public class Alarm extends Function {
      * 
      */
     private AlarmData[] alarmList;
+
+
+    public int getSize() {
+        int cnt = 0;
+        for (AlarmData alarmData : alarmList) {
+            if (alarmData != null)
+                cnt++;
+        }
+        return cnt;
+    }
 
     /**
      * 

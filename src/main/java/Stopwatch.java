@@ -8,7 +8,8 @@ public class Stopwatch extends Function {
      * Default constructor
      */
     public Stopwatch() {
-        mode = 4; //Stopwatch의 모드는 4
+        fid = 2;
+        mode = 0;
         stopwatchRecord = new Time[10];
         for(int i=0; i<10; i++) {
             stopwatchRecord[i] = null;

@@ -2,7 +2,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.lang.System;
+import java.util.StringTokenizer;
 
 public class TimeKeeping extends Function {
 
@@ -30,6 +30,7 @@ public class TimeKeeping extends Function {
 //        System.out.println(curDate.getCurrentDate());
 //    }
 
+    final static String[] DAY_OF_THE_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
     private final int TYPE_SIZE = 6;
 
     // TODO 년, 월, 일, 시, 분, 초 LIMIT 변수 논의 필요
@@ -47,11 +48,8 @@ public class TimeKeeping extends Function {
     // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
     private int timeSettingValue[] = {-1,-1,-1,-1,-1,-1};
 
-    public TimeKeeping() {
-        mode = 0;
-        curTime = new Time(1);
-        curTime.startTime();
-        curTime.setListener(() -> curDate.raiseDate());
+    public TimeKeeping(System system) {
+        fid = 1;
         curDate = new Date();
         d_day = -1; // TODO 초기값 의논 필요
         alarmCnt = 0;
@@ -67,6 +65,63 @@ public class TimeKeeping extends Function {
         }
         dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
+        mode = 0;
+        curTime = new Time(1);
+
+        curTime.setDateListener(() -> {
+            curDate.raiseDate();
+        });
+
+        curTime.setSecondListener(() -> {
+            String str = curTime.getCurrentTime();
+            StringTokenizer st = new StringTokenizer(str, " ");
+            system.GUI.timekeepingView.setCurTime1(String.format("%2s", st.nextToken())
+                    + String.format("%2s", st.nextToken()));
+            system.GUI.timekeepingView.setCurTime2(String.format("%2s", st.nextToken()));
+            system.GUI.timekeepingView.setDayofweek(DAY_OF_THE_WEEK[dayOfTheWeek - 1]);
+            str = curDate.getCurrentDate();
+            st = new StringTokenizer(str, " ");
+            system.GUI.timekeepingView.setDate(String.format("%2s", st.nextToken().substring(2, 4))
+                    + String.format("%2s", st.nextToken())
+                    + String.format("%2s", st.nextToken()));
+
+            // D-day
+            int i;
+            boolean flag = false;
+            for (i = 0; i < 4; i++) {
+                if (system.functions[i].fid == 4) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) {
+                int dDay = ((D_day)(system.functions[i])).getD_day();
+                if (dDay == -1)
+                    system.GUI.timekeepingView.setdDay("NONE");
+                else
+                    system.GUI.timekeepingView.setdDay(String.format("%3s", Integer.toString(dDay)));
+            }
+            else
+                system.GUI.timekeepingView.setdDay("NONE");
+
+            // Alarm
+            flag = false;
+            for (i = 0; i < 4; i++) {
+                if (system.functions[i].fid == 5) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) {
+                int alarmNum = ((Alarm)(system.functions[i])).getSize();
+                system.GUI.timekeepingView.setAlarmNum(String.format("%2s", Integer.toString(alarmNum)));
+            }
+            else {
+                system.GUI.timekeepingView.setAlarmNum("0");
+            }
+        });
+
+        curTime.startTime();
         type = 0;
     }
 
