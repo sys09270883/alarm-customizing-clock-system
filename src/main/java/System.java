@@ -16,6 +16,8 @@ public class System extends Function {
     AlarmCustom alarmCustom;
     int functionNumIdx = 0;
 
+    Time checkTimeOut;
+
     public System() {
         GUI = new MainFrame(this);
 
@@ -38,6 +40,8 @@ public class System extends Function {
 
         buzzer = new Buzzer();
         blink = new Blink();
+
+        checkTimeOut = new Time(0);
     }
 
     public static void main(String[] args) {
@@ -118,8 +122,6 @@ public class System extends Function {
                 else {
                     timeKeeping.changeType();
                 }
-
-
                 break;
             case 2: // stopwatch
 
@@ -146,70 +148,42 @@ public class System extends Function {
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
                 else {
                     timeKeeping.requestSave();
-                    // TODO 시간 저장 후 타임쓰레드에 문제있음.
                 }
 
                 break;
             case 2: // stopwatch
                 if (stopwatch.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 3: // timer
                 if (timer.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 5: // alarm
                 if (alarm.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 6: // alarm custom
                 if (alarmCustom.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
-                break;
-        }
-    }
-
-
-    public void changeScreen() {
-        functionNumIdx = (functionNumIdx + 1) % 4;
-        selectedFid = functionNum[functionNumIdx];
-
-        switch (selectedFid) {
-            case 1:
-                GUI.setView(GUI.timekeepingView);
-                break;
-            case 2:
-                GUI.setView(GUI.stopwatchView);
-                break;
-            case 3:
-                GUI.setView(GUI.timerView);
-                break;
-            case 4:
-                GUI.setView(GUI.d_dayView);
-                break;
-            case 5:
-                GUI.setView(GUI.alarmView);
-                break;
-            case 6:
-                GUI.setView(GUI.alarmCustomView);
                 break;
         }
     }
@@ -318,6 +292,28 @@ public class System extends Function {
      * 
      */
     public void nextFunction() {
-        // TODO implement here
+        functionNumIdx = (functionNumIdx + 1) % 4;
+        selectedFid = functionNum[functionNumIdx];
+
+        switch (selectedFid) {
+            case 1:
+                GUI.setView(GUI.timekeepingView);
+                break;
+            case 2:
+                GUI.setView(GUI.stopwatchView);
+                break;
+            case 3:
+                GUI.setView(GUI.timerView);
+                break;
+            case 4:
+                GUI.setView(GUI.d_dayView);
+                break;
+            case 5:
+                GUI.setView(GUI.alarmView);
+                break;
+            case 6:
+                GUI.setView(GUI.alarmCustomView);
+                break;
+        }
     }
 }
