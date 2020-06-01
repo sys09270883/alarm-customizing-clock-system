@@ -13,7 +13,7 @@ public class Stopwatch extends Function {
         for(int i=0; i<10; i++) {
             stopwatchRecord[i] = null;
         }
-        stopwatch = new Time();
+        stopwatch = new Time(1);
     }
 
     /**

@@ -9,7 +9,7 @@ public class Timer extends Function {
      */
     public Timer() {
         mode = 2;
-        timer = new Time();
+        timer = new Time(0);
     }
 
     /**

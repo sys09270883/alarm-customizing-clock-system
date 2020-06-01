@@ -7,6 +7,8 @@ public class System extends Function {
 
     // 6개 중 4개 인스턴스만 갖고있음.
     // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.
+    MainFrame GUI;
+
 
     public System() {
         functionNum = new int[6];
@@ -22,7 +24,11 @@ public class System extends Function {
         buzzer = new Buzzer();
         blink = new Blink();
 
+        GUI = new MainFrame(this);
+    }
 
+    public static void main(String[] args) {
+        new System();
     }
 
     @Override

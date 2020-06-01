@@ -32,6 +32,17 @@ public class Date {
         day = Integer.parseInt(splited[2]);
     }
 
+    public int getYear() {
+        return this.year;
+    }
+
+    public int getMonth() {
+        return this.year;
+    }
+
+    public int getDay() {
+        return this.year;
+    }
 
     public String getCurrentDate() {
         String currentDate;
