@@ -101,36 +101,42 @@ public class TimeKeeping extends Function {
 
         // 각 type 값 검사 (년, 월, 일, 시, 분, 초 순)
         switch(type) {
-            case 0 :
-                if(timeSettingValue[type] < curDate.YEAR_BOTTON_LIMIT)
-                    timeSettingValue[type] = curDate.YEAR_TOP_LIMIT;
-                else if(timeSettingValue[type] > curDate.YEAR_TOP_LIMIT)
-                    timeSettingValue[type] = curDate.YEAR_BOTTON_LIMIT;
-            case 1 :
-                if(timeSettingValue[type] < curDate.MONTH_BOTTON_LIMIT)
-                    timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
-                else if(timeSettingValue[type] > curDate.MONTH_TOP_LIMIT)
-                    timeSettingValue[type] = curDate.MONTH_BOTTON_LIMIT;
-            case 2 :
-                if(timeSettingValue[type] < curDate.numOfDays[timeSettingValue[0]])
-                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[type]];
-                else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[type]])
-                    timeSettingValue[type] = curDate.numOfDays[0];
-            case 3 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
+            case 0:
+                if (timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.HOUR_TOP_LIMIT;
-                else if(timeSettingValue[type] > curTime.HOUR_TOP_LIMIT)
+                else if (timeSettingValue[type] > curTime.HOUR_TOP_LIMIT)
                     timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
-            case 4 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
+                break;
+            case 1:
+                if (timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.MINUTE_TOP_LIMIT;
-                else if(timeSettingValue[type] > curTime.MINUTE_TOP_LIMIT)
+                else if (timeSettingValue[type] > curTime.MINUTE_TOP_LIMIT)
                     timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
-            case 5 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
+                break;
+            case 2:
+                if (timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.SECOND_TOP_LIMIT;
-                else if(timeSettingValue[type] > curTime.SECOND_TOP_LIMIT)
+                else if (timeSettingValue[type] > curTime.SECOND_TOP_LIMIT)
                     timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
+                break;
+            case 3:
+                if (timeSettingValue[type] < curDate.YEAR_BOTTON_LIMIT)
+                    timeSettingValue[type] = curDate.YEAR_TOP_LIMIT;
+                else if (timeSettingValue[type] > curDate.YEAR_TOP_LIMIT)
+                    timeSettingValue[type] = curDate.YEAR_BOTTON_LIMIT;
+                break;
+            case 4:
+                if (timeSettingValue[type] < curDate.MONTH_BOTTON_LIMIT)
+                    timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
+                else if (timeSettingValue[type] > curDate.MONTH_TOP_LIMIT)
+                    timeSettingValue[type] = curDate.MONTH_BOTTON_LIMIT;
+                break;
+            case 5:
+                if (timeSettingValue[type] < curDate.numOfDays[0])
+                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
+                else if (timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
+                    timeSettingValue[type] = curDate.numOfDays[0];
+                break;
         }
     }
 

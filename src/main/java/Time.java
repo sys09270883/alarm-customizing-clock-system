@@ -38,13 +38,19 @@ class Time implements Runnable {
 
     public void pauseTime() {
         isPaused = true;
+        try {
+            wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     // 추가
     public void startTime() {
         isPaused = false;
-        Thread th = new Thread( this);
-        th.start();
+//        Thread th = new Thread( this);
+//        th.start();
+        notify();
     }
 
     public String getCurrentTime() {
