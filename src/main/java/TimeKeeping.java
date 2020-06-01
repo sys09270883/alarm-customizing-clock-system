@@ -94,6 +94,8 @@ public class TimeKeeping extends Function {
 
         // 현재 년, 월, 일, 시, 분, 초 로 timeSettingValue 초기화
         if (mode == 1) {
+            this.type = 0;
+
             String currentTime = curTime.getCurrentTime();
             String currentDate = curDate.getCurrentDate();
 
