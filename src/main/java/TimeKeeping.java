@@ -64,7 +64,7 @@ public class TimeKeeping extends Function {
         dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         mode = 0;
-        curTime = new Time(1, -1, -1, -1);
+        curTime = new Time(1);
 
         curTime.setDateListener(() -> {
             curDate.raiseDate();
@@ -186,9 +186,15 @@ public class TimeKeeping extends Function {
 
     public void requestSave() {
         curTime.pauseTime();
+        try {
+            curTime.getTimeThread().join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         curTime.setTime(timeSettingValue[0], timeSettingValue[1], timeSettingValue[2]);
         curDate.setDate(timeSettingValue[3], timeSettingValue[4], timeSettingValue[5]);
         curTime.startTime();
+        changeMode();
     }
 
     public Time getCurTime() {

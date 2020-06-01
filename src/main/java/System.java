@@ -152,7 +152,6 @@ public class System extends Function {
                 else {
                     timeKeeping.requestSave();
                     // TODO 시간 저장 후 타임쓰레드에 문제있음.
-                    timeKeeping.changeMode();
                 }
 
                 break;

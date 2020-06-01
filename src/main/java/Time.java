@@ -27,22 +27,15 @@ class Time implements Runnable {
         this.sec = sec;
     }
 
-    public Time(int timeFlag, int hour, int min, int sec) {
-        if(hour == -1 && min == -1 && sec == -1) {
-            SimpleDateFormat format = new SimpleDateFormat("HH mm ss");
-            String curTime = format.format(System.currentTimeMillis());
+    public Time(int timeFlag) {
+        SimpleDateFormat format = new SimpleDateFormat("HH mm ss");
+        String curTime = format.format(System.currentTimeMillis());
 
-            String splited[] = curTime.split(" ");
+        String splited[] = curTime.split(" ");
 
-            hour = Integer.parseInt(splited[0]);
-            min = Integer.parseInt(splited[1]);
-            sec = Integer.parseInt(splited[2]);
-        }
-        else {
-            this.hour = hour;
-            this.min = min;
-            this.sec = sec;
-        }
+        hour = Integer.parseInt(splited[0]);
+        min = Integer.parseInt(splited[1]);
+        sec = Integer.parseInt(splited[2]);
 
         isPaused = false;
         this.timeFlag = timeFlag;
@@ -72,6 +65,10 @@ class Time implements Runnable {
             currentTime = Integer.toString(hour) + " " + Integer.toString(min) + " " + Integer.toString(sec);
         }
         return currentTime;
+    }
+
+    public Thread getTimeThread() {
+        return th;
     }
 
     public void clearTime() {
@@ -145,6 +142,8 @@ class Time implements Runnable {
                 e.printStackTrace();
             }
         }
+
+        System.out.println("while out");
     }
 
     interface ConditionSatisfiedListener {
