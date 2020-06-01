@@ -49,6 +49,7 @@ public class D_day extends Function {
      * 삭제해도 좋을 것 같습니다.
      */
     public void requestSave() {
+        // setDate(date, d_day);
         // TODO implement here
     }
 
@@ -59,7 +60,7 @@ public class D_day extends Function {
      * java.util.Calendar를 활용해 계산했습니다.
      */
     public void setDate(Date date, int d_day) {
-        String curDate = date.getCurrentDate();
+        String curDate = date.getCurrentDate(); // TimeKeeping의 date
 
         Calendar curDateCal = Calendar.getInstance();
         String splited[] = curDate.split(" ");

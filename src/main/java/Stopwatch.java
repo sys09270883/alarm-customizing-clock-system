@@ -9,7 +9,10 @@ public class Stopwatch extends Function {
      */
     public Stopwatch() {
         mode = 4; //Stopwatch의 모드는 4
-        stopwatchRecord = null;
+        stopwatchRecord = new Time[10];
+        for(int i=0; i<10; i++) {
+            stopwatchRecord[i] = null;
+        }
         stopwatch = new Time();
     }
 
@@ -66,7 +69,6 @@ public class Stopwatch extends Function {
 
     /**
      * record(Time stopwatchTime)를 단순히 호출하는 방식이라
-     * requestSaveRecord()를 삭제해도 좋을 것 같습니다.
      */
     public void requestSaveRecord() {
     }
@@ -80,6 +82,7 @@ public class Stopwatch extends Function {
             //stopwatch의 기록이 10개 미만일 때
             if(stopwatchRecord[i] == null) {
                 stopwatchRecord[i] = stopwatchTime; //주석 수정해야합니다.
+                break;
             }
 
             //stopwatch의 기록이 10개일 때
