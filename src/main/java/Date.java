@@ -32,6 +32,7 @@ public class Date {
         day = Integer.parseInt(splited[2]);
     }
 
+
     public String getCurrentDate() {
         String currentDate;
         synchronized(lock) {
