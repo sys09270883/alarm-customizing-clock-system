@@ -39,6 +39,8 @@ class Time implements Runnable {
     public void pauseTime() {
         isPaused = true;
     }
+
+    // 추가
     public void startTime() {
         isPaused = false;
         Thread th = new Thread( this);

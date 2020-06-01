@@ -52,9 +52,7 @@ public class Date {
         if(++day == numOfDays[month]) { day = 0; ++month; }
         if(month > 12) { month = 0; ++year; }
 
-        // TODO 2099년이 넘어가면 어떻게 처리할지 의논해야됨
+        // TODO 2099년이 넘어가면 어떻게 처리할지 의논해야됨 (-> 2020 1 1)
         //if(year > 2099) {  }
     }
-
-
 }

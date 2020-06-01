@@ -43,8 +43,8 @@ public class TimeKeeping extends Function {
     private int dayOfTheWeek; // 1 : 일요일 7 : 토요일
     private int type;
 
-    // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
     // TODO timeSettingValue 논의 필요
+    // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
     private int timeSettingValue[] = {-1,-1,-1,-1,-1,-1};
 
     public TimeKeeping() {
