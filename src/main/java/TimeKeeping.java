@@ -44,7 +44,7 @@ public class TimeKeeping extends Function {
 
     // TODO timeSettingValue 논의 필요
     // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
-    private int timeSettingValue[] = {-1,-1,-1,-1,-1,-1};
+    private int timeSettingValue[] = {-1, -1, -1, -1, -1, -1};
 
     public TimeKeeping(System system) {
         fid = 1;
@@ -91,16 +91,14 @@ public class TimeKeeping extends Function {
                         system.GUI.timekeepingView.setdDay("NONE");
                     else
                         system.GUI.timekeepingView.setdDay(String.format("%3s", Integer.toString(dDay)));
-                }
-                else
+                } else
                     system.GUI.timekeepingView.setdDay("NONE");
 
                 // Alarm
                 if (system.alarm != null) {
                     int alarmNum = system.alarm.getSize();
                     system.GUI.timekeepingView.setAlarmNum(String.format("%2s", Integer.toString(alarmNum)));
-                }
-                else
+                } else
                     system.GUI.timekeepingView.setAlarmNum("0");
 
             }
@@ -110,14 +108,17 @@ public class TimeKeeping extends Function {
         type = 0;
     }
 
-    public void timeout() {}
-    public void cancel() {}
+    public void timeout() {
+    }
+
+    public void cancel() {
+    }
 
     public void changeMode() {
         mode ^= 1;
 
         // 현재 년, 월, 일, 시, 분, 초 로 timeSettingValue 초기화
-        if(mode == 1) {
+        if (mode == 1) {
             String currentTime = curTime.getCurrentTime();
             String currentDate = curDate.getCurrentDate();
 
@@ -131,7 +132,7 @@ public class TimeKeeping extends Function {
             timeSettingValue[5] = Integer.parseInt(ymd[2]);
         } else {
             // timeSettingValue -1로 비활성화
-            for(int i=0; i<TYPE_SIZE; ++i)
+            for (int i = 0; i < TYPE_SIZE; ++i)
                 timeSettingValue[i] = -1;
         }
     }
@@ -140,42 +141,42 @@ public class TimeKeeping extends Function {
         timeSettingValue[type] += diff;
 
         // 각 type 값 검사
-        switch(type) {
-            case 0 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
-                    timeSettingValue[type] = curTime.HOUR_TOP_LIMIT;
+        switch (type) {
+            case 0:
+                if (timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
+                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
                 else if (timeSettingValue[type] > curTime.HOUR_TOP_LIMIT)
-                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
+                    timeSettingValue[type] = curTime.HOUR_TOP_LIMIT;
                 break;
-            case 1 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
-                    timeSettingValue[type] = curTime.MINUTE_TOP_LIMIT;
+            case 1:
+                if (timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
+                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
                 else if (timeSettingValue[type] > curTime.MINUTE_TOP_LIMIT)
-                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
+                    timeSettingValue[type] = curTime.MINUTE_TOP_LIMIT;
                 break;
-            case 2 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
-                    timeSettingValue[type] = curTime.SECOND_TOP_LIMIT;
+            case 2:
+                if (timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
+                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
                 else if (timeSettingValue[type] > curTime.SECOND_TOP_LIMIT)
-                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
+                    timeSettingValue[type] = curTime.SECOND_TOP_LIMIT;
                 break;
-            case 3 :
-                if(timeSettingValue[type] < curDate.YEAR_BOTTON_LIMIT)
-                    timeSettingValue[type] = curDate.YEAR_TOP_LIMIT;
-                else if(timeSettingValue[type] > curDate.YEAR_TOP_LIMIT)
+            case 3:
+                if (timeSettingValue[type] < curDate.YEAR_BOTTON_LIMIT)
                     timeSettingValue[type] = curDate.YEAR_BOTTON_LIMIT;
+                else if (timeSettingValue[type] > curDate.YEAR_TOP_LIMIT)
+                    timeSettingValue[type] = curDate.YEAR_TOP_LIMIT;
                 break;
-            case 4 :
-                if(timeSettingValue[type] < curDate.MONTH_BOTTON_LIMIT)
-                    timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
-                else if(timeSettingValue[type] > curDate.MONTH_TOP_LIMIT)
+            case 4:
+                if (timeSettingValue[type] < curDate.MONTH_BOTTON_LIMIT)
                     timeSettingValue[type] = curDate.MONTH_BOTTON_LIMIT;
+                else if (timeSettingValue[type] > curDate.MONTH_TOP_LIMIT)
+                    timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
                 break;
-            case 5 :
-                if(timeSettingValue[type] < curDate.numOfDays[0])
-                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
-                else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
-                    timeSettingValue[type] = curDate.numOfDays[0];
+            case 5:
+                if (timeSettingValue[type] < curDate.numOfDays[0])
+                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[0]];
+                else if (timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
+                    timeSettingValue[type] = curDate.numOfDays[4];
                 break;
         }
     }
@@ -185,6 +186,12 @@ public class TimeKeeping extends Function {
     }
 
     public void requestSave() {
+
+        if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
+            changeMode();
+            return;
+        }
+
         curTime.pauseTime();
         try {
             curTime.getTimeThread().join();
@@ -200,15 +207,16 @@ public class TimeKeeping extends Function {
     public Time getCurTime() {
         return curTime;
     }
+
     public int[] getTimeSettingValue() {
         return timeSettingValue;
     }
+
     public int getType() {
         return type;
     }
+
     public int getMode() {
         return mode;
     }
-
-    // TODO system 클래스에서 GUI 제어하기 위해선 type, value에 대한 getter가 필요할 것으로 보임. 논의 필요
 }
