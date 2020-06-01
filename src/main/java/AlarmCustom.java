@@ -56,7 +56,7 @@ public class AlarmCustom extends Function {
             }
             //reset(-)
             else if(true) {
-                alarm.movePointer(1, intervalPointer);
+                alarm.movePointer(-1, intervalPointer);
             }
             if (true) // timeout or Select Btn
             {
@@ -73,7 +73,7 @@ public class AlarmCustom extends Function {
     public void requestIntervalSettingMode() {
         // TODO implement here
 
-        alarm.curAlarm = alarm.alarmList.get(intervalPointer);
+        alarm.curAlarm = alarm.alarmList[intervalPointer];
 
         interval = alarm.curAlarm.alarmCustom.interval;
         valueIndex = interval;
@@ -117,7 +117,7 @@ public class AlarmCustom extends Function {
     public void requestAlarmVolumeMode(int interval) {
         // TODO implement here
 
-        alarm.curAlarm = alarm.alarmList.get(intervalPointer);
+        alarm.curAlarm = alarm.alarmList[intervalPointer];
 
         volume = alarm.curAlarm.alarmCustom.volume;
         valueIndex = volume;
@@ -176,9 +176,9 @@ public class AlarmCustom extends Function {
 
         AlarmData alarmData = new AlarmData();
         alarmData.alarmCustom = alarmCustom;
-        alarmData.alarmTime = alarm.alarmList.get(intervalPointer).alarmTime;
+        alarmData.alarmTime = alarm.alarmList[intervalPointer].alarmTime;
 
-        alarm.alarmList.set(intervalPointer, alarmData);
+        alarm.alarmList[intervalPointer] = alarmData;
 
     }
 

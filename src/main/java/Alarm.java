@@ -10,17 +10,18 @@ public class Alarm extends Function {
      */
     public Alarm() {  // 초기
         curAlarm  = new AlarmData();
-        alarmList = new ArrayList<AlarmData>();
+        alarmList = new AlarmData[10];
         mode = 3;
         state = false;
         alarmPointer = 0;
     }
 
     AlarmData curAlarm ;
-    ArrayList<AlarmData> alarmList;
+    AlarmData[] alarmList;
 
     private int alarmPointer;
     private int mode;
+
     private boolean state = false;
 
     private int typeindex = 1; // 시분초 구분
@@ -107,13 +108,27 @@ public class Alarm extends Function {
     public void addTimeToAlarmList(Time alarmTime) {
         // TODO implement here
 
-        if (alarmList.size() >= 10) {
+        int count = 0;
+
+        for (int i  =0 ; i < 10 ; i++)
+        {
+            count++;
+            if(alarmList[i] == null)
+            {
+
+                break;
+            }
+
+
+        }
+
+        if (count >= 10) {
             // 개수 초과
             return;
         }
         else {
             curAlarm.alarmTime = alarmTime;
-            alarmList.add(curAlarm);
+            alarmList[count] = curAlarm;
 
         }
 
@@ -134,7 +149,7 @@ public class Alarm extends Function {
      */
     public void deleteAlarm(int alarmIdx) {
         // TODO implement here
-        alarmList.set(alarmIdx, null);
+        alarmList[alarmIdx] = null;
     }
 
     /**

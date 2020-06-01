@@ -11,7 +11,7 @@ public class MainFrame extends JFrame {
     StopwatchView stopwatchView;
     TimerView timerView;
 
-    public MainFrame() {
+    public MainFrame(System system) {
         setTitle("Alarm Customizing Clock System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
