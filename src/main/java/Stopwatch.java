@@ -7,7 +7,7 @@ public class Stopwatch extends Function {
     /**
      * Default constructor
      */
-    public Stopwatch() {
+    public Stopwatch(System system) {
         fid = 2;
         mode = 0;
         stopwatchRecord = new Time[10];
@@ -137,4 +137,7 @@ public class Stopwatch extends Function {
      */
     public void changeType() {}
 
+    public int getMode() {
+        return this.mode;
+    }
 }

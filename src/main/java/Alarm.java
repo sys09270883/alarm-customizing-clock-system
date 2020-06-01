@@ -124,4 +124,7 @@ public class Alarm extends Function {
      */
     public void changeType() {}
 
+    public int getMode() {
+        return this.mode;
+    }
 }

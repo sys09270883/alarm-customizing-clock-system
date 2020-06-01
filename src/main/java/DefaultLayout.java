@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class DefaultLayout extends JLayeredPane implements ActionListener {
+public class DefaultLayout extends JLayeredPane {
 
     final static int FRAME_WIDTH = 1000;
     final static int FRAME_HEIGHT = 550;
@@ -39,19 +39,23 @@ public class DefaultLayout extends JLayeredPane implements ActionListener {
         startBtn = new JButton("START");
         startBtn.setBounds(PADDING_X, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
         setBtn(startBtn);
+        startBtn.addActionListener(event -> system.startBtnPressed());
 
         resetBtn = new JButton("RESET");
         resetBtn.setBounds(FRAME_WIDTH - PADDING_X - BTN_WIDTH, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
         setBtn(resetBtn);
+        resetBtn.addActionListener(event -> system.resetBtnPressed());
 
         selectBtn = new JButton("SELECT");
         selectBtn.setBounds(PADDING_X, FRAME_HEIGHT - PADDING_Y - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
         setBtn(selectBtn);
+        selectBtn.addActionListener(e -> system.selectBtnPressed());
 
         modeBtn = new JButton("MODE");
         modeBtn.setBounds(FRAME_WIDTH - PADDING_X - BTN_WIDTH,
                 FRAME_HEIGHT - PADDING_Y - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
         setBtn(modeBtn);
+        modeBtn.addActionListener(e -> system.modeBtnPressed());
 
         mainPanel = new JPanel();
         mainPanel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
@@ -70,25 +74,6 @@ public class DefaultLayout extends JLayeredPane implements ActionListener {
         btn.setBorderPainted(false);
         btn.setVisible(true);
         btn.setBackground(Color.lightGray);
-    }
-
-    // 버튼 이벤트 처리할 부분
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        int btnFlag = -1;
-        if (e.getSource() == startBtn)
-            btnFlag = 0;
-        else if (e.getSource() == resetBtn)
-            btnFlag = 1;
-        else if (e.getSource() == selectBtn)
-            btnFlag = 2;
-        else if (e.getSource() == modeBtn)
-            btnFlag = 3;
-        if (btnFlag == -1)
-            return;
-
-        // 눌린 버튼을 System에게 전달한다.
-        // System이 선택된 버튼을 처리해야 한다.
     }
 
     protected void displaySegment(int x, int y, int w, int h, String str) {

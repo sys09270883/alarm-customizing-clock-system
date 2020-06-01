@@ -10,7 +10,7 @@ public class D_day extends Function {
     /**
      * Default constructor
      */
-    public D_day() {
+    public D_day(System system) {
         fid = 4;
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
         d_dayDate = null;
@@ -129,4 +129,8 @@ public class D_day extends Function {
      * 
      */
     public void changeType() {}
+
+    public int getMode() {
+        return this.mode;
+    }
 }

@@ -118,4 +118,12 @@ public class TimekeepingView extends DefaultLayout {
     public void setDayofweek(String str) {
         displaySegment(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT, str, layer++);
     }
+
+    public void setHour(String str) {
+        displaySegment(310, 235, CUR_TIME1_WIDTH / 2, CUR_TIME1_HEIGHT, str, layer++);
+    }
+
+    public void setMinute(String str) {
+        displaySegment(310 + CUR_TIME1_WIDTH / 2, 235, CUR_TIME1_WIDTH / 2, CUR_TIME1_HEIGHT, str, layer++);
+    }
 }

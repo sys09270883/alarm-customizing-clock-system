@@ -35,8 +35,17 @@ public class TimeKeeping extends Function {
 
     // TODO 년, 월, 일, 시, 분, 초 LIMIT 변수 논의 필요
 
+    public int getMode() {
+        return mode;
+    }
+
     // 0 -> Default Mode, 1 -> TimeSettingMode
     private int mode;
+
+    public Time getCurTime() {
+        return curTime;
+    }
+
     private Time curTime;
     private Date curDate;
     private int d_day;
@@ -44,9 +53,17 @@ public class TimeKeeping extends Function {
     private int dayOfTheWeek; // 1 : 일요일 7 : 토요일
     private int type;
 
+    public int[] getTimeSettingValue() {
+        return timeSettingValue;
+    }
+
     // TODO timeSettingValue 논의 필요
     // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
     private int timeSettingValue[] = {-1,-1,-1,-1,-1,-1};
+
+    public int getType() {
+        return type;
+    }
 
     public TimeKeeping(System system) {
         fid = 1;
@@ -73,52 +90,49 @@ public class TimeKeeping extends Function {
         });
 
         curTime.setSecondListener(() -> {
-            String str = curTime.getCurrentTime();
-            StringTokenizer st = new StringTokenizer(str, " ");
-            system.GUI.timekeepingView.setCurTime1(String.format("%2s", st.nextToken())
-                    + String.format("%2s", st.nextToken()));
-            system.GUI.timekeepingView.setCurTime2(String.format("%2s", st.nextToken()));
-            system.GUI.timekeepingView.setDayofweek(DAY_OF_THE_WEEK[dayOfTheWeek - 1]);
-            str = curDate.getCurrentDate();
-            st = new StringTokenizer(str, " ");
-            system.GUI.timekeepingView.setDate(String.format("%2s", st.nextToken().substring(2, 4))
-                    + String.format("%2s", st.nextToken())
-                    + String.format("%2s", st.nextToken()));
+            if (mode == 0) {
+                String str = curTime.getCurrentTime();
+                StringTokenizer st = new StringTokenizer(str, " ");
+                system.GUI.timekeepingView.setCurTime1(String.format("%2s", st.nextToken())
+                        + String.format("%2s", st.nextToken()));
+                system.GUI.timekeepingView.setCurTime2(String.format("%2s", st.nextToken()));
+                system.GUI.timekeepingView.setDayofweek(DAY_OF_THE_WEEK[dayOfTheWeek - 1]);
+                str = curDate.getCurrentDate();
+                st = new StringTokenizer(str, " ");
+                system.GUI.timekeepingView.setDate(String.format("%2s", st.nextToken().substring(2, 4))
+                        + String.format("%2s", st.nextToken())
+                        + String.format("%2s", st.nextToken()));
 
-            // D-day
-            int i;
-            boolean flag = false;
-            for (i = 0; i < 4; i++) {
-                if (system.functions[i].fid == 4) {
+                // D-day
+                boolean flag = false;
+                if (system.d_day != null)
                     flag = true;
-                    break;
+                if (flag) {
+                    int dDay = system.d_day.getD_day();
+                    if (dDay == -1)
+                        system.GUI.timekeepingView.setdDay("NONE");
+                    else
+                        system.GUI.timekeepingView.setdDay(String.format("%3s", Integer.toString(dDay)));
                 }
-            }
-            if (flag) {
-                int dDay = ((D_day)(system.functions[i])).getD_day();
-                if (dDay == -1)
-                    system.GUI.timekeepingView.setdDay("NONE");
                 else
-                    system.GUI.timekeepingView.setdDay(String.format("%3s", Integer.toString(dDay)));
-            }
-            else
-                system.GUI.timekeepingView.setdDay("NONE");
+                    system.GUI.timekeepingView.setdDay("NONE");
 
-            // Alarm
-            flag = false;
-            for (i = 0; i < 4; i++) {
-                if (system.functions[i].fid == 5) {
+                // Alarm
+                flag = false;
+                if (system.alarm != null)
                     flag = true;
-                    break;
+                if (flag) {
+                    int alarmNum = system.alarm.getSize();
+                    system.GUI.timekeepingView.setAlarmNum(String.format("%2s", Integer.toString(alarmNum)));
                 }
-            }
-            if (flag) {
-                int alarmNum = ((Alarm)(system.functions[i])).getSize();
-                system.GUI.timekeepingView.setAlarmNum(String.format("%2s", Integer.toString(alarmNum)));
+                else {
+                    system.GUI.timekeepingView.setAlarmNum("0");
+                }
             }
             else {
-                system.GUI.timekeepingView.setAlarmNum("0");
+
             }
+
         });
 
         curTime.startTime();
@@ -138,12 +152,12 @@ public class TimeKeeping extends Function {
 
             String ymd[] = currentDate.split(" ");
             String hms[] = currentTime.split(" ");
-            timeSettingValue[0] = Integer.parseInt(ymd[0]);
-            timeSettingValue[1] = Integer.parseInt(ymd[1]);
-            timeSettingValue[2] = Integer.parseInt(ymd[2]);
-            timeSettingValue[3] = Integer.parseInt(hms[0]);
-            timeSettingValue[4] = Integer.parseInt(hms[1]);
-            timeSettingValue[5] = Integer.parseInt(hms[2]);
+            timeSettingValue[0] = Integer.parseInt(hms[0]);
+            timeSettingValue[1] = Integer.parseInt(hms[1]);
+            timeSettingValue[2] = Integer.parseInt(hms[2]);
+            timeSettingValue[3] = Integer.parseInt(ymd[0]);
+            timeSettingValue[4] = Integer.parseInt(ymd[1]);
+            timeSettingValue[5] = Integer.parseInt(ymd[2]);
         } else {
             // timeSettingValue -1로 비활성화
             for(int i=0; i<TYPE_SIZE; ++i)
@@ -154,43 +168,56 @@ public class TimeKeeping extends Function {
     public void changeValue(int diff) {
         timeSettingValue[type] += diff;
 
-        // 각 type 값 검사 (년, 월, 일, 시, 분, 초 순)
+        // 각 type 값 검사
         switch(type) {
             case 0 :
-                if(timeSettingValue[type] < curDate.YEAR_BOTTON_LIMIT)
-                    timeSettingValue[type] = curDate.YEAR_TOP_LIMIT;
-                else if(timeSettingValue[type] > curDate.YEAR_TOP_LIMIT)
-                    timeSettingValue[type] = curDate.YEAR_BOTTON_LIMIT;
-            case 1 :
-                if(timeSettingValue[type] < curDate.MONTH_BOTTON_LIMIT)
-                    timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
-                else if(timeSettingValue[type] > curDate.MONTH_TOP_LIMIT)
-                    timeSettingValue[type] = curDate.MONTH_BOTTON_LIMIT;
-            case 2 :
-                if(timeSettingValue[type] < curDate.numOfDays[timeSettingValue[0]])
-                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[type]];
-                else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[type]])
-                    timeSettingValue[type] = curDate.numOfDays[0];
-            case 3 :
                 if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.HOUR_TOP_LIMIT;
                 else if(timeSettingValue[type] > curTime.HOUR_TOP_LIMIT)
                     timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
-            case 4 :
+                break;
+            case 1 :
                 if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.MINUTE_TOP_LIMIT;
                 else if(timeSettingValue[type] > curTime.MINUTE_TOP_LIMIT)
                     timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
-            case 5 :
+                break;
+            case 2 :
                 if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.SECOND_TOP_LIMIT;
                 else if(timeSettingValue[type] > curTime.SECOND_TOP_LIMIT)
                     timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
+                break;
+            case 3 :
+                if(timeSettingValue[type] < curDate.YEAR_BOTTON_LIMIT)
+                    timeSettingValue[type] = curDate.YEAR_TOP_LIMIT;
+                else if(timeSettingValue[type] > curDate.YEAR_TOP_LIMIT)
+                    timeSettingValue[type] = curDate.YEAR_BOTTON_LIMIT;
+                break;
+            case 4 :
+                if(timeSettingValue[type] < curDate.MONTH_BOTTON_LIMIT)
+                    timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
+                else if(timeSettingValue[type] > curDate.MONTH_TOP_LIMIT)
+                    timeSettingValue[type] = curDate.MONTH_BOTTON_LIMIT;
+                break;
+            case 5 :
+                if(timeSettingValue[type] < curDate.numOfDays[0])
+                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
+                else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
+                    timeSettingValue[type] = curDate.numOfDays[0];
+                break;
         }
     }
 
     public void changeType() {
         type = (type + 1) % TYPE_SIZE;
+    }
+
+    public void requestSave() {
+        curTime.pauseTime();
+        curTime.setTime(timeSettingValue[0], timeSettingValue[1], timeSettingValue[2]);
+        curDate.setDate(timeSettingValue[3], timeSettingValue[4], timeSettingValue[5]);
+        curTime.startTime();
     }
 
     // TODO system 클래스에서 GUI 제어하기 위해선 type, value에 대한 getter가 필요할 것으로 보임. 논의 필요
