@@ -215,6 +215,7 @@ public class TimeKeeping extends Function {
 
     public void requestSave() {
         curTime.pauseTime();
+        // TODO 락 겁시다!
         curTime.setTime(timeSettingValue[0], timeSettingValue[1], timeSettingValue[2]);
         curDate.setDate(timeSettingValue[3], timeSettingValue[4], timeSettingValue[5]);
         curTime.startTime();
