@@ -142,8 +142,6 @@ class Time implements Runnable {
                 e.printStackTrace();
             }
         }
-
-        System.out.println("while out");
     }
 
     interface ConditionSatisfiedListener {

@@ -7,20 +7,20 @@ public class System extends Function {
 
     // 6개 중 4개 인스턴스만 갖고있음.
     // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.
-    private MainFrame GUI;
-    private TimeKeeping timeKeeping;
-    private Stopwatch stopwatch;
-    private Timer timer;
-    private D_day d_day;
-    private Alarm alarm;
-    private AlarmCustom alarmCustom;
+    MainFrame GUI;
+    TimeKeeping timeKeeping;
+    Stopwatch stopwatch;
+    Timer timer;
+    D_day d_day;
+    Alarm alarm;
+    AlarmCustom alarmCustom;
+    Buzzer buzzer;
+    Blink blink;
     private int functionNumIdx = 0;
     private int[] functionNum;
     private int selectedFid;
     private int status; // 비트마스킹: 0b00 0b01 0b10 0b11
     private int type;
-    private Buzzer buzzer;
-    private Blink blink;
     private Time checkTimeOut;
 
     public System() {
