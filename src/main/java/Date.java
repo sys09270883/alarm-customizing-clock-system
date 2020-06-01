@@ -6,21 +6,6 @@ import java.text.SimpleDateFormat;
  * @author Yoonseop Shin
  */
 public class Date {
-    /*
-     * D-day 계산시 year, month, day를 가져오는함수가 필요해
-     * 추가했습니다. 추후 방법개선 시 삭제
-     */
-    public int getYear() {
-        return year;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public int getDay() {
-        return day;
-    }
 
     // 년, 월의 상위, 하위 한계값
     public final int YEAR_TOP_LIMIT = 2099;
@@ -47,6 +32,18 @@ public class Date {
         day = Integer.parseInt(splited[2]);
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
     public String getCurrentDate() {
         String currentDate;
         synchronized(lock) {
@@ -67,7 +64,7 @@ public class Date {
         if(++day == numOfDays[month]) { day = 0; ++month; }
         if(month > 12) { month = 0; ++year; }
 
-        // TODO 2099년이 넘어가면 어떻게 처리할지 의논해야됨
+        // TODO 2099년이 넘어가면 어떻게 처리할지 의논해야됨 (-> 2020 1 1)
         //if(year > 2099) {  }
     }
 }
