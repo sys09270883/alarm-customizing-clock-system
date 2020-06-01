@@ -41,6 +41,7 @@ public class DefaultLayout extends JLayeredPane {
         setBtn(startBtn);
         startBtn.addActionListener(event -> system.startBtnPressed());
 
+
         resetBtn = new JButton("RESET");
         resetBtn.setBounds(FRAME_WIDTH - PADDING_X - BTN_WIDTH, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
         setBtn(resetBtn);
