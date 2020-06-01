@@ -50,24 +50,9 @@ public class System extends Function {
 
     }
 
-    public int checkStatus() {
-        if (status == 3) {
-            status = 1;
-            return 2;
-        }
-        else if (status == 2) {
-            status = 0;
-            return 1;
-        }
-        else if (status == 1) {
-            status = 0;
-            return 0;
-        }
-        return -1;
-    }
 
     public void startBtnPressed() {
-        if (checkStatus() > -1)
+        if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
@@ -106,13 +91,13 @@ public class System extends Function {
     }
 
     public void resetBtnPressed() {
-        if (checkStatus() > -1)
+        if (updateStatus() > -1)
             return;
 
     }
 
     public void selectBtnPressed() {
-        if (checkStatus() > -1)
+        if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
@@ -143,7 +128,7 @@ public class System extends Function {
     }
 
     public void modeBtnPressed() {
-        if (checkStatus() > -1)
+        if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
@@ -277,8 +262,20 @@ public class System extends Function {
     /**
      * 
      */
-    public void updateStatus() {
-        // TODO implement here
+    public int updateStatus() {
+        if (status == 3) {
+            status = 1;
+            return 2;
+        }
+        else if (status == 2) {
+            status = 0;
+            return 1;
+        }
+        else if (status == 1) {
+            status = 0;
+            return 0;
+        }
+        return -1;
     }
 
     /**
