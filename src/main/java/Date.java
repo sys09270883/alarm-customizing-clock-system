@@ -21,6 +21,12 @@ public class Date {
     private int day;
     private Object lock = new Object(); // 쓰레드 race condition 방지 위한 lock
 
+    public void setDate(int y, int m, int d) {
+        year = y;
+        month = m;
+        day = d;
+    }
+
     public Date() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy MM dd");
         String curTime = format.format(java.lang.System.currentTimeMillis());

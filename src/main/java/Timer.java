@@ -7,8 +7,9 @@ public class Timer extends Function {
     /**
      * Default constructor
      */
-    public Timer() {
-        mode = 2;
+    public Timer(System system) {
+        fid = 3;
+        mode = 0;
         timer = new Time(0);
     }
 
@@ -83,4 +84,7 @@ public class Timer extends Function {
      */
     public void changeType() {}
 
+    public int getMode() {
+        return this.mode;
+    }
 }

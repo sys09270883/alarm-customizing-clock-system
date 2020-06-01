@@ -13,6 +13,7 @@ public abstract class Function {
      * 
      */
     protected int mode;
+    protected int fid;
 
 
     /**
