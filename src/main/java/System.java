@@ -20,6 +20,8 @@ public class System extends Function {
         selectedFunction = 0;
         buzzer = new Buzzer();
         blink = new Blink();
+
+
     }
 
     @Override
