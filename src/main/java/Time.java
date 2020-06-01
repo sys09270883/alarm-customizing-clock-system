@@ -27,6 +27,12 @@ class Time implements Runnable {
         this.sec = sec;
     }
 
+    public Time getTime() {
+        Time result = new Time(0);
+        result.setTime(this.hour, this.min, this.sec);
+        return result;
+    }
+
     // TODO timeFlag가 시간을 증가시킬지, 감소시킬지를 의미하는 flag. Time 생성자에 필요할 듯
     public Time(int timeFlag) {
         SimpleDateFormat format = new SimpleDateFormat("HH mm ss");

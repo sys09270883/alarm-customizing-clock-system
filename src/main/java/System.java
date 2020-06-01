@@ -37,7 +37,7 @@ public class System extends Function {
         alarmCustom = null;
 
         buzzer = new Buzzer();
-        blink = new Blink();
+        blink = new Blink(this);
 
     }
 
@@ -263,9 +263,10 @@ public class System extends Function {
      */
     private Blink blink;
 
-
-
-
+    // blink 제어를 위해 getBlink() 필요
+    public Blink getBlink() {
+        return blink;
+    }
 
     /**
      * 

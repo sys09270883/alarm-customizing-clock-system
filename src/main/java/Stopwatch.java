@@ -4,38 +4,36 @@
  */
 public class Stopwatch extends Function {
 
+    public final int STOPWATCH_TOP_LIMIT = 9;
+    public final int STOPWATCH_BOTTOM_LIMIT = 0;
+
+    private final int TYPE_SIZE = 3;
+    private int timeSettingValue[] = {-1, -1, -1};
+
     /**
      * Default constructor
      */
     public Stopwatch(System system) {
         fid = 2;
         mode = 0;
+        type = 0;
         stopwatchRecord = new Time[10];
         for(int i=0; i<10; i++) {
             stopwatchRecord[i] = null;
         }
         stopwatch = new Time(1);
+        recordPointer = 0;
     }
 
-    /**
-     * 
-     */
     private int mode;
 
-    /**
-     * 
-     */
     private Time stopwatch;
 
-    /**
-     * 
-     */
     private Time[] stopwatchRecord;
 
-    /**
-     * 
-     */
     private int recordPointer;
+
+    private int type;
 
 
     /**
@@ -57,6 +55,7 @@ public class Stopwatch extends Function {
      */
     public void requestResetStopwatch() {
         stopwatch.clearTime();
+        clearList();
     }
 
     /**
@@ -69,9 +68,10 @@ public class Stopwatch extends Function {
     }
 
     /**
-     * record(Time stopwatchTime)를 단순히 호출하는 방식이라
+     *
      */
     public void requestSaveRecord() {
+        record(stopwatch.getTime());
     }
 
     /**
@@ -100,14 +100,20 @@ public class Stopwatch extends Function {
      * 
      */
     public void requestRecordCheckMode() {
-        // TODO implement here
+        changeMode();
+        // TODO move pointer 후 Recordcheck가 끝나면 changeMode()가 한번 더 필요함.
     }
 
     /**
      * @param diff
      */
     public void movePointer(int diff) {
-        // TODO implement here
+        recordPointer+=diff;
+
+        if(recordPointer < STOPWATCH_BOTTOM_LIMIT)
+            recordPointer = STOPWATCH_BOTTOM_LIMIT;
+        else if(recordPointer > STOPWATCH_TOP_LIMIT)
+            recordPointer = STOPWATCH_TOP_LIMIT;
     }
 
     /**
@@ -125,17 +131,42 @@ public class Stopwatch extends Function {
     /**
      * 
      */
-    public void changeMode() {}
+    public void changeMode() {
+        if(mode == 0) mode = 1;
+        else mode = 0;
+    }
 
     /**
      * @param diff
      */
-    public void changeValue(int diff) {}
+    public void changeValue(int diff) {
+        timeSettingValue[type] += diff;
+        switch(type) {
+            case 0:
+                if (timeSettingValue[type] < stopwatch.TIME_BOTTOM_LIMIT)
+                    timeSettingValue[type] = stopwatch.HOUR_TOP_LIMIT;
+                else if (timeSettingValue[type] > stopwatch.HOUR_TOP_LIMIT)
+                    timeSettingValue[type] = stopwatch.TIME_BOTTOM_LIMIT;
+                break;
+            case 1:
+                if (timeSettingValue[type] < stopwatch.TIME_BOTTOM_LIMIT)
+                    timeSettingValue[type] = stopwatch.MINUTE_TOP_LIMIT;
+                else if (timeSettingValue[type] > stopwatch.MINUTE_TOP_LIMIT)
+                    timeSettingValue[type] = stopwatch.TIME_BOTTOM_LIMIT;
+                break;
+            case 2:
+                if (timeSettingValue[type] < stopwatch.TIME_BOTTOM_LIMIT)
+                    timeSettingValue[type] = stopwatch.SECOND_TOP_LIMIT;
+                else if (timeSettingValue[type] > stopwatch.SECOND_TOP_LIMIT)
+                    timeSettingValue[type] = stopwatch.TIME_BOTTOM_LIMIT;
+                break;
+        }
+    }
 
     /**
      * 
      */
-    public void changeType() {}
+    public void changeType() { type = (type + 1) % TYPE_SIZE; }
 
     public int getMode() {
         return this.mode;
