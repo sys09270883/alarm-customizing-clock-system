@@ -40,7 +40,7 @@ public class TimeKeeping extends Function {
     private Date curDate;
     private int d_day;
     private int alarmCnt;
-    private int dayOfTheWeek;
+    private int dayOfTheWeek; // 1 : 일요일 7 : 토요일
     private int type;
 
     // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
@@ -50,6 +50,7 @@ public class TimeKeeping extends Function {
     public TimeKeeping() {
         mode = 0;
         curTime = new Time(1);
+        curTime.startTime();
         curTime.setListener(() -> curDate.raiseDate());
         curDate = new Date();
         d_day = -1; // TODO 초기값 의논 필요

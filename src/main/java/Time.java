@@ -1,6 +1,7 @@
 import javafx.util.Pair;
 import java.text.SimpleDateFormat;
 import java.lang.System;
+import java.lang.Runnable;
 
 class Time implements Runnable {
 
@@ -33,13 +34,15 @@ class Time implements Runnable {
         this.timeFlag = timeFlag;
 
         dateChangedListener = null;
-
-        Thread th = new Thread((java.lang.Runnable) this);
-        th.start();
     }
 
     public void pauseTime() {
         isPaused = true;
+    }
+    public void startTime() {
+        isPaused = false;
+        Thread th = new Thread( this);
+        th.start();
     }
 
     public String getCurrentTime() {
