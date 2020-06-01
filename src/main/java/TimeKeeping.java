@@ -6,11 +6,12 @@ import java.lang.System;
 
 public class TimeKeeping extends Function {
 
-//    Time 쓰레드 테스트 코드
+    //Time 쓰레드 테스트 코드
 //    public static void main(String args[]) {
 //        TimeKeeping tk = new TimeKeeping();
 //
 //        System.out.println(tk.curDate.getCurrentDate());
+//        System.out.println(tk.dayOfTheWeek);
 //
 //        for(int i=0; i<100; ++i) {
 //            try {
@@ -19,7 +20,14 @@ public class TimeKeeping extends Function {
 //                e.printStackTrace();
 //            }
 //            tk.printCurTime();
+//            tk.printCurDate();
 //        }
+//    }
+//    public void printCurTime() {
+//        System.out.println(curTime.getCurrentTime());
+//    }
+//    public void printCurDate() {
+//        System.out.println(curDate.getCurrentDate());
 //    }
 
     private final int TYPE_SIZE = 6;
@@ -41,7 +49,7 @@ public class TimeKeeping extends Function {
 
     public TimeKeeping() {
         mode = 0;
-        curTime = new Time();
+        curTime = new Time(1);
         curTime.setListener(() -> curDate.raiseDate());
         curDate = new Date();
         d_day = -1; // TODO 초기값 의논 필요
@@ -108,31 +116,26 @@ public class TimeKeeping extends Function {
                 else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[type]])
                     timeSettingValue[type] = curDate.numOfDays[0];
             case 3 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTON_LIMIT)
+                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.HOUR_TOP_LIMIT;
                 else if(timeSettingValue[type] > curTime.HOUR_TOP_LIMIT)
-                    timeSettingValue[type] = curTime.TIME_BOTTON_LIMIT;
+                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
             case 4 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTON_LIMIT)
+                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.MINUTE_TOP_LIMIT;
                 else if(timeSettingValue[type] > curTime.MINUTE_TOP_LIMIT)
-                    timeSettingValue[type] = curTime.TIME_BOTTON_LIMIT;
+                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
             case 5 :
-                if(timeSettingValue[type] < curTime.TIME_BOTTON_LIMIT)
+                if(timeSettingValue[type] < curTime.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = curTime.SECOND_TOP_LIMIT;
                 else if(timeSettingValue[type] > curTime.SECOND_TOP_LIMIT)
-                    timeSettingValue[type] = curTime.TIME_BOTTON_LIMIT;
+                    timeSettingValue[type] = curTime.TIME_BOTTOM_LIMIT;
         }
     }
 
     public void changeType() {
         type = (type + 1) % TYPE_SIZE;
     }
-
-//    Time 쓰레드 테스크 코드
-//    public void printCurTime() {
-//        System.out.println(curTime.getCurrentTime());
-//    }
 
     // TODO system 클래스에서 GUI 제어하기 위해선 type, value에 대한 getter가 필요할 것으로 보임. 논의 필요
 }
