@@ -93,7 +93,29 @@ public class TimekeepingView extends DefaultLayout {
         add(curTimePanel2, new Integer(1));
         add(alarmPanel, new Integer(1));
         add(dayofweekPanel, new Integer(1));
+    }
 
+    public void setAlarmNum(String str) {
+        displaySegment(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT, str, layer++);
+    }
 
+    public void setdDay(String str) {
+        displaySegment(420, 175, D_DAY_WIDTH, D_DAY_HEIGHT, str, layer++);
+    }
+
+    public void setCurTime1(String str) {
+        displaySegment(310, 235, CUR_TIME1_WIDTH, CUR_TIME1_HEIGHT, str, layer++);
+    }
+
+    public void setCurTime2(String str) {
+        displaySegment(600, 250, CUR_TIME2_WIDTH, CUR_TIME2_HEIGHT, str, layer++);
+    }
+
+    public void setDate(String str) {
+        displaySegment(310, 310, DATE_WIDTH, DATE_HEIGHT, str, layer++);
+    }
+
+    public void setDayofweek(String str) {
+        displaySegment(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT, str, layer++);
     }
 }

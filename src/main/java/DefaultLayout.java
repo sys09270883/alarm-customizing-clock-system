@@ -14,6 +14,7 @@ public class DefaultLayout extends JLayeredPane implements ActionListener {
     final static int BTN_HEIGHT = 50;
     final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
 
+    protected static int layer = 3;
     protected JPanel mainPanel;
     System system;
     ImageIcon clockImage;
@@ -94,6 +95,14 @@ public class DefaultLayout extends JLayeredPane implements ActionListener {
         w /= str.length();
         for (int i = 0; i < str.length(); i++) {
             add(new SegmentDisplay(x, y, w, h, str.charAt(i)), new Integer(2));
+            x += w;
+        }
+    }
+
+    protected void displaySegment(int x, int y, int w, int h, String str, int layer) {
+        w /= str.length();
+        for (int i = 0; i < str.length(); i++) {
+            add(new SegmentDisplay(x, y, w, h, str.charAt(i)), new Integer(layer));
             x += w;
         }
     }
