@@ -7,16 +7,21 @@ public class System extends Function {
 
     // 6개 중 4개 인스턴스만 갖고있음.
     // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.
-    MainFrame GUI;
-    TimeKeeping timeKeeping;
-    Stopwatch stopwatch;
-    Timer timer;
-    D_day d_day;
-    Alarm alarm;
-    AlarmCustom alarmCustom;
-    int functionNumIdx = 0;
-
-    Time checkTimeOut;
+    private MainFrame GUI;
+    private TimeKeeping timeKeeping;
+    private Stopwatch stopwatch;
+    private Timer timer;
+    private D_day d_day;
+    private Alarm alarm;
+    private AlarmCustom alarmCustom;
+    private int functionNumIdx = 0;
+    private int[] functionNum;
+    private int selectedFid;
+    private int status; // 비트마스킹: 0b00 0b01 0b10 0b11
+    private int type;
+    private Buzzer buzzer;
+    private Blink blink;
+    private Time checkTimeOut;
 
     public System() {
         GUI = new MainFrame(this);
@@ -46,8 +51,6 @@ public class System extends Function {
 
     public static void main(String[] args) {
         System system = new System();
-
-
     }
 
 
@@ -188,80 +191,27 @@ public class System extends Function {
 
     }
 
-    /**
-     * 
-     */
-    private int[] functionNum;
 
-    /**
-     * 
-     */
-    private int selectedFid;
-
-    /**
-     * 비트마스킹: 0b00 0b01 0b10 0b11
-     */
-    private int status;
-
-
-
-    /**
-     * 수정할 인덱스: 연, 월, 일, 시, 분, 초 [0, 5]
-     */
-    private int type;
-
-    /**
-     * 
-     */
-    private Buzzer buzzer;
-
-    /**
-     * 
-     */
-    private Blink blink;
-
-
-
-
-
-    /**
-     * 
-     */
     public void changeType() {
         type = (type + 1) % 6;
     }
 
-    /**
-     * @param diff: +1 or -1
-     */
     public void changeValue(int diff) {
         // TODO implement here
     }
 
-    /**
-     * @param selected
-     */
     public void setFunction(int[] selected) {
         // TODO implement here
     }
 
-    /**
-     * 
-     */
     public void selectFunction() {
         // TODO implement here
     }
 
-    /**
-     * 
-     */
     public void beepBuzzer() {
         // TODO implement here
     }
 
-    /**
-     * 
-     */
     public int updateStatus() {
         if (status == 3) {
             status = 1;
@@ -278,16 +228,10 @@ public class System extends Function {
         return -1;
     }
 
-    /**
-     * 
-     */
     public void set() {
         // TODO implement here
     }
 
-    /**
-     * 
-     */
     public void nextFunction() {
         functionNumIdx = (functionNumIdx + 1) % 4;
         selectedFid = functionNum[functionNumIdx];
