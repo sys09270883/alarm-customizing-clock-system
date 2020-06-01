@@ -125,5 +125,4 @@ public class D_day extends Function {
      * 
      */
     public void changeType() {}
-
 }

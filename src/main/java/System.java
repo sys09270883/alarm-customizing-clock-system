@@ -5,9 +5,9 @@ import java.util.Arrays;
  */
 public class System extends Function {
 
-    /**
-     * Default constructor
-     */
+    // 6개 중 4개 인스턴스만 갖고있음.
+    // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.
+
     public System() {
         functionNum = new int[6];
         Arrays.fill(functionNum, 0);
@@ -18,8 +18,11 @@ public class System extends Function {
         status = 0b00;
         type = 0;
         selectedFunction = 0;
+
         buzzer = new Buzzer();
         blink = new Blink();
+
+
     }
 
     @Override
