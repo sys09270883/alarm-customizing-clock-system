@@ -38,7 +38,6 @@ public class System extends Function {
 
         buzzer = new Buzzer();
         blink = new Blink();
-
     }
 
     public static void main(String[] args) {
@@ -114,7 +113,7 @@ public class System extends Function {
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0) {
-                    timeKeeping.changeMode();
+                    timeKeeping.requestTimeSettingMode();
                 }
                 else {
                     timeKeeping.changeType();

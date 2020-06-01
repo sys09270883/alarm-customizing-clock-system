@@ -6,30 +6,6 @@ import java.util.StringTokenizer;
 
 public class TimeKeeping extends Function {
 
-    //Time 쓰레드 테스트 코드
-//    public static void main(String args[]) {
-//        TimeKeeping tk = new TimeKeeping();
-//
-//        System.out.println(tk.curDate.getCurrentDate());
-//        System.out.println(tk.dayOfTheWeek);
-//
-//        for(int i=0; i<100; ++i) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            tk.printCurTime();
-//            tk.printCurDate();
-//        }
-//    }
-//    public void printCurTime() {
-//        System.out.println(curTime.getCurrentTime());
-//    }
-//    public void printCurDate() {
-//        System.out.println(curDate.getCurrentDate());
-//    }
-
     final static String[] DAY_OF_THE_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
     private final int TYPE_SIZE = 6;
 
@@ -42,7 +18,6 @@ public class TimeKeeping extends Function {
     private int dayOfTheWeek; // 1 : 일요일 7 : 토요일
     private int type;
 
-    // TODO timeSettingValue 논의 필요
     // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
     private int timeSettingValue[] = {-1, -1, -1, -1, -1, -1};
 
@@ -204,8 +179,8 @@ public class TimeKeeping extends Function {
         changeMode();
     }
 
-    public Time getCurTime() {
-        return curTime;
+    public void requestTimeSettingMode() {
+        this.changeMode();
     }
 
     public int[] getTimeSettingValue() {
