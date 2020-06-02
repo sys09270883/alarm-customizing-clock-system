@@ -100,9 +100,25 @@ public class System extends Function {
                     alarm.changeValue(1);
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
-                    GUI.alarmView.setAlarm(String.format("%2s", alarmSettingValue[0])
-                            + String.format("%2s", alarmSettingValue[1])
-                            + String.format("%2s", alarmSettingValue[2]));
+                    String str1 = "00", str2 = "00", str3 = "00";
+                    if(alarmSettingValue[0] < 10) {
+                        str1 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    } else {
+                        str1 = String.format("%2s", alarmSettingValue[0]);
+                    }
+                    if (alarmSettingValue[1] < 10)
+                    {
+                        str2 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    }else {
+                        str2 = String.format("%2s", alarmSettingValue[0]);
+                    }if (alarmSettingValue[2] < 10)
+                    {
+                        str3 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    }else {
+                        str3 = String.format("%2s", alarmSettingValue[0]);
+                    }
+
+                    GUI.alarmView.setAlarm(str1 + str2  + str3);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
 
                 } else if (alarm.getMode() == 2) // 포인터 조종
@@ -155,9 +171,26 @@ public class System extends Function {
                     alarm.changeValue(-1);
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
-                    GUI.alarmView.setAlarm(String.format("%2s", alarmSettingValue[0])
-                            + String.format("%2s", alarmSettingValue[1])
-                            + String.format("%2s", alarmSettingValue[2]));
+                    String str1 = "00", str2 = "00", str3 = "00";
+                    if(alarmSettingValue[0] < 10) {
+                        str1 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    } else {
+                        str1 = String.format("%2s", alarmSettingValue[0]);
+                    }
+                    if (alarmSettingValue[1] < 10)
+                    {
+                        str2 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    }else {
+                        str2 = String.format("%2s", alarmSettingValue[0]);
+                    }if (alarmSettingValue[2] < 10)
+                    {
+                        str3 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    }else {
+                        str3 = String.format("%2s", alarmSettingValue[0]);
+                    }
+
+                    GUI.alarmView.setAlarm(str1 + str2  + str3);
+                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 } else if (alarm.getMode() == 2) // 포인터 조종
                 {
                     alarm.movePointer(-1);
