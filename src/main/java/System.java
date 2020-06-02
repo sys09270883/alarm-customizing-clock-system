@@ -104,9 +104,12 @@ public class System extends Function {
                 GUI.timekeepingView.setDate(String.format("%2s", timeSettingValue[3]).substring(2, 4)
                         + String.format("%2s", timeSettingValue[4])
                         + String.format("%2s", timeSettingValue[5]));
-
                 break;
             case 2: // stopwatch
+                if (stopwatch.getMode() == 0) {
+
+                }
+
 
                 break;
             case 3: // timer
