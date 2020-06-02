@@ -68,11 +68,11 @@ public class System extends Function {
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
-                if (timeKeeping.getMode() == 0)
+                if (timeKeeping.getMode() == 0) {
                     return;
+                }
                 // GUI에 반영해야 함.
                 timeKeeping.changeValue(1);
-                int type = timeKeeping.getType();
                 int[] timeSettingValue = timeKeeping.getTimeSettingValue();
                 GUI.timekeepingView.setHour(String.format("%2s", timeSettingValue[0]));
                 GUI.timekeepingView.setMinute(String.format("%2s", timeSettingValue[1]));
@@ -81,6 +81,7 @@ public class System extends Function {
                         + String.format("%2s", timeSettingValue[4])
                         + String.format("%2s", timeSettingValue[5]));
                 // GUI type에 해당하는 부분이 깜빡이는 효과를 추가해야 함.
+                // SELECT 버튼을 눌렀을 때 깜빡이게 추가함.
 
                 break;
             case 2: // stopwatch
@@ -114,10 +115,64 @@ public class System extends Function {
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0) {
+                    GUI.timekeepingView.borderPanel.setVisible(true);
                     timeKeeping.changeMode();
                 }
                 else {
                     timeKeeping.changeType();
+                    int type = timeKeeping.getType();
+                    GUI.timekeepingView.borderPanel.setVisible(true);
+                    if (type == 0) {
+                        GUI.timekeepingView.borderPanel.setBounds(
+                                GUI.timekeepingView.curTimePanel1.getX() - 5,
+                                GUI.timekeepingView.curTimePanel1.getY() - 5,
+                                (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
+                                GUI.timekeepingView.curTimePanel1.getHeight() + 10
+                        );
+                    }
+                    else if (type == 1) {
+                        GUI.timekeepingView.borderPanel.setBounds(
+                                GUI.timekeepingView.curTimePanel1.getX() - 5 +
+                                        (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
+                                GUI.timekeepingView.curTimePanel1.getY() - 5,
+                                (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
+                                GUI.timekeepingView.curTimePanel1.getHeight() + 10
+                        );
+                    }
+                    else if (type == 2) {
+                        GUI.timekeepingView.borderPanel.setBounds(
+                                GUI.timekeepingView.curTimePanel2.getX() - 5,
+                                GUI.timekeepingView.curTimePanel2.getY() - 5,
+                                GUI.timekeepingView.curTimePanel2.getWidth() + 10,
+                                GUI.timekeepingView.curTimePanel2.getHeight() + 10
+                        );
+                    }
+                    else if (type == 3) {
+                        GUI.timekeepingView.borderPanel.setBounds(
+                                GUI.timekeepingView.datePanel.getX() - 5,
+                                GUI.timekeepingView.datePanel.getY() - 5,
+                                (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
+                                GUI.timekeepingView.datePanel.getHeight() + 10
+                        );
+                    }
+                    else if (type == 4) {
+                        GUI.timekeepingView.borderPanel.setBounds(
+                                GUI.timekeepingView.datePanel.getX() - 5
+                                        + (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
+                                GUI.timekeepingView.datePanel.getY() - 5,
+                                (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
+                                GUI.timekeepingView.datePanel.getHeight() + 10
+                        );
+                    }
+                    else if (type == 5) {
+                        GUI.timekeepingView.borderPanel.setBounds(
+                                GUI.timekeepingView.datePanel.getX() - 5
+                                        + 2 * (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
+                                GUI.timekeepingView.datePanel.getY() - 5,
+                                (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
+                                GUI.timekeepingView.datePanel.getHeight() + 10
+                        );
+                    }
                 }
 
 
@@ -153,6 +208,7 @@ public class System extends Function {
                     timeKeeping.requestSave();
                     // TODO 시간 저장 후 타임쓰레드에 문제있음.
                     timeKeeping.changeMode();
+                    GUI.timekeepingView.borderPanel.setVisible(false);
                 }
 
                 break;
