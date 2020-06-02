@@ -634,7 +634,12 @@ public class System extends Function {
         }
         else if (status == 0b01) {
             status = 0b00;
-            buzzer.stopBuzzer();
+            try {
+                buzzer.stopBuzzer();
+                buzzer.getBeepThread().join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return 0;
         }
         return -1;

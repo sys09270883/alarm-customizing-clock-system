@@ -62,4 +62,8 @@ public class Buzzer implements Runnable {
         }
         buzzerState = false;
     }
+
+    public Thread getBeepThread() {
+        return this.beepThread;
+    }
 }
