@@ -138,9 +138,9 @@ public class TimeKeeping extends Function {
                 break;
             case 5:
                 if (timeSettingValue[type] < curDate.numOfDays[0])
-                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[0]];
+                    timeSettingValue[type] = curDate.numOfDays[0];
                 else if (timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
-                    timeSettingValue[type] = curDate.numOfDays[4];
+                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
                 break;
         }
     }
@@ -151,7 +151,6 @@ public class TimeKeeping extends Function {
         DateFormat dateFormat = new SimpleDateFormat("yyyy MM dd");
         try {
             java.util.Date date = dateFormat.parse(curDate.getCurrentDate());
-            java.lang.System.out.println(curDate.getCurrentDate());
             calendar.setTime(date);
         } catch (ParseException e) {
             e.printStackTrace();
