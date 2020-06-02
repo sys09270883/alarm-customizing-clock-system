@@ -1,7 +1,3 @@
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
-import java.awt.*;
 import java.util.Arrays;
 
 /**
@@ -85,9 +81,7 @@ public class System extends Function {
                         + String.format("%2s", timeSettingValue[4])
                         + String.format("%2s", timeSettingValue[5]));
                 // GUI type에 해당하는 부분이 깜빡이는 효과를 추가해야 함.
-
-
-
+                // SELECT 버튼을 눌렀을 때 깜빡이게 추가함.
 
                 break;
             case 2: // stopwatch

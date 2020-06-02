@@ -104,13 +104,9 @@ public class TimekeepingView extends DefaultLayout {
         add(borderPanel, new Integer(2));
     }
 
-    public void setAlarmNum(String str) {
-        displaySegment(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT, str, layer++);
-    }
+    public void setAlarmNum(String str) { displaySegment(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT, str, layer++); }
 
-    public void setdDay(String str) {
-        displaySegment(420, 175, D_DAY_WIDTH, D_DAY_HEIGHT, str, layer++);
-    }
+    public void setdDay(String str) { displaySegment(420, 175, D_DAY_WIDTH, D_DAY_HEIGHT, str, layer++); }
 
     public void setCurTime1(String str) {
         displaySegment(310, 235, CUR_TIME1_WIDTH, CUR_TIME1_HEIGHT, str, layer++);
@@ -124,9 +120,7 @@ public class TimekeepingView extends DefaultLayout {
         displaySegment(310, 310, DATE_WIDTH, DATE_HEIGHT, str, layer++);
     }
 
-    public void setDayofweek(String str) {
-        displaySegment(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT, str, layer++);
-    }
+    public void setDayofweek(String str) { displaySegment(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT, str, layer++); }
 
     public void setHour(String str) {
         displaySegment(310, 235, CUR_TIME1_WIDTH / 2, CUR_TIME1_HEIGHT, str, layer++);
