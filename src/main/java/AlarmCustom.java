@@ -127,11 +127,13 @@ public class AlarmCustom extends Function {
 
         if(this.mode == 1){
 
-            this.interval = default_interval;
+            this.interval = 1;
 
 
         } else if (this.mode == 2)
         {
+
+            this.volume = 0;
 
         } else {
 
@@ -144,7 +146,7 @@ public class AlarmCustom extends Function {
      */
     public void changeValue(int diff) {
 
-        if(mode == 1)
+        if(mode == 2)
         {
             this.interval += diff;
             if(this.interval > 3)
@@ -155,7 +157,7 @@ public class AlarmCustom extends Function {
                 this.interval = 1;
             }
         }
-        else if (mode == 2)
+        else if (mode == 3)
         {
             this.volume += diff;
             if(this.volume > 4)

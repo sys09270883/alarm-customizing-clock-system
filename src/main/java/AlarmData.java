@@ -29,11 +29,11 @@ public class AlarmData {
 
 
     public Time getTime(){
-        return this.alarmTime;
+        return alarmTime;
     }
 
     public AlarmCustom getAlarmCustom() {
-        return this.alarmCustom;
+        return alarmCustom;
     }
 
 
