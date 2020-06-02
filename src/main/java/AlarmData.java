@@ -15,6 +15,10 @@ public class AlarmData {
 
     }
 
+    public Time getAlarmTime() {
+        return alarmTime;
+    }
+
     /**
      * 
      */
@@ -23,17 +27,14 @@ public class AlarmData {
 
     protected AlarmCustom alarmCustom;
 
-    /**
-     * 
-     *///
 
 
     public Time getTime(){
-        return alarmTime;
+        return this.alarmTime;
     }
 
     public AlarmCustom getAlarmCustom() {
-        return alarmCustom;
+        return this.alarmCustom;
     }
 
     public void setAlarmTime(Time settingTime) {
