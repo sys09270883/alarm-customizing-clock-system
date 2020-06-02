@@ -119,6 +119,7 @@ public class Stopwatch extends Function {
     /**
      * 
      */
+
     public void timeout() {
 
     }
@@ -135,6 +136,7 @@ public class Stopwatch extends Function {
         if(mode == 0) mode = 1;
         else mode = 0;
     }
+
 
     /**
      * @param diff

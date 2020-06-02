@@ -18,7 +18,7 @@ public class DDayView extends DefaultLayout {
         datePanel.setBounds(335, 190, D_DATE_WIDTH, D_DATE_HEIGHT);
         datePanel.setVisible(true);
 
-        displaySegment(335, 190, D_DATE_WIDTH, D_DATE_HEIGHT, "200531");
+        displaySegment(335, 190, D_DATE_WIDTH, D_DATE_HEIGHT, "000000");
 
         d_dayPanel = new JPanel();
         d_dayPanel.setLayout(null);

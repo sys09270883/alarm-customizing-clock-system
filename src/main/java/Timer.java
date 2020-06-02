@@ -17,7 +17,6 @@ public class Timer extends Function {
         curTime = new Time(0);
     }
 
-    private int mode;
 
     private Time timer;
 
@@ -29,6 +28,7 @@ public class Timer extends Function {
     /**
      * 
      */
+
     public void requestTimerSettingMode() {
         changeMode();
         String curTimeStr = curTime.getCurrentTime();
@@ -67,15 +67,6 @@ public class Timer extends Function {
         timer.pauseTime();
     }
 
-    /**
-     * 
-     */
-    public void timeout() {}
-
-    /**
-     * 
-     */
-    public void cancel() {}
 
     /**
      * 
@@ -84,6 +75,7 @@ public class Timer extends Function {
         if(mode == 0) mode = 1;
         else mode = 0;
     }
+
 
     /**
      * @param diff

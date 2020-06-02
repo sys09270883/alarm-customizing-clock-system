@@ -10,6 +10,7 @@ public class DefaultLayout extends JLayeredPane {
     final static int FRAME_HEIGHT = 550;
     final static int PADDING_X = 100;
     final static int PADDING_Y = 120;
+    final static int PADDING = 5;
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
     final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
@@ -79,7 +80,7 @@ public class DefaultLayout extends JLayeredPane {
     protected void displaySegment(int x, int y, int w, int h, String str) {
         w /= str.length();
         for (int i = 0; i < str.length(); i++) {
-            add(new SegmentDisplay(x, y, w, h, str.charAt(i)), new Integer(2));
+            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), new Integer(2));
             x += w;
         }
     }
@@ -87,7 +88,7 @@ public class DefaultLayout extends JLayeredPane {
     protected void displaySegment(int x, int y, int w, int h, String str, int layer) {
         w /= str.length();
         for (int i = 0; i < str.length(); i++) {
-            add(new SegmentDisplay(x, y, w, h, str.charAt(i)), new Integer(layer));
+            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), new Integer(layer));
             x += w;
         }
     }
