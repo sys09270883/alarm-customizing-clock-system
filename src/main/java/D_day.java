@@ -82,7 +82,7 @@ public class D_day extends Function {
         String curDate = system.timeKeeping.getCurDate().getCurrentDate();
         StringTokenizer st = new StringTokenizer(curDate, " ");
         Calendar curDateCal = Calendar.getInstance();
-        curDateCal.set(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+        curDateCal.set(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()) - 1, Integer.parseInt(st.nextToken()));
 
         Calendar d_dayDateCal = Calendar.getInstance();
         d_dayDateCal.set(date.getYear(), date.getMonth()-1, date.getDay());
