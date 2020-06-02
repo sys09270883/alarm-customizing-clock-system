@@ -52,6 +52,7 @@ public class Buzzer implements Runnable {
         synchronized (lock) {
             buzzerState = true;
         }
+        beepThread = new Thread(this);
         beepThread.start();
     }
 
