@@ -30,6 +30,8 @@ public class MainFrame extends JFrame {
         alarmView = new AlarmView(system);
         alarmCustomView = new AlarmCustomView(system);
 
+
+
         setView(timekeepingView);
     }
 

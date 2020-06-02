@@ -55,11 +55,12 @@ public class TimeKeeping extends Function {
                 if (system.d_day != null) {
                     int dDay = system.d_day.getD_day();
                     if (dDay == -1)
-                        system.GUI.timekeepingView.setdDay("NONE");
+                        system.GUI.timekeepingView.setdDay("000");
                     else
                         system.GUI.timekeepingView.setdDay(String.format("%3s", Integer.toString(dDay)));
-                } else
-                    system.GUI.timekeepingView.setdDay("NONE");
+                }
+                else
+                    system.GUI.timekeepingView.setdDay("000");
 
                 // Alarm
                 if (system.alarm != null) {
