@@ -1,10 +1,11 @@
+import java.util.StringTokenizer;
 
 /**
  * @author Yoonseop Shin
  */
 public class Stopwatch extends Function {
 
-    public final int STOPWATCH_TOP_LIMIT = 9;
+    public final int STOPWATCH_TOP_LIMIT = 7;
     public final int STOPWATCH_BOTTOM_LIMIT = 0;
 
     private final int TYPE_SIZE = 3;
@@ -17,11 +18,20 @@ public class Stopwatch extends Function {
         fid = 2;
         mode = 0;
         type = 0;
-        stopwatchRecord = new Time[10];
+        stopwatchRecord = new String[10];
         for(int i=0; i<10; i++) {
             stopwatchRecord[i] = null;
         }
         stopwatch = new Time(1);
+        stopwatch.setTime(0, 0, 0);
+        stopwatch.setSecondListener(() -> {
+                    String time = stopwatch.getCurrentTime();
+                    StringTokenizer st = new StringTokenizer(time, " ");
+                    system.GUI.stopwatchView.setStopwatch(String.format("%02d", Integer.parseInt(st.nextToken()))
+                    + String.format("%02d", Integer.parseInt(st.nextToken())) +
+                            String.format("%02d", Integer.parseInt(st.nextToken())));
+                }
+                );
         recordPointer = 0;
     }
 
@@ -29,18 +39,24 @@ public class Stopwatch extends Function {
 
     private Time stopwatch;
 
-    private Time[] stopwatchRecord;
+    public String[] getStopwatchRecord() {
+        return stopwatchRecord;
+    }
+
+    private String[] stopwatchRecord;
 
     private int recordPointer;
 
     private int type;
 
 
+
     /**
      * Stopwatch 실행 요청
      */
     public void requestStartStopwatch() {
-        stopwatch.run();
+        changeMode(1);
+        stopwatch.startTime();
     }
 
     /**
@@ -48,12 +64,20 @@ public class Stopwatch extends Function {
      */
     public void requestPauseStopwatch() {
         stopwatch.pauseTime();
+        try {
+            stopwatch.getTimeThread().join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        changeMode(0);
     }
 
     /*
      * requestResetStopwatch() Class Diagram에 추가해야합니다
      */
     public void requestResetStopwatch() {
+        if (mode == 1)
+            requestPauseStopwatch();
         stopwatch.clearTime();
         clearList();
     }
@@ -71,14 +95,14 @@ public class Stopwatch extends Function {
      *
      */
     public void requestSaveRecord() {
-        record(stopwatch.getTime());
+        String time = stopwatch.getCurrentTime();
+        record(time);
     }
 
     /**
      * @param stopwatchTime
      */
-    public void record(Time stopwatchTime) {
-
+    public void record(String stopwatchTime) {
         for(int i=0; i<10; i++) {
             //stopwatch의 기록이 10개 미만일 때
             if(stopwatchRecord[i] == null) {
@@ -87,7 +111,7 @@ public class Stopwatch extends Function {
             }
 
             //stopwatch의 기록이 10개일 때
-            if(i==9 || stopwatchRecord[i] != null) {
+            if(i==9 && stopwatchRecord[i] != null) {
                 for(int j=0; j<9; j++) {
                     stopwatchRecord[j] = stopwatchRecord[j+1];
                 }
@@ -100,10 +124,14 @@ public class Stopwatch extends Function {
      * 
      */
     public void requestRecordCheckMode() {
-        changeMode();
+        changeMode(2);
         // TODO move pointer 후 Recordcheck가 끝나면 changeMode()가 한번 더 필요함.
     }
 
+
+    public int getRecordPointer() {
+        return this.recordPointer;
+    }
     /**
      * @param diff
      */
@@ -132,9 +160,8 @@ public class Stopwatch extends Function {
     /**
      * 
      */
-    public void changeMode() {
-        if(mode == 0) mode = 1;
-        else mode = 0;
+    public void changeMode(int mode) {
+        this.mode = mode;
     }
 
 

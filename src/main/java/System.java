@@ -1,4 +1,7 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 /**
  * @author Yoonseop Shin
@@ -15,7 +18,7 @@ public class System extends Function {
     Alarm alarm;
     AlarmCustom alarmCustom;
     Buzzer buzzer;
-    Blink blink;
+    public Blink blink;
     private int functionNumIdx = 0;
     private int[] functionNum;
     private int selectedFid;
@@ -86,7 +89,31 @@ public class System extends Function {
     }
 
     public void modeBtnLongPressed() {
+        lastOperateTime = java.lang.System.currentTimeMillis();
+        if (updateStatus() > -1)
+            return;
+        switch (selectedFid) {
+            case 2:
+                if (stopwatch.getMode() == 2) {
+                    // cancel
+                    stopwatch.changeMode(0);
+                    GUI.stopwatchView.borderPanel.setVisible(false);
+                }
+                break;
+        }
+    }
 
+    public void selectBtnLongPressed() {
+        lastOperateTime = java.lang.System.currentTimeMillis();
+        if (updateStatus() > -1)
+            return;
+        switch (selectedFid) {
+            case 2: // 스탑워치
+                if (stopwatch.getMode() == 0) {
+                    stopwatch.requestRecordCheckMode();
+                    GUI.stopwatchView.borderPanel.setVisible(true);
+                }
+        }
     }
 
     public void startBtnPressed() {
@@ -110,16 +137,73 @@ public class System extends Function {
                 break;
             case 2: // stopwatch
                 if (stopwatch.getMode() == 0) {
-
+                    stopwatch.requestStartStopwatch();
                 }
+                else if (stopwatch.getMode() == 1){
+                    stopwatch.requestPauseStopwatch();
+                }
+                else {
+                    String[] tmp = stopwatch.getStopwatchRecord();
 
+                    int curRecordPointer = stopwatch.getRecordPointer();
+                    if (curRecordPointer > 2 && tmp[0 + curRecordPointer] == null)
+                        break;
 
+                    stopwatch.movePointer(1);
+                    String[] str = new String[3];
+                    if (tmp[0 + curRecordPointer] == null)
+                        str[0] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[0 + curRecordPointer], " ");
+                        str[0] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+                    if (tmp[1 + curRecordPointer] == null)
+                        str[1] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[1 + curRecordPointer], " ");
+                        str[1] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+
+                    }
+                    if (tmp[2 + curRecordPointer] == null)
+                        str[2] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[2 + curRecordPointer], " ");
+                        str[2] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+
+                    GUI.stopwatchView.setStopwatchList(str[0] + str[1] + str[2]);
+                }
                 break;
             case 3: // timer
+                if (timer.getMode() == 0) {
+                    timer.requestStartTimer();
+                }
+                else if (timer.getMode() == 1){
+                    timer.changeValue(1);
+                    int[] tsv = timer.getTimeSettingValue();
+                    GUI.timerView.setHour(String.format("%02d", tsv[0]));
+                    GUI.timerView.setMinute(String.format("%02d", tsv[1]));
+                    GUI.timerView.setSecond(String.format("%02d", tsv[2]));
+                }
+                else {
+                    timer.requestPauseTimer();
+                }
 
                 break;
             case 4: // d-day
+                if (d_day.getMode() == 0) {
 
+                }
+                else {
+                    int d_dayType = d_day.getType();
+                    d_day.changeValue(1);
+                }
                 break;
             case 5: // alarm
 
@@ -151,10 +235,61 @@ public class System extends Function {
 
                 break;
             case 2: // stopwatch
+                if (stopwatch.getMode() == 2) {
 
+                    stopwatch.movePointer(-1);
+                    String[] tmp = stopwatch.getStopwatchRecord();
+                    int curRecordPointer = stopwatch.getRecordPointer();
+                    String[] str = new String[3];
+
+                    if (tmp[0 + curRecordPointer] == null)
+                        str[0] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[0 + curRecordPointer], " ");
+                        str[0] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+                    if (tmp[1 + curRecordPointer] == null)
+                        str[1] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[1 + curRecordPointer], " ");
+                        str[1] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+
+                    }
+                    if (tmp[2 + curRecordPointer] == null)
+                        str[2] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[2 + curRecordPointer], " ");
+                        str[2] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+
+                    GUI.stopwatchView.setStopwatchList(str[0] + str[1] + str[2]);
+                }
+                else {
+                    stopwatch.requestResetStopwatch();
+                    GUI.stopwatchView.setStopwatch("000000");
+                    GUI.stopwatchView.setStopwatchList("  NONE  NONE  NONE");
+                }
                 break;
             case 3: // timer
-
+                if (timer.getMode() == 1) {
+                    timer.changeValue(-1);
+                    int[] tsv = timer.getTimeSettingValue();
+                    GUI.timerView.setHour(String.format("%02d", tsv[0]));
+                    GUI.timerView.setMinute(String.format("%02d", tsv[1]));
+                    GUI.timerView.setSecond(String.format("%02d", tsv[2]));
+                }
+                else {
+                    timer.requestResetTimer();
+                    GUI.timerView.setHour("00");
+                    GUI.timerView.setMinute("00");
+                    GUI.timerView.setSecond("00");
+                }
                 break;
             case 4: // d-day
 
@@ -244,14 +379,107 @@ public class System extends Function {
                 }
                 break;
             case 2: // stopwatch
+                if (stopwatch.getMode() == 0) {
 
+                }
+                else {
+                    stopwatch.requestSaveRecord();
+                    String[] tmp = stopwatch.getStopwatchRecord();
+
+                    String[] str = new String[3];
+                    if (tmp[0] == null)
+                        str[0] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[0], " ");
+                        str[0] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+                    if (tmp[1] == null)
+                        str[1] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[1], " ");
+                        str[1] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+
+                    }
+                    if (tmp[2] == null)
+                        str[2] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[2], " ");
+                        str[2] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+
+                    GUI.stopwatchView.setStopwatchList(str[0] + str[1] + str[2]);
+                }
 
                 break;
             case 3: // timer
+                if (timer.getMode() == 0) {
+                    timer.requestTimerSettingMode();
+                    int[] tmp = timer.getTimeSettingValue();
+                    GUI.timerView.setHour(String.format("%02d", tmp[0]));
+                    GUI.timerView.setMinute(String.format("%02d", tmp[1]));
+                    GUI.timerView.setSecond(String.format("%02d", tmp[2]));
+                    GUI.timerView.borderPanel.setVisible(true);
+
+                    int w = GUI.timerView.borderPanel.getWidth();
+                    int h = GUI.timerView.borderPanel.getHeight();
+                    int x = GUI.timerView.borderPanel.getX() % w + 2 * w;
+                    int y = GUI.timerView.borderPanel.getY();
+                    GUI.timerView.borderPanel.setBounds(x, y, w, h);
+                }
+                else {
+                    timer.changeType();
+                    int timerType = timer.getType();
+                    int w = GUI.timerView.borderPanel.getWidth();
+                    int h = GUI.timerView.borderPanel.getHeight();
+                    int x = GUI.timerView.borderPanel.getX() % w + 2 * w;
+                    int y = GUI.timerView.borderPanel.getY();
+
+                    if (timerType == 0) {
+                        GUI.timerView.borderPanel.setBounds(x, y, w, h);
+                    }
+                    else if (timerType == 1) {
+                        GUI.timerView.borderPanel.setBounds(x + w, y, w, h);
+                    }
+                    else if (timerType == 2) {
+                        GUI.timerView.borderPanel.setBounds(x + 2 * w, y, w, h);
+                    }
+                }
 
                 break;
             case 4: // d-day
+                if (d_day.getMode() == 0) {
+                    d_day.requestDdaySettingMode();
+                    GUI.d_dayView.borderPanel.setVisible(true);
 
+                    int w = GUI.d_dayView.borderPanel.getWidth();
+                    int h = GUI.d_dayView.borderPanel.getHeight();
+                    int x = GUI.d_dayView.borderPanel.getX() % w + 2 * w;
+                    int y = GUI.d_dayView.borderPanel.getY();
+                    GUI.d_dayView.borderPanel.setBounds(x, y, w, h);
+                }
+                else {
+                    d_day.changeType();
+                    int d_dayType = d_day.getType();
+                    int w = GUI.d_dayView.borderPanel.getWidth();
+                    int h = GUI.d_dayView.borderPanel.getHeight();
+                    int x = GUI.d_dayView.borderPanel.getX() % w + 2 * w;
+                    int y = GUI.d_dayView.borderPanel.getY();
+                    if (d_dayType == 0) {
+                        GUI.d_dayView.borderPanel.setBounds(x, y, w, h);
+                    }
+                    else if (d_dayType == 1) {
+                        GUI.d_dayView.borderPanel.setBounds(x + w, y, w, h);
+                    }
+                    else if (d_dayType == 2) {
+                        GUI.d_dayView.borderPanel.setBounds(x + 2 * w, y, w, h);
+                    }
+                }
                 break;
             case 5: // alarm
 
@@ -287,6 +515,10 @@ public class System extends Function {
             case 3: // timer
                 if (timer.getMode() == 0) {
                     nextFunction();
+                }
+                else {
+                    timer.requestSave();
+                    GUI.timerView.borderPanel.setVisible(false);
                 }
 
                 break;
@@ -342,20 +574,21 @@ public class System extends Function {
     }
 
     public void beepBuzzer() {
-        // TODO implement here
+        status |= 1;
+        buzzer.beepBuzzer();
     }
 
     public int updateStatus() {
-        if (status == 3) {
-            status = 1;
+        if (status == 0b11) {
+            status = 0b01;
             return 2;
         }
-        else if (status == 2) {
-            status = 0;
+        else if (status == 0b10) {
+            status = 0b00;
             return 1;
         }
-        else if (status == 1) {
-            status = 0;
+        else if (status == 0b01) {
+            status = 0b00;
             return 0;
         }
         return -1;
