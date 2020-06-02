@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class TimekeepingView extends DefaultLayout {
@@ -28,6 +29,7 @@ public class TimekeepingView extends DefaultLayout {
     JPanel alarmNumPanel;
     ImageIcon alarmImage;
     JLabel alarmLabel;
+    JPanel borderPanel;
 
     public TimekeepingView(System system) {
         super(system);
@@ -86,6 +88,12 @@ public class TimekeepingView extends DefaultLayout {
 
         displaySegment(570, 310, DAYOFWEEK_WIDTH, DAYOFWEEK_HEIGHT, "   ");
 
+        borderPanel = new JPanel();
+        borderPanel.setVisible(false);
+        borderPanel.setBorder(new LineBorder(Color.GRAY, 5));
+        borderPanel.setBounds(curTimePanel1.getX() - 5, curTimePanel1.getY() - 5,
+                (curTimePanel1.getWidth() + 10) / 2, curTimePanel1.getHeight() + 10);
+
         add(alarmNumPanel, new Integer(1));
         add(datePanel, new Integer(1));
         add(d_dayPanel, new Integer(1));
@@ -93,6 +101,7 @@ public class TimekeepingView extends DefaultLayout {
         add(curTimePanel2, new Integer(1));
         add(alarmPanel, new Integer(1));
         add(dayofweekPanel, new Integer(1));
+        add(borderPanel, new Integer(2));
     }
 
     public void setAlarmNum(String str) {
