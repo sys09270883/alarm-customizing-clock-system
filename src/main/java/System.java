@@ -69,7 +69,7 @@ public class System extends Function {
                 while(curFunction.getMode() == 1) {
                     try {
                         Thread.sleep(1000);
-                        if(java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                        if(java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
                             cancel(curFunction);
                         }
                     } catch (InterruptedException e) {
@@ -262,11 +262,6 @@ public class System extends Function {
                 break;
         }
     }
-
-//    @Override
-//    public void timeout() {
-//
-//    }
 
     public void cancel(Function curFunction) {
         curFunction.changeMode();
