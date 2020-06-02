@@ -12,6 +12,11 @@ public class TimeKeeping extends Function {
     // 0 -> Default Mode, 1 -> TimeSettingMode
     private int mode;
     private Time curTime;
+
+    public Date getCurDate() {
+        return curDate;
+    }
+
     private Date curDate;
     private int d_day;
     private int alarmCnt;
@@ -41,23 +46,27 @@ public class TimeKeeping extends Function {
             if (mode == 0) {
                 String str = curTime.getCurrentTime();
                 StringTokenizer st = new StringTokenizer(str, " ");
-                system.GUI.timekeepingView.setCurTime1(String.format("%2s", st.nextToken())
-                        + String.format("%2s", st.nextToken()));
-                system.GUI.timekeepingView.setCurTime2(String.format("%2s", st.nextToken()));
+                system.GUI.timekeepingView.setCurTime1(String.format("%02d", Integer.parseInt(st.nextToken()))
+                        + String.format("%02d", Integer.parseInt(st.nextToken())));
+                system.GUI.timekeepingView.setCurTime2(String.format("%02d", Integer.parseInt(st.nextToken())));
                 system.GUI.timekeepingView.setDayofweek(DAY_OF_THE_WEEK[dayOfTheWeek - 1]);
                 str = curDate.getCurrentDate();
                 st = new StringTokenizer(str, " ");
-                system.GUI.timekeepingView.setDate(String.format("%2s", st.nextToken().substring(2, 4))
-                        + String.format("%2s", st.nextToken())
-                        + String.format("%2s", st.nextToken()));
+                system.GUI.timekeepingView.setDate(String.format("%02d", Integer.parseInt(st.nextToken().substring(2, 4)))
+                        + String.format("%02d", Integer.parseInt(st.nextToken()))
+                        + String.format("%02d", Integer.parseInt(st.nextToken())));
 
                 // D-day
                 if (system.d_day != null) {
                     int dDay = system.d_day.getD_day();
                     if (dDay == -1)
                         system.GUI.timekeepingView.setdDay("000");
-                    else
-                        system.GUI.timekeepingView.setdDay(String.format("%3s", Integer.toString(dDay)));
+                    else {
+                        if (dDay > 999)
+                            system.GUI.timekeepingView.setdDay("999");
+                        else
+                            system.GUI.timekeepingView.setdDay(String.format("%03d", dDay));
+                    }
                 }
                 else
                     system.GUI.timekeepingView.setdDay("000");
@@ -65,7 +74,7 @@ public class TimeKeeping extends Function {
                 // Alarm
                 if (system.alarm != null) {
                     int alarmNum = system.alarm.getSize();
-                    system.GUI.timekeepingView.setAlarmNum(String.format("%2s", Integer.toString(alarmNum)));
+                    system.GUI.timekeepingView.setAlarmNum(String.format("%02d", alarmNum));
                 } else
                     system.GUI.timekeepingView.setAlarmNum("0");
 

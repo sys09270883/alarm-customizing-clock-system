@@ -100,6 +100,21 @@ public class System extends Function {
                     GUI.stopwatchView.borderPanel.setVisible(false);
                 }
                 break;
+            case 4: // dday
+                cancel(d_day);
+                GUI.d_dayView.borderPanel.setVisible(false);
+                if (d_day.getD_day() == -1) {
+                    GUI.d_dayView.setYear("  ");
+                    GUI.d_dayView.setMonth("NO");
+                    GUI.d_dayView.setDate("NE");
+                }
+                else {
+                    String curDate = d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+                    GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                    GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                }
         }
     }
 
@@ -198,11 +213,14 @@ public class System extends Function {
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
-
+                    // 아무것도 없음.
                 }
                 else {
-                    int d_dayType = d_day.getType();
                     d_day.changeValue(1);
+                    int[] curDate = d_day.getDateSettingValue();
+                    GUI.d_dayView.setYear(String.format("%02d", curDate[0] % 100));
+                    GUI.d_dayView.setMonth(String.format("%02d", curDate[1]));
+                    GUI.d_dayView.setDate(String.format("%02d", curDate[2]));
                 }
                 break;
             case 5: // alarm
@@ -292,7 +310,16 @@ public class System extends Function {
                 }
                 break;
             case 4: // d-day
-
+                if (d_day.getMode() == 0) {
+                    // 아무것도 없음.
+                }
+                else {
+                    d_day.changeValue(-1);
+                    int[] curDate = d_day.getDateSettingValue();
+                    GUI.d_dayView.setYear(String.format("%02d", curDate[0] % 100));
+                    GUI.d_dayView.setMonth(String.format("%02d", curDate[1]));
+                    GUI.d_dayView.setDate(String.format("%02d", curDate[2]));
+                }
                 break;
             case 5: // alarm
 
@@ -462,6 +489,12 @@ public class System extends Function {
                     int x = GUI.d_dayView.borderPanel.getX() % w + 2 * w;
                     int y = GUI.d_dayView.borderPanel.getY();
                     GUI.d_dayView.borderPanel.setBounds(x, y, w, h);
+
+                    String curDate = d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+                    GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                    GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
                 }
                 else {
                     d_day.changeType();
@@ -525,6 +558,21 @@ public class System extends Function {
             case 4: // d-day
                 if (d_day.getMode() == 0) {
                     nextFunction();
+                }
+                else {
+                    d_day.requestSave();
+                    GUI.d_dayView.borderPanel.setVisible(false);
+                    String curDate = d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+                    GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                    GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    if (d_day.getD_day() > 999) {
+                        GUI.d_dayView.setDday("999");
+                    }
+                    else
+                        GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
+
                 }
 
                 break;
