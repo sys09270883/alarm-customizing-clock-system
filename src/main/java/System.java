@@ -14,7 +14,15 @@ public class System extends Function {
     D_day d_day;
     Alarm alarm;
     AlarmCustom alarmCustom;
-    int functionNumIdx = 0;
+    Buzzer buzzer;
+    Blink blink;
+    private int functionNumIdx = 0;
+    private int[] functionNum;
+    private int selectedFid;
+    private int status; // 비트마스킹: 0b00 0b01 0b10 0b11
+    private int type;
+    private Thread checkTimeOut;
+    private long lastOperateTime;
 
     public System() {
         GUI = new MainFrame(this);
@@ -38,27 +46,40 @@ public class System extends Function {
 
         buzzer = new Buzzer();
         blink = new Blink();
-
     }
 
     public static void main(String[] args) {
         System system = new System();
     }
 
-    public int checkStatus() {
-        if (status == 3) {
-            status = 1;
-            return 2;
-        }
-        else if (status == 2) {
-            status = 0;
-            return 1;
-        }
-        else if (status == 1) {
-            status = 0;
-            return 0;
-        }
-        return -1;
+    public void startCheckTimeOut() {
+        checkTimeOut = new Thread() {
+            public void run() {
+                Function curFunction;
+                switch(functionNum[functionNumIdx]) {
+                    case 1 : curFunction = timeKeeping; break;
+                    case 2 : curFunction = stopwatch; break;
+                    case 3 : curFunction = timer; break;
+                    case 4 : curFunction = d_day; break;
+                    case 5 : curFunction = alarm; break;
+                    case 6 : curFunction = alarmCustom; break;
+                    default: curFunction = null;
+                }
+
+                while(curFunction.getMode() == 1) {
+                    try {
+                        Thread.sleep(1000);
+                        if(java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                            cancel(curFunction);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        checkTimeOut.start();
     }
 
     public void modeBtnLongPressed() {
@@ -66,7 +87,8 @@ public class System extends Function {
     }
 
     public void startBtnPressed() {
-        if (checkStatus() > -1)
+        lastOperateTime = java.lang.System.currentTimeMillis();
+        if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
@@ -100,11 +122,11 @@ public class System extends Function {
 
                 break;
         }
-
     }
 
     public void resetBtnPressed() {
-        if (checkStatus() > -1)
+        lastOperateTime = java.lang.System.currentTimeMillis();
+        if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
@@ -142,13 +164,15 @@ public class System extends Function {
     }
 
     public void selectBtnPressed() {
-        if (checkStatus() > -1)
+        lastOperateTime = java.lang.System.currentTimeMillis();
+        if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0) {
+                    timeKeeping.requestTimeSettingMode();
+                    startCheckTimeOut();
                     GUI.timekeepingView.borderPanel.setVisible(true);
-                    timeKeeping.changeMode();
                 }
                 else {
                     timeKeeping.changeType();
@@ -206,8 +230,6 @@ public class System extends Function {
                         );
                     }
                 }
-
-
                 break;
             case 2: // stopwatch
 
@@ -230,56 +252,109 @@ public class System extends Function {
     }
 
     public void modeBtnPressed() {
-        if (checkStatus() > -1)
+        lastOperateTime = java.lang.System.currentTimeMillis();
+        if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
                 else {
                     timeKeeping.requestSave();
-                    // TODO 시간 저장 후 타임쓰레드에 문제있음.
-                    timeKeeping.changeMode();
                     GUI.timekeepingView.borderPanel.setVisible(false);
                 }
 
                 break;
             case 2: // stopwatch
                 if (stopwatch.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 3: // timer
                 if (timer.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 5: // alarm
                 if (alarm.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
             case 6: // alarm custom
                 if (alarmCustom.getMode() == 0) {
-                    changeScreen();
+                    nextFunction();
                 }
 
                 break;
         }
     }
 
+//    @Override
+//    public void timeout() {
+//
+//    }
 
-    public void changeScreen() {
+    public void cancel(Function curFunction) {
+        curFunction.changeMode();
+    }
+
+    @Override
+    public void changeMode() {
+
+    }
+
+
+    public void changeType() {
+        type = (type + 1) % 6;
+    }
+
+    public void changeValue(int diff) {
+        // TODO implement here
+    }
+
+    public void setFunction(int[] selected) {
+        // TODO implement here
+    }
+
+    public void selectFunction() {
+        // TODO implement here
+    }
+
+    public void beepBuzzer() {
+        // TODO implement here
+    }
+
+    public int updateStatus() {
+        if (status == 3) {
+            status = 1;
+            return 2;
+        }
+        else if (status == 2) {
+            status = 0;
+            return 1;
+        }
+        else if (status == 1) {
+            status = 0;
+            return 0;
+        }
+        return -1;
+    }
+
+    public void set() {
+        // TODO implement here
+    }
+
+    public void nextFunction() {
         functionNumIdx = (functionNumIdx + 1) % 4;
         selectedFid = functionNum[functionNumIdx];
 
@@ -303,112 +378,5 @@ public class System extends Function {
                 GUI.setView(GUI.alarmCustomView);
                 break;
         }
-    }
-
-    @Override
-    public void timeout() {
-
-    }
-
-    @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public void changeMode() {
-
-    }
-
-    /**
-     * 
-     */
-    private int[] functionNum;
-
-    /**
-     * 
-     */
-    private int selectedFid;
-
-    /**
-     * 비트마스킹: 0b00 0b01 0b10 0b11
-     */
-    private int status;
-
-
-
-    /**
-     * 수정할 인덱스: 연, 월, 일, 시, 분, 초 [0, 5]
-     */
-    private int type;
-
-    /**
-     * 
-     */
-    private Buzzer buzzer;
-
-    /**
-     * 
-     */
-    private Blink blink;
-
-
-
-
-
-    /**
-     * 
-     */
-    public void changeType() {
-        type = (type + 1) % 6;
-    }
-
-    /**
-     * @param diff: +1 or -1
-     */
-    public void changeValue(int diff) {
-        // TODO implement here
-    }
-
-    /**
-     * @param selected
-     */
-    public void setFunction(int[] selected) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void selectFunction() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void beepBuzzer() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void updateStatus() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void set() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void nextFunction() {
-        // TODO implement here
     }
 }
