@@ -27,6 +27,13 @@ class Time implements Runnable {
         this.sec = sec;
     }
 
+    @Override
+    public String toString() {
+        return hour + " " + min + " " + sec;
+    }
+
+    // TODO timeFlag가 시간을 증가시킬지, 감소시킬지를 의미하는 flag. Time 생성자에 필요할 듯
+
     public Time(int timeFlag) {
         SimpleDateFormat format = new SimpleDateFormat("HH mm ss");
         String curTime = format.format(System.currentTimeMillis());
@@ -48,6 +55,7 @@ class Time implements Runnable {
         synchronized (pauseLock) {
             isPaused = true;
         }
+
     }
 
     // 추가

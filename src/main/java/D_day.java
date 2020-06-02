@@ -7,68 +7,61 @@ import static java.lang.Integer.parseInt;
  */
 public class D_day extends Function {
 
+    private final int TYPE_SIZE = 3;
+    private int dateSettingValue[] = {-1, -1, -1};
+
     /**
      * Default constructor
      */
     public D_day(System system) {
         fid = 4;
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
-        d_dayDate = null;
+        d_dayDate = new Date();
         mode = 0;
+        type = 0;
+        this.system = system;
     }
 
     public int getD_day() {
         return d_day;
     }
 
-    /**
-     * 
-     */
     private int d_day;
 
-    /**
-     * 
-     */
     private Date d_dayDate;
 
-    /**
-     * 
-     */
-
-    /**
-     * 
-     */
     private int mode;
 
+    private int type;
 
-    /**
-     * 
-     */
+    // system의 blink에 접근하기 위하여
+    private System system;
+
     public void requestDdaySettingMode() {
-        // TODO implement here
+        changeMode(); // d-day setting mode로 변경
+        String curDateStr = d_dayDate.getCurrentDate();
+        String splited[] = curDateStr.split(" ");
+        d_dayDate.setDate(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
     /**
-     * request Save는 setDate를 단순히 호출하는 방식이라서
-     * 삭제해도 좋을 것 같습니다.
+     *
      */
     public void requestSave() {
-        // setDate(date, d_day);
-        // TODO implement here
+        Date saveDdayDate = new Date();
+        saveDdayDate.setDate(dateSettingValue[0], dateSettingValue[1], dateSettingValue[2]);
+
+        setDate(saveDdayDate);
+        changeMode(); // d-day setting이 끝났으면 원래 모드로 변경
     }
 
     /**
-     * @param date 
-     * @param d_day
-     * param에 d_day는 필요없을 것 같습니다.
+     * @param date
      * java.util.Calendar를 활용해 계산했습니다.
      */
-    public void setDate(Date date, int d_day) {
-        String curDate = date.getCurrentDate(); // TimeKeeping의 date
-
+    public void setDate(Date date) {
         Calendar curDateCal = Calendar.getInstance();
-        String splited[] = curDate.split(" ");
-        curDateCal.set(parseInt(splited[0]), parseInt(splited[1])-1, parseInt(splited[2]));
+        curDateCal.set(d_dayDate.getYear(), d_dayDate.getMonth(), d_dayDate.getDay());
         curDateCal = Calendar.getInstance(); //현재시간 가져오기
 
         Calendar d_dayDateCal = Calendar.getInstance();
@@ -90,11 +83,10 @@ public class D_day extends Function {
     }
 
     /**
-     * 울리고 있는 Blink를 받아올 방법이 필요합니다.
+     *
      */
     public void requestStopDdayBlink() {
-        Blink b = new Blink(); //울리고 있는 Blink에 접근해야합니다.
-        b.stopBlink();
+        system.blink.stopBlink();
     }
 
     /**
@@ -105,9 +97,59 @@ public class D_day extends Function {
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
     }
 
-    public void changeMode() {}
-    public void changeValue(int diff) {}
-    public void changeType() {}
+    /**
+     * 
+     */
+    public void timeout() {}
+
+    /**
+     * 
+     */
+    public void cancel() {}
+
+    /**
+     *
+     */
+    public void changeMode() {
+        if(mode == 0) mode = 1;
+        else mode = 0;
+    }
+
+    public int getType() {
+        return this.type;
+    }
+    /**
+     * @param diff
+     */
+    public void changeValue(int diff) {
+        dateSettingValue[type] += diff;
+        switch(type) {
+            case 0:
+                if(dateSettingValue[type] < d_dayDate.YEAR_BOTTON_LIMIT)
+                    dateSettingValue[type] = d_dayDate.YEAR_TOP_LIMIT;
+                else if(dateSettingValue[type] > d_dayDate.YEAR_TOP_LIMIT)
+                    dateSettingValue[type] = d_dayDate.YEAR_BOTTON_LIMIT;
+                break;
+            case 1:
+                if(dateSettingValue[type] < d_dayDate.MONTH_BOTTON_LIMIT)
+                    dateSettingValue[type] = d_dayDate.MONTH_TOP_LIMIT;
+                else if(dateSettingValue[type] > d_dayDate.MONTH_TOP_LIMIT)
+                    dateSettingValue[type] = d_dayDate.MONTH_BOTTON_LIMIT;
+                break;
+            case 2:
+                if(dateSettingValue[type] < d_dayDate.numOfDays[0])
+                    dateSettingValue[type] = d_dayDate.numOfDays[dateSettingValue[1]];
+                else if(dateSettingValue[type] > d_dayDate.numOfDays[dateSettingValue[1]])
+                    dateSettingValue[type] = d_dayDate.numOfDays[0];
+                break;
+        }
+    }
+
+    /**
+     * 
+     */
+    public void changeType() { type = (type + 1) % TYPE_SIZE; }
+
     public int getMode() {
         return this.mode;
     }

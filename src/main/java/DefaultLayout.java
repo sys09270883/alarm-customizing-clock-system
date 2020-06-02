@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class DefaultLayout extends JLayeredPane {
@@ -24,6 +26,7 @@ public class DefaultLayout extends JLayeredPane {
     JButton selectBtn;
     JButton modeBtn;
     JLabel clockLabel;
+    Long start, end;
 
     public DefaultLayout(System system) {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -50,13 +53,45 @@ public class DefaultLayout extends JLayeredPane {
         selectBtn = new JButton("SELECT");
         selectBtn.setBounds(PADDING_X, FRAME_HEIGHT - PADDING_Y - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
         setBtn(selectBtn);
-        selectBtn.addActionListener(e -> system.selectBtnPressed());
+        selectBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                start = java.lang.System.currentTimeMillis();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                end = java.lang.System.currentTimeMillis();
+                if (end - start >= 2000)
+                    system.selectBtnLongPressed();
+                else
+                    system.selectBtnPressed();
+            }
+        });
 
         modeBtn = new JButton("MODE");
         modeBtn.setBounds(FRAME_WIDTH - PADDING_X - BTN_WIDTH,
                 FRAME_HEIGHT - PADDING_Y - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
         setBtn(modeBtn);
-        modeBtn.addActionListener(e -> system.modeBtnPressed());
+        modeBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                start = java.lang.System.currentTimeMillis();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                end = java.lang.System.currentTimeMillis();
+                if (end - start >= 2000)
+                    system.modeBtnLongPressed();
+                else
+                    system.modeBtnPressed();
+            }
+        });
 
         mainPanel = new JPanel();
         mainPanel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
