@@ -27,11 +27,9 @@ class Time implements Runnable {
         this.sec = sec;
     }
 
-
-    public Time getTime() {
-        Time result = new Time(0);
-        result.setTime(this.hour, this.min, this.sec);
-        return result;
+    @Override
+    public String toString() {
+        return hour + " " + min + " " + sec;
     }
 
     // TODO timeFlag가 시간을 증가시킬지, 감소시킬지를 의미하는 flag. Time 생성자에 필요할 듯
@@ -57,6 +55,7 @@ class Time implements Runnable {
         synchronized (pauseLock) {
             isPaused = true;
         }
+
     }
 
     // 추가
@@ -110,13 +109,12 @@ class Time implements Runnable {
                                 ++hour;
                             }
                             if (hour > HOUR_TOP_LIMIT) {
+                                hour = TIME_BOTTOM_LIMIT;
+                                min = TIME_BOTTOM_LIMIT;
+                                sec = TIME_BOTTOM_LIMIT;
                                 if (dateChangedListener != null) {
-                                    hour = TIME_BOTTOM_LIMIT;
-                                    min = TIME_BOTTOM_LIMIT;
-                                    sec = TIME_BOTTOM_LIMIT;
                                     dateChangedListener.conditionSatisfied();
-                                } else
-                                    throw new NullListenerException();
+                                }
                             }
                             secondChangedListener.conditionSatisfied();
                         }
@@ -133,20 +131,19 @@ class Time implements Runnable {
                                 --hour;
                             }
                             if (hour < TIME_BOTTOM_LIMIT) {
-                                if (dateChangedListener != null) {
-                                    hour = TIME_BOTTOM_LIMIT;
-                                    min = TIME_BOTTOM_LIMIT;
-                                    sec = TIME_BOTTOM_LIMIT;
+                                hour = TIME_BOTTOM_LIMIT;
+                                min = TIME_BOTTOM_LIMIT;
+                                sec = TIME_BOTTOM_LIMIT;
+                                if (dateChangedListener != null)
                                     dateChangedListener.conditionSatisfied();
-                                } else
-                                    throw new NullListenerException();
+
                             }
                             secondChangedListener.conditionSatisfied();
                         }
                     }
                     std = cur;
                 }
-            } catch (InterruptedException | NullListenerException e) {
+            } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }

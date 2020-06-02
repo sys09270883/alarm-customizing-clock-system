@@ -17,14 +17,22 @@ public class TimerView extends DefaultLayout {
         timerPanel.setBounds(335, 190, TIMER_WIDTH, TIMER_HEIGHT);
         timerPanel.setVisible(true);
 
-        displaySegment(350, 180, TIMER_WIDTH, TIMER_HEIGHT, "000000");
+        displaySegment(335, 190, TIMER_WIDTH, TIMER_HEIGHT, "000000");
 
         borderPanel = new JPanel();
         borderPanel.setVisible(false);
         borderPanel.setBorder(new LineBorder(Color.GRAY, 5));
         borderPanel.setBounds(timerPanel.getX() - 5, timerPanel.getY() - 5,
-                (timerPanel.getWidth() + 10) / 2, timerPanel.getHeight() + 10);
+                (timerPanel.getWidth() + 10) / 3, timerPanel.getHeight() + 10);
 
         add(timerPanel, new Integer(1));
+        add(borderPanel, new Integer(2));
     }
+
+    public void setHour(String str) {
+        displaySegment(335, 190, TIMER_WIDTH / 3, TIMER_HEIGHT, str, layer++); }
+    public void setMinute(String str) {
+        displaySegment(335 + TIMER_WIDTH / 3, 190, TIMER_WIDTH / 3, TIMER_HEIGHT, str, layer++); }
+    public void setSecond(String str) {
+        displaySegment(335 + 2 * TIMER_WIDTH / 3, 190, TIMER_WIDTH / 3, TIMER_HEIGHT, str, layer++); }
 }

@@ -16,8 +16,7 @@ public class D_day extends Function {
     public D_day(System system) {
         fid = 4;
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
-        d_dayDate = null;
-        curDate = new Date();
+        d_dayDate = new Date();
         mode = 0;
         type = 0;
         this.system = system;
@@ -31,8 +30,6 @@ public class D_day extends Function {
 
     private Date d_dayDate;
 
-    private Date curDate;
-
     private int mode;
 
     private int type;
@@ -44,7 +41,7 @@ public class D_day extends Function {
         changeMode(); // d-day setting mode로 변경
         String curDateStr = d_dayDate.getCurrentDate();
         String splited[] = curDateStr.split(" ");
-        curDate.setDate(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
+        d_dayDate.setDate(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
     /**
@@ -64,7 +61,7 @@ public class D_day extends Function {
      */
     public void setDate(Date date) {
         Calendar curDateCal = Calendar.getInstance();
-        curDateCal.set(curDate.getYear(), curDate.getMonth(), curDate.getDay());
+        curDateCal.set(d_dayDate.getYear(), d_dayDate.getMonth(), d_dayDate.getDay());
         curDateCal = Calendar.getInstance(); //현재시간 가져오기
 
         Calendar d_dayDateCal = Calendar.getInstance();
@@ -89,7 +86,7 @@ public class D_day extends Function {
      *
      */
     public void requestStopDdayBlink() {
-        system.getBlink().stopBlink();
+        system.blink.stopBlink();
     }
 
     /**
@@ -118,6 +115,9 @@ public class D_day extends Function {
         else mode = 0;
     }
 
+    public int getType() {
+        return this.type;
+    }
     /**
      * @param diff
      */
