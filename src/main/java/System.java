@@ -124,14 +124,17 @@ public class System extends Function {
                 } else if (alarm.getMode() == 2) // 포인터 조종
                 {
                     alarm.movePointer(1);
+
+
                 }
                 // GUI type에 해당하는 부분이 깜빡이는 효과를 추가해야 함.
                 break;
             case 6: // alarm custom
                 if (alarmCustom.getMode() == 0) // 알람 포인터
                 {
-                    alarm.movePointer(-1);
+                    alarm.movePointer(1);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                    java.lang.System.out.println(alarm.getAlarmPointer());
                 }
                 // GUI에 반영해야 함.
                 else if (alarmCustom.getMode() == 1) { // 알람 간격 설정
@@ -144,17 +147,16 @@ public class System extends Function {
 
                     GUI.alarmCustomView.setAlarmInterval(str1);
                     GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
-                } else if (alarm.getMode() == 2) // 알람 볼륨 설정
+                } else if (alarmCustom.getMode() == 2) // 알람 볼륨 설정
                 {
                     alarmCustom.changeValue(1);
                     int setVolume = alarmCustom.getVolume();
                     String str2= "0";
-                    if(setVolume < 10)
-                    {
-                        str2 = String.format("%1s", setVolume);
-                    }
+                    str2 = String.format("%1s", setVolume);
+
+                    //java.lang.System.out.println(str2);
                     GUI.alarmCustomView.setAlarmVolume(str2);
-                    GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                   // GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
 
                 }
                 break;
@@ -241,8 +243,8 @@ public class System extends Function {
                     }
 
                     GUI.alarmCustomView.setAlarmInterval(str1);
-                    GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
-                } else if (alarm.getMode() == 2) // 알람 볼륨 설정
+                //    GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                } else if (alarmCustom.getMode() == 2) // 알람 볼륨 설정
                 {
                     alarmCustom.changeValue(-1);
                     int setVolume = alarmCustom.getVolume();
@@ -252,7 +254,6 @@ public class System extends Function {
                         str2 = String.format("%1s", setVolume);
                     }
                     GUI.alarmCustomView.setAlarmVolume(str2);
-                    GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
 
                 }
                 break;
@@ -298,13 +299,17 @@ public class System extends Function {
 
                 break;
             case 6: // alarm custom
-                if(alarmCustom.getMode() == 0){ // 2초 입력
-                    alarmCustom.requestAlarmSelectMode(alarm);
-                } else if (alarmCustom.getMode() == 1) { // 알람 리스트 확인
+                if(alarmCustom.getMode() == 0){ // 항목 선택 시
+                    //String str = String.format("%1s", alarm.getAlarmList()[alarm.getAlarmPointer()].alarmCustom.getVolume());
+                    //GUI.alarmCustomView.setAlarmVolume(str);
                     alarmCustom.requestIntervalSettingMode();
+                    //alarmCustom.requestAlarmSelectMode(alarm);
+                } else if (alarmCustom.getMode() == 1) { // 인터벌 설정 끝날때
+                    alarmCustom.requestAlarmVolumeMode();
 
                 } else if (alarmCustom.getMode() == 2) {
-                    alarmCustom.requestAlarmVolumeMode();
+
+                    //alarmCustom.requestSave();
                 }else {//타입 바뀔 때마다 항목 표시
                     //alarmCustom.changeType();
                 }
@@ -351,6 +356,7 @@ public class System extends Function {
                     changeScreen();
                 }else if(alarm.getMode() == 1){
                     alarm.requestSave();
+
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
 
                     alarm.changeMode();
@@ -364,7 +370,10 @@ public class System extends Function {
                     changeScreen();
                 } else if (alarmCustom.getMode() == 1)
                 {
-                    alarmCustom.requestAlarmVolumeMode();
+                    //alarmCustom.requestAlarmVolumeMode();
+                } else  if(alarmCustom.getMode() == 2)
+                {
+                    alarmCustom.requestSave();
                 }
 
                 break;

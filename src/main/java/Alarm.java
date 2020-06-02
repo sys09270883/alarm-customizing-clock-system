@@ -51,7 +51,13 @@ public class Alarm extends Function {
     public void requestSave() {
         // TODO implement here
         this.curAlarm.alarmTime.setTime(alarmSettingValue[0],alarmSettingValue[1], alarmSettingValue[2]);
-        addTimeToAlarmList(this.curAlarm.alarmTime);
+
+        Time time = new Time(2);
+
+        time.setTime(alarmSettingValue[0],alarmSettingValue[1], alarmSettingValue[2]);
+        //this.curAlarm.setAlarmTime(time);
+        //this.curAlarm.setAlarmTime();
+        addTimeToAlarmList(time);
         this.mode = 0;
 
     }
@@ -66,6 +72,11 @@ public class Alarm extends Function {
         {
             // 꽉 찼으니 저장 안함.
         } else {
+            //this.alarmList[size].setAlarmTime(alarmTime);
+            //Time time = new Time(2);
+            //time.setTime(alarmSettingValue[0], alarmSettingValue[1], alarmSettingValue[2]);
+
+            this.curAlarm.setAlarmTime(alarmTime);
             this.alarmList[size] = this.curAlarm;
         }
 
@@ -108,7 +119,23 @@ public class Alarm extends Function {
      */
     public void movePointer(int diff) {
         // TODO implement here
+        int size = this.getSize();
+
+        if (size == 0)
+        {
+            return;
+        }
+
         this.alarmPointer += diff;
+
+
+        if(this.alarmPointer > size)
+        {
+            this.alarmPointer = size;
+        } else if (this.alarmPointer < 0)
+        {
+            this.alarmPointer = 0;
+        }
     }
 
     /**
@@ -212,7 +239,10 @@ public class Alarm extends Function {
         int cnt = 0;
         for (AlarmData alarmData : alarmList) {
             if (alarmData != null)
+            {
                 cnt++;
+
+            }
         }
         return cnt;
     }

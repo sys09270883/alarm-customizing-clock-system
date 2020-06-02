@@ -66,7 +66,7 @@ public class AlarmCustom extends Function {
 
         this.alarm = alarm2;
 
-        mode = 1;
+        mode = -1;
 
         changeMode();
     }
@@ -77,7 +77,9 @@ public class AlarmCustom extends Function {
     public void requestIntervalSettingMode() {
         // TODO implement here
 
-        valueIndex = interval;
+        this.mode = 1;
+        changeMode();
+
     }
 
     /**
@@ -85,6 +87,8 @@ public class AlarmCustom extends Function {
      */
     public void requestAlarmVolumeMode() {
         // TODO implement here
+        this.mode = 2;
+        changeMode();
     }
 
     /**
@@ -103,6 +107,10 @@ public class AlarmCustom extends Function {
      */
     public void setCustom(AlarmCustom alarmCustom) {
         // TODO implement here
+        int size = this.alarm.getSize();
+        this.alarm.getAlarmList()[size].alarmCustom = alarmCustom;
+        mode = 0;
+        changeMode();
 
     }
 
@@ -146,7 +154,7 @@ public class AlarmCustom extends Function {
      */
     public void changeValue(int diff) {
 
-        if(mode == 2)
+        if(this.mode == 1)
         {
             this.interval += diff;
             if(this.interval > 3)
@@ -157,7 +165,7 @@ public class AlarmCustom extends Function {
                 this.interval = 1;
             }
         }
-        else if (mode == 3)
+        else if (this.mode == 2)
         {
             this.volume += diff;
             if(this.volume > 4)
