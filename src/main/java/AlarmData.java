@@ -36,6 +36,10 @@ public class AlarmData {
         return alarmCustom;
     }
 
+    public void setAlarmTime(Time settingTime) {
+        this.alarmTime = settingTime;
+    }
+
 
 
 }
