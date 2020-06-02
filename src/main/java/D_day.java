@@ -105,31 +105,9 @@ public class D_day extends Function {
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
     }
 
-    /**
-     * 
-     */
-    public void timeout() {}
-
-    /**
-     * 
-     */
-    public void cancel() {}
-
-    /**
-     * 
-     */
     public void changeMode() {}
-
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {}
-
-    /**
-     * 
-     */
     public void changeType() {}
-
     public int getMode() {
         return this.mode;
     }
