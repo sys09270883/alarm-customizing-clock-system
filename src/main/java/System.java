@@ -69,7 +69,7 @@ public class System extends Function {
                 while(curFunction.getMode() == 1) {
                     try {
                         Thread.sleep(1000);
-                        if(java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                        if(java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
                             cancel(curFunction);
                         }
                     } catch (InterruptedException e) {
@@ -173,6 +173,12 @@ public class System extends Function {
                     timeKeeping.requestTimeSettingMode();
                     startCheckTimeOut();
                     GUI.timekeepingView.borderPanel.setVisible(true);
+                    GUI.timekeepingView.borderPanel.setBounds(
+                            GUI.timekeepingView.curTimePanel1.getX() - 5,
+                            GUI.timekeepingView.curTimePanel1.getY() - 5,
+                            (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
+                            GUI.timekeepingView.curTimePanel1.getHeight() + 10
+                    );
                 }
                 else {
                     timeKeeping.changeType();
