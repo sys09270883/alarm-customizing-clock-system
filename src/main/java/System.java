@@ -43,8 +43,6 @@ public class System extends Function {
 
     public static void main(String[] args) {
         System system = new System();
-
-
     }
 
     public int checkStatus() {
@@ -61,6 +59,10 @@ public class System extends Function {
             return 0;
         }
         return -1;
+    }
+
+    public void modeBtnLongPressed() {
+
     }
 
     public void startBtnPressed() {
@@ -80,8 +82,6 @@ public class System extends Function {
                 GUI.timekeepingView.setDate(String.format("%2s", timeSettingValue[3]).substring(2, 4)
                         + String.format("%2s", timeSettingValue[4])
                         + String.format("%2s", timeSettingValue[5]));
-                // GUI type에 해당하는 부분이 깜빡이는 효과를 추가해야 함.
-                // SELECT 버튼을 눌렀을 때 깜빡이게 추가함.
 
                 break;
             case 2: // stopwatch
@@ -106,6 +106,38 @@ public class System extends Function {
     public void resetBtnPressed() {
         if (checkStatus() > -1)
             return;
+        switch (selectedFid) {
+            case 1: // timekeeping에서 현재시간 설정하는 것
+                if (timeKeeping.getMode() == 0) {
+                    return;
+                }
+                // GUI에 반영해야 함.
+                timeKeeping.changeValue(-1);
+                int[] timeSettingValue = timeKeeping.getTimeSettingValue();
+                GUI.timekeepingView.setHour(String.format("%2s", timeSettingValue[0]));
+                GUI.timekeepingView.setMinute(String.format("%2s", timeSettingValue[1]));
+                GUI.timekeepingView.setCurTime2(String.format("%2s", timeSettingValue[2]));
+                GUI.timekeepingView.setDate(String.format("%2s", timeSettingValue[3]).substring(2, 4)
+                        + String.format("%2s", timeSettingValue[4])
+                        + String.format("%2s", timeSettingValue[5]));
+
+                break;
+            case 2: // stopwatch
+
+                break;
+            case 3: // timer
+
+                break;
+            case 4: // d-day
+
+                break;
+            case 5: // alarm
+
+                break;
+            case 6: // alarm custom
+
+                break;
+        }
 
     }
 
@@ -178,6 +210,7 @@ public class System extends Function {
 
                 break;
             case 2: // stopwatch
+
 
                 break;
             case 3: // timer
