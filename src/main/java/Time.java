@@ -101,13 +101,12 @@ class Time implements Runnable {
                                 ++hour;
                             }
                             if (hour > HOUR_TOP_LIMIT) {
+                                hour = TIME_BOTTOM_LIMIT;
+                                min = TIME_BOTTOM_LIMIT;
+                                sec = TIME_BOTTOM_LIMIT;
                                 if (dateChangedListener != null) {
-                                    hour = TIME_BOTTOM_LIMIT;
-                                    min = TIME_BOTTOM_LIMIT;
-                                    sec = TIME_BOTTOM_LIMIT;
                                     dateChangedListener.conditionSatisfied();
-                                } else
-                                    throw new NullListenerException();
+                                }
                             }
                             secondChangedListener.conditionSatisfied();
                         }
@@ -124,20 +123,19 @@ class Time implements Runnable {
                                 --hour;
                             }
                             if (hour < TIME_BOTTOM_LIMIT) {
-                                if (dateChangedListener != null) {
-                                    hour = TIME_BOTTOM_LIMIT;
-                                    min = TIME_BOTTOM_LIMIT;
-                                    sec = TIME_BOTTOM_LIMIT;
+                                hour = TIME_BOTTOM_LIMIT;
+                                min = TIME_BOTTOM_LIMIT;
+                                sec = TIME_BOTTOM_LIMIT;
+                                if (dateChangedListener != null)
                                     dateChangedListener.conditionSatisfied();
-                                } else
-                                    throw new NullListenerException();
+
                             }
                             secondChangedListener.conditionSatisfied();
                         }
                     }
                     std = cur;
                 }
-            } catch (InterruptedException | NullListenerException e) {
+            } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -154,11 +152,5 @@ class Time implements Runnable {
 
     public void setSecondListener(ConditionSatisfiedListener secondChangedListener) {
         this.secondChangedListener = secondChangedListener;
-    }
-
-    class NullListenerException extends Exception {
-        public NullListenerException() {
-            System.err.println("Listener is null");
-        }
     }
 }
