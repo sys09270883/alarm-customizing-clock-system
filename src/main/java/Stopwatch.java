@@ -113,18 +113,6 @@ public class Stopwatch extends Function {
     /**
      * 
      */
-    public void timeout() {
-
-    }
-
-    /**
-     * 
-     */
-    public void cancel() {}
-
-    /**
-     * 
-     */
     public void changeMode() {}
 
     /**

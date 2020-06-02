@@ -22,6 +22,7 @@ public class System extends Function {
     private int status; // 비트마스킹: 0b00 0b01 0b10 0b11
     private int type;
     private Thread checkTimeOut;
+    private long lastOperateTime;
 
     public System() {
         GUI = new MainFrame(this);
@@ -68,14 +69,12 @@ public class System extends Function {
                 while(curFunction.getMode() == 1) {
                     try {
                         Thread.sleep(1000);
-                        if(java.lang.System.currentTimeMillis() - curFunction.getLastOperateTime() >= 3000) {
+                        if(java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
                             cancel(curFunction);
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-//                    if (curFunction != null)
-//                        java.lang.System.out.println(curFunction.getMode());
                 }
             }
         };
@@ -84,6 +83,7 @@ public class System extends Function {
     }
 
     public void startBtnPressed() {
+        lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
@@ -122,11 +122,13 @@ public class System extends Function {
     }
 
     public void resetBtnPressed() {
+        lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
             return;
     }
 
     public void selectBtnPressed() {
+        lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
@@ -159,6 +161,7 @@ public class System extends Function {
     }
 
     public void modeBtnPressed() {
+        lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {

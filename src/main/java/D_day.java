@@ -106,17 +106,8 @@ public class D_day extends Function {
     }
 
     public void changeMode() {}
-
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {}
-
-    /**
-     * 
-     */
     public void changeType() {}
-
     public int getMode() {
         return this.mode;
     }

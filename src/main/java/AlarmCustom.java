@@ -67,23 +67,14 @@ public class AlarmCustom extends Function {
         // TODO implement here
     }
 
-    /**
-     * 
-     */
     public void changeMode() {
 
     }
 
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {
 
     }
 
-    /**
-     * 
-     */
     public void changeType() {
 
     }

@@ -23,26 +23,18 @@ public class TimeKeeping extends Function {
 
     public TimeKeeping(System system) {
         fid = 1;
-        curDate = new Date();
         d_day = -1;
         alarmCnt = 0;
-
-        // 년,월,일에 맞는 요일 설정
-        Calendar calendar = Calendar.getInstance();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy MM dd");
-        try {
-            java.util.Date date = dateFormat.parse(curDate.getCurrentDate());
-            calendar.setTime(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
         mode = 0;
+
+        curDate = new Date();
+        setDayOfTheWeek(); // curDate 초기화 후 호출해야함.
+
         curTime = new Time(1);
 
         curTime.setDateListener(() -> {
             curDate.raiseDate();
+            setDayOfTheWeek();
         });
 
         curTime.setSecondListener(() -> {
@@ -86,7 +78,7 @@ public class TimeKeeping extends Function {
     public void changeMode() {
         mode ^= 1;
 
-        // 현재 년, 월, 일, 시, 분, 초 로 timeSettingValue 초기화
+        // 현재 시, 분, 초, 년, 월, 일로 timeSettingValue 초기화
         if (mode == 1) {
             this.type = 0;
 
@@ -101,8 +93,6 @@ public class TimeKeeping extends Function {
             timeSettingValue[3] = Integer.parseInt(ymd[0]);
             timeSettingValue[4] = Integer.parseInt(ymd[1]);
             timeSettingValue[5] = Integer.parseInt(ymd[2]);
-
-            lastOperateTime = java.lang.System.currentTimeMillis();
         } else {
             // timeSettingValue -1로 비활성화
             for (int i = 0; i < TYPE_SIZE; ++i)
@@ -112,7 +102,6 @@ public class TimeKeeping extends Function {
 
     public void changeValue(int diff) {
         timeSettingValue[type] += diff;
-        lastOperateTime = java.lang.System.currentTimeMillis();
 
         // 각 type 값 검사
         switch (type) {
@@ -155,9 +144,22 @@ public class TimeKeeping extends Function {
         }
     }
 
+    public void setDayOfTheWeek() {
+        // 년,월,일에 맞는 요일 설정
+        Calendar calendar = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy MM dd");
+        try {
+            java.util.Date date = dateFormat.parse(curDate.getCurrentDate());
+            java.lang.System.out.println(curDate.getCurrentDate());
+            calendar.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
+    }
+
     public void changeType() {
         type = (type + 1) % TYPE_SIZE;
-        lastOperateTime = java.lang.System.currentTimeMillis();
     }
 
     public void requestSave() {
@@ -172,8 +174,11 @@ public class TimeKeeping extends Function {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         curTime.setTime(timeSettingValue[0], timeSettingValue[1], timeSettingValue[2]);
         curDate.setDate(timeSettingValue[3], timeSettingValue[4], timeSettingValue[5]);
+        setDayOfTheWeek();
+
         curTime.startTime();
         changeMode();
     }
@@ -192,9 +197,5 @@ public class TimeKeeping extends Function {
 
     public int getMode() {
         return mode;
-    }
-
-    public long getLastOperateTime() {
-        return this.lastOperateTime;
     }
 }
