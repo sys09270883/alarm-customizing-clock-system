@@ -45,7 +45,10 @@ public class System extends Function {
         alarmCustom = null;
 
         buzzer = new Buzzer();
-        blink = new Blink();
+
+        blink = new Blink(this);
+
+
     }
 
     public static void main(String[] args) {
@@ -321,7 +324,6 @@ public class System extends Function {
     public void changeMode() {
 
     }
-
 
     public void changeType() {
         type = (type + 1) % 6;
