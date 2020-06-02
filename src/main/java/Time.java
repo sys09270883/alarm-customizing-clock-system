@@ -161,10 +161,4 @@ class Time implements Runnable {
     public void setSecondListener(ConditionSatisfiedListener secondChangedListener) {
         this.secondChangedListener = secondChangedListener;
     }
-
-    class NullListenerException extends Exception {
-        public NullListenerException() {
-            System.err.println("Listener is null");
-        }
-    }
 }

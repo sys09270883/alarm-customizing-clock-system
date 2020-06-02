@@ -591,11 +591,6 @@ public class System extends Function {
         }
     }
 
-//    @Override
-//    public void timeout() {
-//
-//    }
-
     public void cancel(Function curFunction) {
         curFunction.changeMode();
     }
@@ -629,14 +624,17 @@ public class System extends Function {
     public int updateStatus() {
         if (status == 0b11) {
             status = 0b01;
+            blink.stopBlink();
             return 2;
         }
         else if (status == 0b10) {
             status = 0b00;
+            blink.stopBlink();
             return 1;
         }
         else if (status == 0b01) {
             status = 0b00;
+            buzzer.stopBuzzer();
             return 0;
         }
         return -1;
