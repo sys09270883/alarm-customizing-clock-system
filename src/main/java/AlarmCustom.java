@@ -70,20 +70,6 @@ public class AlarmCustom extends Function {
     /**
      * 
      */
-    public void timeout() {
-
-    }
-
-    /**
-     * 
-     */
-    public void cancel() {
-
-    }
-
-    /**
-     * 
-     */
     public void changeMode() {
 
     }

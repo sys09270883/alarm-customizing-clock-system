@@ -13,20 +13,8 @@ public class Timer extends Function {
         timer = new Time(0);
     }
 
-    /**
-     * 
-     */
     private int mode;
-
-    /**
-     * 
-     */
     private Time timer;
-
-
-    /**
-     * 
-     */
     public void requestTimerSettingMode() {
         // TODO implement here
     }
@@ -59,19 +47,7 @@ public class Timer extends Function {
         timer.pauseTime();
     }
 
-    /**
-     * 
-     */
-    public void timeout() {}
 
-    /**
-     * 
-     */
-    public void cancel() {}
-
-    /**
-     * 
-     */
     public void changeMode() {}
 
     /**

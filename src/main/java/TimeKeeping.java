@@ -83,12 +83,6 @@ public class TimeKeeping extends Function {
         type = 0;
     }
 
-    public void timeout() {
-    }
-
-    public void cancel() {
-    }
-
     public void changeMode() {
         mode ^= 1;
 
@@ -107,6 +101,8 @@ public class TimeKeeping extends Function {
             timeSettingValue[3] = Integer.parseInt(ymd[0]);
             timeSettingValue[4] = Integer.parseInt(ymd[1]);
             timeSettingValue[5] = Integer.parseInt(ymd[2]);
+
+            lastOperateTime = java.lang.System.currentTimeMillis();
         } else {
             // timeSettingValue -1로 비활성화
             for (int i = 0; i < TYPE_SIZE; ++i)
@@ -116,6 +112,7 @@ public class TimeKeeping extends Function {
 
     public void changeValue(int diff) {
         timeSettingValue[type] += diff;
+        lastOperateTime = java.lang.System.currentTimeMillis();
 
         // 각 type 값 검사
         switch (type) {
@@ -160,10 +157,10 @@ public class TimeKeeping extends Function {
 
     public void changeType() {
         type = (type + 1) % TYPE_SIZE;
+        lastOperateTime = java.lang.System.currentTimeMillis();
     }
 
     public void requestSave() {
-
         if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
             changeMode();
             return;
@@ -195,5 +192,9 @@ public class TimeKeeping extends Function {
 
     public int getMode() {
         return mode;
+    }
+
+    public long getLastOperateTime() {
+        return this.lastOperateTime;
     }
 }

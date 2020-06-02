@@ -14,22 +14,11 @@ public abstract class Function {
      */
     protected int mode;
     protected int fid;
+    protected long lastOperateTime;
 
+    protected void changeMode() {
 
-    /**
-     * 
-     */
-    public abstract void timeout();
-
-    /**
-     * 
-     */
-    public abstract void cancel();
-
-    /**
-     * 
-     */
-    public abstract void changeMode();
+    }
 
     /**
      * @param diff
@@ -41,8 +30,11 @@ public abstract class Function {
      */
     public abstract void changeType();
 
-    /**
-     * 
-     */
+    protected int getMode() {
+        return this.mode;
+    }
 
+    protected long getLastOperateTime() {
+        return this.lastOperateTime;
+    }
 }

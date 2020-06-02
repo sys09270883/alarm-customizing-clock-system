@@ -21,7 +21,7 @@ public class System extends Function {
     private int selectedFid;
     private int status; // 비트마스킹: 0b00 0b01 0b10 0b11
     private int type;
-    private Time checkTimeOut;
+    private Thread checkTimeOut;
 
     public System() {
         GUI = new MainFrame(this);
@@ -45,14 +45,43 @@ public class System extends Function {
 
         buzzer = new Buzzer();
         blink = new Blink();
-
-        checkTimeOut = new Time(0);
     }
 
     public static void main(String[] args) {
         System system = new System();
     }
 
+    public void startCheckTimeOut() {
+        checkTimeOut = new Thread() {
+            public void run() {
+                Function curFunction;
+                switch(functionNum[functionNumIdx]) {
+                    case 1 : curFunction = timeKeeping; break;
+                    case 2 : curFunction = stopwatch; break;
+                    case 3 : curFunction = timer; break;
+                    case 4 : curFunction = d_day; break;
+                    case 5 : curFunction = alarm; break;
+                    case 6 : curFunction = alarmCustom; break;
+                    default: curFunction = null;
+                }
+
+                while(curFunction.getMode() == 1) {
+                    try {
+                        Thread.sleep(1000);
+                        if(java.lang.System.currentTimeMillis() - curFunction.getLastOperateTime() >= 3000) {
+                            cancel(curFunction);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+//                    if (curFunction != null)
+//                        java.lang.System.out.println(curFunction.getMode());
+                }
+            }
+        };
+
+        checkTimeOut.start();
+    }
 
     public void startBtnPressed() {
         if (updateStatus() > -1)
@@ -90,13 +119,11 @@ public class System extends Function {
 
                 break;
         }
-
     }
 
     public void resetBtnPressed() {
         if (updateStatus() > -1)
             return;
-
     }
 
     public void selectBtnPressed() {
@@ -106,6 +133,7 @@ public class System extends Function {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0) {
                     timeKeeping.requestTimeSettingMode();
+                    startCheckTimeOut();
                 }
                 else {
                     timeKeeping.changeType();
@@ -176,14 +204,13 @@ public class System extends Function {
         }
     }
 
-    @Override
-    public void timeout() {
+//    @Override
+//    public void timeout() {
+//
+//    }
 
-    }
-
-    @Override
-    public void cancel() {
-
+    public void cancel(Function curFunction) {
+        curFunction.changeMode();
     }
 
     @Override
