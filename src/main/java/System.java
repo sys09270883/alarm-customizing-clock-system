@@ -194,10 +194,30 @@ public class System extends Function {
                 } else if (alarm.getMode() == 2) // 포인터 조종
                 {
                     alarm.movePointer(-1);
+                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 }
                 break;
             case 6: // alarm custom
+                if (alarmCustom.getMode() == 0)
+                    return;
+                    // GUI에 반영해야 함.
+                else if (alarmCustom.getMode() == 1) { // 알람 설정
+                    alarmCustom.changeValue(-1);
+                    int setInterval = alarmCustom.getInterval();
+                    String str1 = "00";
+                    if(setInterval < 10) {
+                        str1 = "0" + String.format("%1s", setInterval);
+                    } else {
+                        str1 = String.format("%2s", setInterval);
+                    }
 
+                    GUI.alarmCustomView.setAlarmInterval(str1);
+                    GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                } else if (alarm.getMode() == 2) // 포인터 조종
+                {
+                    alarm.movePointer(-1);
+                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                }
                 break;
         }
 
@@ -232,6 +252,8 @@ public class System extends Function {
                     alarm.requestAlarmSettingMode();
                 } else if (alarm.getMode() == 1) {
                     alarm.changeType();
+                    //타입 바뀔 때마다 항목 표시
+
                 } else { // 알람 리스트 확인
                     alarm.requestDeleteAlarm();
                     
@@ -239,7 +261,16 @@ public class System extends Function {
 
                 break;
             case 6: // alarm custom
+                if(alarmCustom.getMode() == 0){
+                    alarmCustom.requestAlarmSelectMode(alarm);
+                } else if (alarmCustom.getMode() == 1) { // 알람 리스트 확인
+                    alarmCustom.requestIntervalSettingMode();
 
+                } else if (alarmCustom.getMode() == 2) {
+                    alarmCustom.requestAlarmVolumeMode();
+                }else {//타입 바뀔 때마다 항목 표시
+                    alarmCustom.changeType();
+                }
                 break;
         }
 
@@ -287,7 +318,7 @@ public class System extends Function {
 
                     alarm.changeMode();
                 } else {
-
+                    alarm.cancel();
                 }
 
                 break;

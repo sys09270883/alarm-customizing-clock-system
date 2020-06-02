@@ -129,11 +129,17 @@ public class Alarm extends Function {
     /**
      * 
      */
-    public void cancel() {}
+    public void cancel() {
+
+        mode = 0;
+        changeMode();
+    }
 
     /**
      * 
      */
+
+
     public void changeMode() { // 기본 화면, 알람 리스트 확인, 알람 설정 이렇게 3개가 있음.
 
         if(this.mode == 1) // 알람 설정

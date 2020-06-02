@@ -24,6 +24,7 @@ public class AlarmCustom extends Function {
         intervalPointer = 0;
         volumePointer = 0;
         customPointer = 0;
+        valueIndex = 0;
     }
 
     /**
@@ -42,13 +43,26 @@ public class AlarmCustom extends Function {
     private int intervalPointer;
     private int volumePointer;
     private int customPointer;
+    private int valueIndex;
 
+
+    public int getInterval(){
+        return this.interval;
+    }
+
+
+    public int getVolume(){
+        return this.volume;
+    }
 
     /**
      * 
      */
-    public void requestAlarmSelectMode() {
+    public void requestAlarmSelectMode(Alarm alarm) {
         // TODO implement here
+        mode = 1;
+
+        changeMode();
     }
 
     /**
@@ -56,6 +70,8 @@ public class AlarmCustom extends Function {
      */
     public void requestIntervalSettingMode() {
         // TODO implement here
+
+        valueIndex = interval;
     }
 
     /**
