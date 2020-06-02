@@ -50,11 +50,10 @@ public class Alarm extends Function {
      */
     public void requestSave() {
         // TODO implement here
-        this.curAlarm.alarmTime.setTime(alarmSettingValue[0],alarmSettingValue[1], alarmSettingValue[2]);
-
         Time time = new Time(2);
-
         time.setTime(alarmSettingValue[0],alarmSettingValue[1], alarmSettingValue[2]);
+        this.curAlarm.setAlarmTime(time);
+
         //this.curAlarm.setAlarmTime(time);
         //this.curAlarm.setAlarmTime();
         addTimeToAlarmList(time);
@@ -78,6 +77,7 @@ public class Alarm extends Function {
 
             this.curAlarm.setAlarmTime(alarmTime);
             this.alarmList[size] = this.curAlarm;
+            this.alarmList[size].setAlarmTime(alarmTime);
         }
 
     }
@@ -199,22 +199,22 @@ public class Alarm extends Function {
         // 각 type 값 검사
         switch(typeindex) {
             case 0 :
-                if(alarmSettingValue[typeindex] < curAlarm.alarmTime.TIME_BOTTOM_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.alarmTime.TIME_BOTTOM_LIMIT;
-                else if(alarmSettingValue[typeindex] > curAlarm.alarmTime.HOUR_TOP_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.alarmTime.HOUR_TOP_LIMIT;
+                if(alarmSettingValue[typeindex] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
+                    alarmSettingValue[typeindex] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
+                else if(alarmSettingValue[typeindex] > curAlarm.getTime().HOUR_TOP_LIMIT)
+                    alarmSettingValue[typeindex] = curAlarm.getTime().HOUR_TOP_LIMIT;
                 break;
             case 1 :
-                if(alarmSettingValue[typeindex] < curAlarm.alarmTime.TIME_BOTTOM_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.alarmTime.TIME_BOTTOM_LIMIT;
-                else if(alarmSettingValue[typeindex] > curAlarm.alarmTime.MINUTE_TOP_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.alarmTime.MINUTE_TOP_LIMIT;
+                if(alarmSettingValue[typeindex] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
+                    alarmSettingValue[typeindex] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
+                else if(alarmSettingValue[typeindex] > curAlarm.getTime().MINUTE_TOP_LIMIT)
+                    alarmSettingValue[typeindex] = curAlarm.getTime().MINUTE_TOP_LIMIT;
                 break;
             case 2 :
-                if(alarmSettingValue[typeindex] < curAlarm.alarmTime.TIME_BOTTOM_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.alarmTime.TIME_BOTTOM_LIMIT;
-                else if(alarmSettingValue[typeindex] > curAlarm.alarmTime.SECOND_TOP_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.alarmTime.SECOND_TOP_LIMIT;
+                if(alarmSettingValue[typeindex] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
+                    alarmSettingValue[typeindex] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
+                else if(alarmSettingValue[typeindex] > curAlarm.getTime().SECOND_TOP_LIMIT)
+                    alarmSettingValue[typeindex] = curAlarm.getTime().SECOND_TOP_LIMIT;
                 break;
 
         }

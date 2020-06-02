@@ -22,10 +22,10 @@ public class AlarmData {
     /**
      * 
      */
-    protected Time alarmTime;
+    private Time alarmTime;
 
 
-    protected AlarmCustom alarmCustom;
+    private AlarmCustom alarmCustom;
 
 
 
@@ -39,6 +39,10 @@ public class AlarmData {
 
     public void setAlarmTime(Time settingTime) {
         this.alarmTime = settingTime;
+    }
+
+    public void setAlarmCustom(AlarmCustom settingCustom) {
+        this.alarmCustom = settingCustom;
     }
 
 

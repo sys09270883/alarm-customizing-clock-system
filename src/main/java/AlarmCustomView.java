@@ -101,34 +101,34 @@ public class AlarmCustomView extends DefaultLayout {
                         , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE");
                 break;
             case 1:
-                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].alarmTime.getCurrentTime()) , layer++);
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()) , layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
                         , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE" , layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
                         , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
                 break;
             case 2:
-                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].alarmTime.getCurrentTime()), layer++);
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].alarmTime.getCurrentTime()) , layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].getTime().getCurrentTime()) , layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
                         , ALARM_LIST_HEIGHT / DISPLAY_AMT, "NONE", layer++);
                 break;
             case 3:
-                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].alarmTime.getCurrentTime()), layer++);
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].alarmTime.getCurrentTime()), layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT,String.format("%6s",alarmData[2].alarmTime.getCurrentTime()), layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT,String.format("%6s",alarmData[2].getTime().getCurrentTime()), layer++);
             default:
                 if(pointer2 == pointer)
                     pointer2 = 1;
 
-                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer].alarmTime.getCurrentTime()), layer++);
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer+1].alarmTime.getCurrentTime()) , layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer+1].getTime().getCurrentTime()) , layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer+2].alarmTime.getCurrentTime()), layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer+2].getTime().getCurrentTime()), layer++);
 
                 break;
         }

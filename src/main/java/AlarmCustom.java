@@ -108,7 +108,7 @@ public class AlarmCustom extends Function {
     public void setCustom(AlarmCustom alarmCustom) {
         // TODO implement here
         int size = this.alarm.getSize();
-        this.alarm.getAlarmList()[size].alarmCustom = alarmCustom;
+        this.alarm.getAlarmList()[size].setAlarmCustom(alarmCustom);
         mode = 0;
         changeMode();
 
