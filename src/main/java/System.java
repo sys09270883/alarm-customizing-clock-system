@@ -82,6 +82,10 @@ public class System extends Function {
         checkTimeOut.start();
     }
 
+    public void modeBtnLongPressed() {
+
+    }
+
     public void startBtnPressed() {
         lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
@@ -100,8 +104,6 @@ public class System extends Function {
                 GUI.timekeepingView.setDate(String.format("%2s", timeSettingValue[3]).substring(2, 4)
                         + String.format("%2s", timeSettingValue[4])
                         + String.format("%2s", timeSettingValue[5]));
-                // GUI type에 해당하는 부분이 깜빡이는 효과를 추가해야 함.
-                // SELECT 버튼을 눌렀을 때 깜빡이게 추가함.
 
                 break;
             case 2: // stopwatch
@@ -126,6 +128,39 @@ public class System extends Function {
         lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
             return;
+        switch (selectedFid) {
+            case 1: // timekeeping에서 현재시간 설정하는 것
+                if (timeKeeping.getMode() == 0) {
+                    return;
+                }
+                // GUI에 반영해야 함.
+                timeKeeping.changeValue(-1);
+                int[] timeSettingValue = timeKeeping.getTimeSettingValue();
+                GUI.timekeepingView.setHour(String.format("%2s", timeSettingValue[0]));
+                GUI.timekeepingView.setMinute(String.format("%2s", timeSettingValue[1]));
+                GUI.timekeepingView.setCurTime2(String.format("%2s", timeSettingValue[2]));
+                GUI.timekeepingView.setDate(String.format("%2s", timeSettingValue[3]).substring(2, 4)
+                        + String.format("%2s", timeSettingValue[4])
+                        + String.format("%2s", timeSettingValue[5]));
+
+                break;
+            case 2: // stopwatch
+
+                break;
+            case 3: // timer
+
+                break;
+            case 4: // d-day
+
+                break;
+            case 5: // alarm
+
+                break;
+            case 6: // alarm custom
+
+                break;
+        }
+
     }
 
     public void selectBtnPressed() {
@@ -138,6 +173,12 @@ public class System extends Function {
                     timeKeeping.requestTimeSettingMode();
                     startCheckTimeOut();
                     GUI.timekeepingView.borderPanel.setVisible(true);
+                    GUI.timekeepingView.borderPanel.setBounds(
+                            GUI.timekeepingView.curTimePanel1.getX() - 5,
+                            GUI.timekeepingView.curTimePanel1.getY() - 5,
+                            (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
+                            GUI.timekeepingView.curTimePanel1.getHeight() + 10
+                    );
                 }
                 else {
                     timeKeeping.changeType();
@@ -197,6 +238,7 @@ public class System extends Function {
                 }
                 break;
             case 2: // stopwatch
+
 
                 break;
             case 3: // timer

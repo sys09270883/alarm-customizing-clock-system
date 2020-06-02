@@ -151,7 +151,6 @@ public class TimeKeeping extends Function {
         DateFormat dateFormat = new SimpleDateFormat("yyyy MM dd");
         try {
             java.util.Date date = dateFormat.parse(curDate.getCurrentDate());
-            java.lang.System.out.println(curDate.getCurrentDate());
             calendar.setTime(date);
         } catch (ParseException e) {
             e.printStackTrace();
