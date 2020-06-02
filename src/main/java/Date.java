@@ -43,11 +43,11 @@ public class Date {
     }
 
     public int getMonth() {
-        return this.year;
+        return this.month;
     }
 
     public int getDay() {
-        return this.year;
+        return this.day;
     }
 
     public String getCurrentDate() {
