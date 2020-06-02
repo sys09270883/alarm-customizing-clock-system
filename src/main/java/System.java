@@ -108,14 +108,14 @@ public class System extends Function {
                     }
                     if (alarmSettingValue[1] < 10)
                     {
-                        str2 = "0" + String.format("%1s", alarmSettingValue[0]);
+                        str2 = "0" + String.format("%1s", alarmSettingValue[1]);
                     }else {
-                        str2 = String.format("%2s", alarmSettingValue[0]);
+                        str2 = String.format("%2s", alarmSettingValue[1]);
                     }if (alarmSettingValue[2] < 10)
                     {
-                        str3 = "0" + String.format("%1s", alarmSettingValue[0]);
+                        str3 = "0" + String.format("%1s", alarmSettingValue[2]);
                     }else {
-                        str3 = String.format("%2s", alarmSettingValue[0]);
+                        str3 = String.format("%2s", alarmSettingValue[2]);
                     }
 
                     GUI.alarmView.setAlarm(str1 + str2  + str3);
@@ -128,6 +128,24 @@ public class System extends Function {
                 // GUI type에 해당하는 부분이 깜빡이는 효과를 추가해야 함.
                 break;
             case 6: // alarm custom
+                if (alarmCustom.getMode() == 0)
+                    return;
+                    // GUI에 반영해야 함.
+                else if (alarmCustom.getMode() == 1) { // 알람 설정
+                    alarmCustom.changeValue(+1);
+                    int setInterval = alarmCustom.getInterval();
+                    String str1 = "00";
+                    if(setInterval < 10) {
+                        str1 = String.format("%1s", setInterval);
+                    }
+
+                    GUI.alarmCustomView.setAlarmInterval(str1);
+                    GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                } else if (alarm.getMode() == 2) // 포인터 조종
+                {
+                    alarm.movePointer(-1);
+                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                }
 
                 break;
         }
@@ -179,14 +197,14 @@ public class System extends Function {
                     }
                     if (alarmSettingValue[1] < 10)
                     {
-                        str2 = "0" + String.format("%1s", alarmSettingValue[0]);
+                        str2 = "0" + String.format("%1s", alarmSettingValue[1]);
                     }else {
-                        str2 = String.format("%2s", alarmSettingValue[0]);
+                        str2 = String.format("%2s", alarmSettingValue[1]);
                     }if (alarmSettingValue[2] < 10)
                     {
-                        str3 = "0" + String.format("%1s", alarmSettingValue[0]);
+                        str3 = "0" + String.format("%1s", alarmSettingValue[2]);
                     }else {
-                        str3 = String.format("%2s", alarmSettingValue[0]);
+                        str3 = String.format("%2s", alarmSettingValue[2]);
                     }
 
                     GUI.alarmView.setAlarm(str1 + str2  + str3);
@@ -206,9 +224,7 @@ public class System extends Function {
                     int setInterval = alarmCustom.getInterval();
                     String str1 = "00";
                     if(setInterval < 10) {
-                        str1 = "0" + String.format("%1s", setInterval);
-                    } else {
-                        str1 = String.format("%2s", setInterval);
+                        str1 = String.format("%1s", setInterval);
                     }
 
                     GUI.alarmCustomView.setAlarmInterval(str1);
@@ -325,6 +341,9 @@ public class System extends Function {
             case 6: // alarm custom
                 if (alarmCustom.getMode() == 0) {
                     changeScreen();
+                } else if (alarmCustom.getMode() == 1)
+                {
+                    alarmCustom.requestAlarmVolumeMode();
                 }
 
                 break;

@@ -58,8 +58,14 @@ public class AlarmCustom extends Function {
     /**
      * 
      */
-    public void requestAlarmSelectMode(Alarm alarm) {
+
+    Alarm alarm;
+
+    public void requestAlarmSelectMode(Alarm alarm2) {
         // TODO implement here
+
+        this.alarm = alarm2;
+
         mode = 1;
 
         changeMode();
@@ -86,6 +92,10 @@ public class AlarmCustom extends Function {
      */
     public void requestSave() {
         // TODO implement here
+        AlarmCustom alarmCustom = new AlarmCustom();
+        alarmCustom.interval = this.interval;
+        alarmCustom.volume = this.volume;
+        setCustom(alarmCustom);
     }
 
     /**
@@ -93,6 +103,7 @@ public class AlarmCustom extends Function {
      */
     public void setCustom(AlarmCustom alarmCustom) {
         // TODO implement here
+
     }
 
     /**
@@ -114,6 +125,18 @@ public class AlarmCustom extends Function {
      */
     public void changeMode() {
 
+        if(this.mode == 1){
+
+            this.interval = default_interval;
+
+
+        } else if (this.mode == 2)
+        {
+
+        } else {
+
+        }
+
     }
 
     /**
@@ -121,17 +144,42 @@ public class AlarmCustom extends Function {
      */
     public void changeValue(int diff) {
 
+        if(mode == 1)
+        {
+            this.interval += diff;
+            if(this.interval > 3)
+            {
+                this.interval = 3;
+            } else if (this.interval < 1)
+            {
+                this.interval = 1;
+            }
+        }
+        else if (mode == 2)
+        {
+            this.volume += diff;
+            if(this.volume > 4)
+            {
+                this.volume = 4;
+            } else if( this.volume < 0)
+            {
+                this.volume = 0;
+            }
+        }
+
+
     }
 
     /**
      * 
      */
     public void changeType() {
+        //return this.mode;
 
     }
 
     public int getMode() {
-        return mode;
+        return this.mode;
     }
 
     public void setMode(int mode) {
