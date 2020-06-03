@@ -1,4 +1,3 @@
-import javafx.util.Pair;
 import java.text.SimpleDateFormat;
 import java.lang.System;
 import java.lang.Runnable;
@@ -16,7 +15,8 @@ class Time implements Runnable {
     private int min;
     private int sec;
     private boolean isPaused; // pause, start 표현 위한 boolean 변수 추가
-    private final Object lock = new Object();
+    private final Object hmsLock = new Object();
+    private final Object pauseLock = new Object();
     private ConditionSatisfiedListener dateChangedListener;
     private ConditionSatisfiedListener secondChangedListener;
     private Thread th;
@@ -27,7 +27,13 @@ class Time implements Runnable {
         this.sec = sec;
     }
 
+    @Override
+    public String toString() {
+        return hour + " " + min + " " + sec;
+    }
+
     // TODO timeFlag가 시간을 증가시킬지, 감소시킬지를 의미하는 flag. Time 생성자에 필요할 듯
+
     public Time(int timeFlag) {
         SimpleDateFormat format = new SimpleDateFormat("HH mm ss");
         String curTime = format.format(System.currentTimeMillis());
@@ -43,30 +49,38 @@ class Time implements Runnable {
 
         dateChangedListener = null;
         secondChangedListener = null;
-
     }
 
     public void pauseTime() {
-        isPaused = true;
+        synchronized (pauseLock) {
+            isPaused = true;
+        }
+
     }
 
     // 추가
     public void startTime() {
-        isPaused = false;
+        synchronized (pauseLock) {
+            isPaused = false;
+        }
         th = new Thread(this);
         th.start();
     }
 
     public String getCurrentTime() {
         String currentTime;
-        synchronized(lock) {
+        synchronized(hmsLock) {
             currentTime = Integer.toString(hour) + " " + Integer.toString(min) + " " + Integer.toString(sec);
         }
         return currentTime;
     }
 
+    public Thread getTimeThread() {
+        return th;
+    }
+
     public void clearTime() {
-        synchronized(lock) {
+        synchronized(hmsLock) {
             hour = 0;
             min = 0;
             sec = 0;
@@ -75,13 +89,16 @@ class Time implements Runnable {
 
     public void run() {
         long std = System.currentTimeMillis();
-        while (!isPaused) {
+        while (true) {
+            synchronized (pauseLock) {
+                if(isPaused) break;
+            }
             try {
                 Thread.sleep(10);
                 long cur = System.currentTimeMillis();
                 if(cur - std >= 1000) {
                     if(timeFlag == 1) {
-                        synchronized (lock) {
+                        synchronized (hmsLock) {
                             ++sec;
                             if (sec > SECOND_TOP_LIMIT) {
                                 sec = TIME_BOTTOM_LIMIT;
@@ -92,19 +109,18 @@ class Time implements Runnable {
                                 ++hour;
                             }
                             if (hour > HOUR_TOP_LIMIT) {
+                                hour = TIME_BOTTOM_LIMIT;
+                                min = TIME_BOTTOM_LIMIT;
+                                sec = TIME_BOTTOM_LIMIT;
                                 if (dateChangedListener != null) {
-                                    hour = TIME_BOTTOM_LIMIT;
-                                    min = TIME_BOTTOM_LIMIT;
-                                    sec = TIME_BOTTOM_LIMIT;
                                     dateChangedListener.conditionSatisfied();
-                                } else
-                                    throw new NullListenerException();
+                                }
                             }
                             secondChangedListener.conditionSatisfied();
                         }
                     }
                     else {
-                        synchronized (lock) {
+                        synchronized (hmsLock) {
                             --sec;
                             if (sec < TIME_BOTTOM_LIMIT) {
                                 sec = SECOND_TOP_LIMIT;
@@ -115,21 +131,19 @@ class Time implements Runnable {
                                 --hour;
                             }
                             if (hour < TIME_BOTTOM_LIMIT) {
-                                if (dateChangedListener != null) {
-                                    hour = TIME_BOTTOM_LIMIT;
-                                    min = TIME_BOTTOM_LIMIT;
-                                    sec = TIME_BOTTOM_LIMIT;
+                                hour = TIME_BOTTOM_LIMIT;
+                                min = TIME_BOTTOM_LIMIT;
+                                sec = TIME_BOTTOM_LIMIT;
+                                if (dateChangedListener != null)
                                     dateChangedListener.conditionSatisfied();
-                                } else
-                                    throw new NullListenerException();
+
                             }
                             secondChangedListener.conditionSatisfied();
                         }
                     }
                     std = cur;
                 }
-
-            } catch (InterruptedException | NullListenerException e) {
+            } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -146,11 +160,5 @@ class Time implements Runnable {
 
     public void setSecondListener(ConditionSatisfiedListener secondChangedListener) {
         this.secondChangedListener = secondChangedListener;
-    }
-
-    class NullListenerException extends Exception {
-        public NullListenerException() {
-            System.err.println("Listener is null");
-        }
     }
 }

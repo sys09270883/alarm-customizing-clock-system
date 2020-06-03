@@ -6,7 +6,7 @@ public class Blink {
     /**
      * Default constructor
      */
-    public Blink() {
+    public Blink(System system) {
     }
 
     /**

@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class DefaultLayout extends JLayeredPane {
@@ -10,6 +12,7 @@ public class DefaultLayout extends JLayeredPane {
     final static int FRAME_HEIGHT = 550;
     final static int PADDING_X = 100;
     final static int PADDING_Y = 120;
+    final static int PADDING = 5;
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
     final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
@@ -23,6 +26,7 @@ public class DefaultLayout extends JLayeredPane {
     JButton selectBtn;
     JButton modeBtn;
     JLabel clockLabel;
+    Long start, end;
 
     public DefaultLayout(System system) {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -50,13 +54,45 @@ public class DefaultLayout extends JLayeredPane {
         selectBtn = new JButton("SELECT");
         selectBtn.setBounds(PADDING_X, FRAME_HEIGHT - PADDING_Y - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
         setBtn(selectBtn);
-        selectBtn.addActionListener(e -> system.selectBtnPressed());
+        selectBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                start = java.lang.System.currentTimeMillis();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                end = java.lang.System.currentTimeMillis();
+                if (end - start >= 2000)
+                    system.selectBtnLongPressed();
+                else
+                    system.selectBtnPressed();
+            }
+        });
 
         modeBtn = new JButton("MODE");
         modeBtn.setBounds(FRAME_WIDTH - PADDING_X - BTN_WIDTH,
                 FRAME_HEIGHT - PADDING_Y - BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
         setBtn(modeBtn);
-        modeBtn.addActionListener(e -> system.modeBtnPressed());
+        modeBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                start = java.lang.System.currentTimeMillis();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                end = java.lang.System.currentTimeMillis();
+                if (end - start >= 2000)
+                    system.modeBtnLongPressed();
+                else
+                    system.modeBtnPressed();
+            }
+        });
 
         mainPanel = new JPanel();
         mainPanel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
@@ -80,7 +116,7 @@ public class DefaultLayout extends JLayeredPane {
     protected void displaySegment(int x, int y, int w, int h, String str) {
         w /= str.length();
         for (int i = 0; i < str.length(); i++) {
-            add(new SegmentDisplay(x, y, w, h, str.charAt(i)), new Integer(2));
+            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), new Integer(2));
             x += w;
         }
     }
@@ -88,7 +124,7 @@ public class DefaultLayout extends JLayeredPane {
     protected void displaySegment(int x, int y, int w, int h, String str, int layer) {
         w /= str.length();
         for (int i = 0; i < str.length(); i++) {
-            add(new SegmentDisplay(x, y, w, h, str.charAt(i)), new Integer(layer));
+            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), new Integer(layer));
             x += w;
         }
     }

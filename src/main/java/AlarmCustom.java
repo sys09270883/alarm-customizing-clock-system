@@ -7,7 +7,6 @@ public class AlarmCustom extends Function {
     /**
      * Default constructor
      */
-
     final public static int default_interval = 2;
     final public static int default_volume = 2;
 
@@ -16,7 +15,8 @@ public class AlarmCustom extends Function {
     public final int VOLUME_TOP_LIMIT = 4;
     public final int VOLUME_BOTTOM_LIMIT = 0;
 
-    public AlarmCustom() {
+    public AlarmCustom(System system) {
+
         fid = 6;
         mode = 0;
         interval = default_interval;
@@ -114,23 +114,6 @@ public class AlarmCustom extends Function {
 
     }
 
-    /**
-     * 
-     */
-    public void timeout() {
-
-    }
-
-    /**
-     * 
-     */
-    public void cancel() {
-
-    }
-
-    /**
-     * 
-     */
     public void changeMode() {
 
         if(this.mode == 1){
@@ -149,9 +132,6 @@ public class AlarmCustom extends Function {
 
     }
 
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {
 
         if(this.mode == 1)
@@ -180,9 +160,6 @@ public class AlarmCustom extends Function {
 
     }
 
-    /**
-     * 
-     */
     public void changeType() {
         //return this.mode;
 

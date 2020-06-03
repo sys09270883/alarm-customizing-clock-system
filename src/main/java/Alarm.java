@@ -8,13 +8,13 @@ public class Alarm extends Function {
      * Default constructor
      */
     public Alarm(System system) {
-
         fid = 5;
         curAlarm = new AlarmData();
         alarmList = new AlarmData[10]; // 기본 간격, 볼륨 2로 고정.
         mode = 0; // 기본 모드
 
         typeindex = 0;
+
 
     }
 
@@ -189,6 +189,7 @@ public class Alarm extends Function {
         }
 
     }
+
 
     /**
      * @param diff
