@@ -787,7 +787,7 @@ public class System extends Function {
                 break;
             case 5: // alarm
                 if (alarm.getMode() == 0) {
-                    changeScreen();
+//                    changeScreen();
                 }else if(alarm.getMode() == 1){
                     alarm.requestSave();
 
@@ -800,19 +800,19 @@ public class System extends Function {
                 }
 
                 break;
-            case 6: // alarm custom
-                if (alarmCustom.getMode() == 0) {
-                    changeScreen();
-                } else if (alarmCustom.getMode() == 1)
-                {
-                    //alarmCustom.requestAlarmVolumeMode();
-                } else  if(alarmCustom.getMode() == 2)
-                {
-                    alarmCustom.requestSave();
-
-                }
-
-                break;
+//            case 6: // alarm custom
+//                if (alarmCustom.getMode() == 0) {
+////                    changeScreen();
+//                } else if (alarmCustom.getMode() == 1)
+//                {
+//                    //alarmCustom.requestAlarmVolumeMode();
+//                } else  if(alarmCustom.getMode() == 2)
+//                {
+//                    alarmCustom.requestSave();
+//
+//                }
+//
+//                break;
         }
     }
 
