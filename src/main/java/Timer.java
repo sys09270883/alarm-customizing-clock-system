@@ -15,6 +15,10 @@ public class Timer extends Function {
     private int timeSettingValue[] = {-1, -1, -1};
     System system;
 
+    public Time getTimer() {
+        return timer;
+    }
+
     /**
      * Default constructor
      */
