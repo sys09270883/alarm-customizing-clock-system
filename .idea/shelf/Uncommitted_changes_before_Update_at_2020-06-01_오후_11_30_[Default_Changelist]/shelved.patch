@@ -1,0 +1,81 @@
+Index: src/main/java/System.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.Arrays;\r\n\r\n/**\r\n * @author Yoonseop Shin\r\n */\r\npublic class System extends Function {\r\n\r\n    // 6개 중 4개 인스턴스만 갖고있음.\r\n    // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.\r\n    MainFrame GUI;\r\n\r\n\r\n    public System() {\r\n        functionNum = new int[6];\r\n        Arrays.fill(functionNum, 0);\r\n        functionNum[0] = 1;\r\n        functionNum[1] = 2;\r\n        functionNum[2] = 3;\r\n        functionNum[3] = 4;\r\n        status = 0b00;\r\n        type = 0;\r\n        selectedFunction = 0;\r\n\r\n        buzzer = new Buzzer();\r\n        blink = new Blink();\r\n\r\n        GUI = new MainFrame(this);\r\n    }\r\n\r\n    public static void main(String[] args) {\r\n        new System();\r\n    }\r\n\r\n    @Override\r\n    public void timeout() {\r\n\r\n    }\r\n\r\n    @Override\r\n    public void cancel() {\r\n\r\n    }\r\n\r\n    @Override\r\n    public void changeMode() {\r\n\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    private int[] functionNum;\r\n\r\n    /**\r\n     * \r\n     */\r\n    private int selectedFunction;\r\n\r\n    /**\r\n     * 비트마스킹: 0b00 0b01 0b10 0b11\r\n     */\r\n    private int status;\r\n\r\n    /**\r\n     * 수정할 인덱스: 연, 월, 일, 시, 분, 초 [0, 5]\r\n     */\r\n    private int type;\r\n\r\n    /**\r\n     * \r\n     */\r\n    private Buzzer buzzer;\r\n\r\n    /**\r\n     * \r\n     */\r\n    private Blink blink;\r\n\r\n\r\n\r\n\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void changeType() {\r\n        type = (type + 1) % 6;\r\n    }\r\n\r\n    /**\r\n     * @param diff: +1 or -1\r\n     */\r\n    public void changeValue(int diff) {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * @param selected\r\n     */\r\n    public void setFunction(int[] selected) {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void selectFunction() {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void beepBuzzer() {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void updateStatus() {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void set() {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void nextFunction() {\r\n        // TODO implement here\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/System.java	(revision 7965ab1718fb98ed1d7be4974e447bbb229fd77b)
++++ src/main/java/System.java	(date 1591019790565)
+@@ -1,4 +1,7 @@
++import java.time.DayOfWeek;
+ import java.util.Arrays;
++import java.util.Calendar;
++import java.util.concurrent.CountDownLatch;
+ 
+ /**
+  * @author Yoonseop Shin
+@@ -28,7 +31,12 @@
+     }
+ 
+     public static void main(String[] args) {
++
+         new System();
++
++
++
++
+     }
+ 
+     @Override
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1591014904155)
++++ .idea/compiler.xml	(date 1591014904155)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 7965ab1718fb98ed1d7be4974e447bbb229fd77b)
++++ .idea/misc.xml	(date 1591014904165)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"useAutoImport\" value=\"true\" />\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 7965ab1718fb98ed1d7be4974e447bbb229fd77b)
++++ .idea/gradle.xml	(date 1591014904146)
+@@ -11,7 +11,6 @@
+             <option value="$PROJECT_DIR$" />
+           </set>
+         </option>
+-        <option name="useAutoImport" value="true" />
+         <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
