@@ -1,0 +1,69 @@
+Index: src/main/java/Stopwatch.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n/**\r\n * @author Yoonseop Shin\r\n */\r\npublic class Stopwatch extends Function {\r\n\r\n    /**\r\n     * Default constructor\r\n     */\r\n    public Stopwatch() {\r\n        mode = 4; //Stopwatch의 모드는 4\r\n        stopwatchRecord = new Time[10];\r\n        for(int i=0; i<10; i++) {\r\n            stopwatchRecord[i] = null;\r\n        }\r\n        stopwatch = new Time();\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    private int mode;\r\n\r\n    /**\r\n     * \r\n     */\r\n    private Time stopwatch;\r\n\r\n    /**\r\n     * \r\n     */\r\n    private Time[] stopwatchRecord;\r\n\r\n    /**\r\n     * \r\n     */\r\n    private int recordPointer;\r\n\r\n\r\n    /**\r\n     * Stopwatch 실행 요청\r\n     */\r\n    public void requestStartStopwatch() {\r\n        stopwatch.run();\r\n    }\r\n\r\n    /**\r\n     * Stopwatch 멈춤 요청\r\n     */\r\n    public void requestPauseStopwatch() {\r\n        stopwatch.pauseTime();\r\n    }\r\n\r\n    /*\r\n     * requestResetStopwatch() Class Diagram에 추가해야합니다\r\n     */\r\n    public void requestResetStopwatch() {\r\n        stopwatch.clearTime();\r\n    }\r\n\r\n    /**\r\n     * stopwatch record list를 초기화\r\n     */\r\n    public void clearList() {\r\n        for(int i=0; i<10; i++) {\r\n            stopwatchRecord[i] = null;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * record(Time stopwatchTime)를 단순히 호출하는 방식이라\r\n     */\r\n    public void requestSaveRecord() {\r\n    }\r\n\r\n    /**\r\n     * @param stopwatchTime\r\n     */\r\n    public void record(Time stopwatchTime) {\r\n\r\n        for(int i=0; i<10; i++) {\r\n            //stopwatch의 기록이 10개 미만일 때\r\n            if(stopwatchRecord[i] == null) {\r\n                stopwatchRecord[i] = stopwatchTime; //주석 수정해야합니다.\r\n                break;\r\n            }\r\n\r\n            //stopwatch의 기록이 10개일 때\r\n            if(i==9 || stopwatchRecord[i] != null) {\r\n                for(int j=0; j<9; j++) {\r\n                    stopwatchRecord[j] = stopwatchRecord[j+1];\r\n                }\r\n                stopwatchRecord[9] = stopwatchTime;\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void requestRecordCheckMode() {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * @param diff\r\n     */\r\n    public void movePointer(int diff) {\r\n        // TODO implement here\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void timeout() {\r\n\r\n    }\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void cancel() {}\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void changeMode() {}\r\n\r\n    /**\r\n     * @param diff\r\n     */\r\n    public void changeValue(int diff) {}\r\n\r\n    /**\r\n     * \r\n     */\r\n    public void changeType() {}\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/Stopwatch.java	(revision 1644b22a44589da96e77c8161311d7e3a771ad4a)
++++ src/main/java/Stopwatch.java	(date 1591014893739)
+@@ -13,7 +13,7 @@
+         for(int i=0; i<10; i++) {
+             stopwatchRecord[i] = null;
+         }
+-        stopwatch = new Time();
++        stopwatch = new Time(1);
+     }
+ 
+     /**
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"useAutoImport\" value=\"true\" />\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 1644b22a44589da96e77c8161311d7e3a771ad4a)
++++ .idea/gradle.xml	(date 1591014827210)
+@@ -11,7 +11,6 @@
+             <option value="$PROJECT_DIR$" />
+           </set>
+         </option>
+-        <option name="useAutoImport" value="true" />
+         <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1591014827196)
++++ .idea/compiler.xml	(date 1591014827196)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 1644b22a44589da96e77c8161311d7e3a771ad4a)
++++ .idea/misc.xml	(date 1591014827182)
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
