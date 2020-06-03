@@ -4,13 +4,14 @@
  */
 public class Alarm extends Function {
 
+    final static int ALARM_POINTER_MAX = 9;
     /**
      * Default constructor
      */
     public Alarm(System system) {
         fid = 5;
         curAlarm = new AlarmData();
-        alarmList = new AlarmData[10]; // 기본 간격, 볼륨 2로 고정.
+        alarmList = new AlarmData[10];
         mode = 0; // 기본 모드
 
         typeindex = 0;
@@ -41,8 +42,7 @@ public class Alarm extends Function {
      */
     public void requestAlarmSettingMode() {
         // TODO implement here
-        this.mode = 1;
-        changeMode();
+        changeMode(1);
     }
 
     /**
@@ -57,7 +57,7 @@ public class Alarm extends Function {
         //this.curAlarm.setAlarmTime(time);
         //this.curAlarm.setAlarmTime();
         addTimeToAlarmList(time);
-        this.mode = 0;
+        changeMode(0);
 
     }
 
@@ -71,13 +71,13 @@ public class Alarm extends Function {
         {
             // 꽉 찼으니 저장 안함.
         } else {
-            //this.alarmList[size].setAlarmTime(alarmTime);
-            //Time time = new Time(2);
-            //time.setTime(alarmSettingValue[0], alarmSettingValue[1], alarmSettingValue[2]);
+            Time newTime = new Time(0);
+            newTime.setTime(0, 0, 0);
+            curAlarm.setAlarmTime(newTime);
 
-            this.curAlarm.setAlarmTime(alarmTime);
-            this.alarmList[size] = this.curAlarm;
-            this.alarmList[size].setAlarmTime(alarmTime);
+            if (alarmList[size] == null)
+                alarmList[size] = new AlarmData();
+            alarmList[size].setAlarmTime(alarmTime);
         }
 
     }
@@ -90,9 +90,14 @@ public class Alarm extends Function {
         deleteAlarm(this.alarmPointer);
     }
 
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
     /**
      * @param alarmIdx
      */
+
     public void deleteAlarm(int alarmIdx) {
         // TODO implement here
         //delete하면 그 사이를 이어붙임.
@@ -129,9 +134,9 @@ public class Alarm extends Function {
         this.alarmPointer += diff;
 
 
-        if(this.alarmPointer > size)
+        if(this.alarmPointer > size - 1)
         {
-            this.alarmPointer = size;
+            this.alarmPointer = size - 1;
         } else if (this.alarmPointer < 0)
         {
             this.alarmPointer = 0;
@@ -143,8 +148,7 @@ public class Alarm extends Function {
      */
     public void requestAlarmSelectMode() {
         // TODO implement here
-        this.mode = 2;
-        changeMode();
+        changeMode(2);
     }
 
     /**
@@ -167,8 +171,8 @@ public class Alarm extends Function {
      */
 
 
-    public void changeMode() { // 기본 화면, 알람 리스트 확인, 알람 설정 이렇게 3개가 있음.
-
+    public void changeMode(int mode) { // 기본 화면, 알람 리스트 확인, 알람 설정 이렇게 3개가 있음.
+        this.mode = mode;
         if(this.mode == 1) // 알람 설정
         {
             // 알람 설정값을 00 : 00 : 00 으로 초기화
@@ -186,6 +190,8 @@ public class Alarm extends Function {
             // alarmSettingValue -1로 비활성화
             for(int i=0; i< 3; ++i)
                 alarmSettingValue[i] = -1;
+
+            typeindex = 0;
         }
 
     }

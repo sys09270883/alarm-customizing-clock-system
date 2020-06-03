@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 /**
  * @author Yoonseop Shin
@@ -7,6 +8,10 @@ public class AlarmCustom extends Function {
     /**
      * Default constructor
      */
+
+    private int ALARM_TOP_LIMIT;
+    private final int ALARM_BOTTOM_LIMIT = 0;
+
     final public static int default_interval = 2;
     final public static int default_volume = 2;
 
@@ -15,27 +20,30 @@ public class AlarmCustom extends Function {
     public final int VOLUME_TOP_LIMIT = 4;
     public final int VOLUME_BOTTOM_LIMIT = 0;
 
-    public AlarmCustom(System system) {
+    public int[] getCustomSettingValue() {
+        return customSettingValue;
+    }
 
+    public void setCustomSettingValue(int[] customSettingValue) {
+        this.customSettingValue = customSettingValue;
+    }
+
+    int[] customSettingValue;
+
+    public AlarmCustom(System system) {
+        this.system = system;
         fid = 6;
         mode = 0;
-        interval = default_interval;
-        volume = default_volume;
         intervalPointer = 0;
         volumePointer = 0;
         customPointer = 0;
         valueIndex = 0;
+        alarm = system.alarm;
+        customSettingValue = new int[3];
+        Arrays.fill(customSettingValue, -1);
+        type = 0;
     }
 
-    /**
-     * 
-     */
-    private int interval;
-
-    /**
-     * 
-     */
-    private int volume;
 
     /**
      * 
@@ -46,39 +54,23 @@ public class AlarmCustom extends Function {
     private int valueIndex;
 
 
-    public int getInterval(){
-        return this.interval;
-    }
-
-
-    public int getVolume(){
-        return this.volume;
-    }
-
     /**
      * 
      */
 
     Alarm alarm;
 
-    public void requestAlarmSelectMode(Alarm alarm2) {
+    public void requestAlarmSelectMode() {
         // TODO implement here
 
-        this.alarm = alarm2;
-
-        mode = -1;
-
-        changeMode();
+        changeMode(1);
     }
 
     /**
      * 
      */
     public void requestIntervalSettingMode() {
-        // TODO implement here
-
-        this.mode = 1;
-        changeMode();
+        changeMode(2);
 
     }
 
@@ -87,8 +79,7 @@ public class AlarmCustom extends Function {
      */
     public void requestAlarmVolumeMode() {
         // TODO implement here
-        this.mode = 2;
-        changeMode();
+        changeMode(3);
     }
 
     /**
@@ -102,6 +93,7 @@ public class AlarmCustom extends Function {
 //        setCustom(alarmCustom);
 //    }
 
+    System system;
     /**
      * @param alarmCustom
      */
@@ -114,51 +106,58 @@ public class AlarmCustom extends Function {
 
     }
 
-    public void changeMode() {
-
-        if(this.mode == 1){
-
-            this.interval = 1;
-
-
-        } else if (this.mode == 2)
+    public void changeMode(int mode) {
+        if (mode == 1){
+            if ((ALARM_TOP_LIMIT = system.alarm.getSize()) == 0) {
+                this.mode = 0;
+                return;
+            }
+            customSettingValue[0] = 0;
+        } else if (mode == 2)
         {
-
-            this.volume = 0;
-
-        } else {
-
+            if (this.mode == 1) {
+                AlarmData[] tmp = system.alarm.getAlarmList();
+                customSettingValue[1] = tmp[customSettingValue[0]].getInterval();
+            }
+        } else if (mode == 3) {
+            AlarmData[] tmp = system.alarm.getAlarmList();
+            customSettingValue[2] = tmp[customSettingValue[0]].getVolume();
         }
-
+        else {
+            Arrays.fill(customSettingValue, -1);
+        }
+        this.mode = mode;
     }
+
+    int type;
 
     public void changeValue(int diff) {
+        customSettingValue[type] += diff;
 
-        if(this.mode == 1)
-        {
-            this.interval += diff;
-            if(this.interval > 3)
-            {
-                this.interval = 3;
-            } else if (this.interval < 1)
-            {
-                this.interval = 1;
-            }
+        switch (type) {
+            case 0:
+                if (customSettingValue[type] > ALARM_TOP_LIMIT)
+                    customSettingValue[type] = ALARM_TOP_LIMIT;
+                if (customSettingValue[type] < ALARM_BOTTOM_LIMIT)
+                    customSettingValue[type] = ALARM_BOTTOM_LIMIT;
+                break;
+            case 1:
+                if (customSettingValue[type] > INTERVAL_TOP_LIMIT)
+                    customSettingValue[type] = INTERVAL_TOP_LIMIT;
+                if (customSettingValue[type] < INTERVAL_BOTTOM_LIMIT)
+                    customSettingValue[type] = INTERVAL_BOTTOM_LIMIT;
+                break;
+            case 2:
+                if (customSettingValue[type] > VOLUME_TOP_LIMIT)
+                    customSettingValue[type] = VOLUME_TOP_LIMIT;
+                if (customSettingValue[type] < VOLUME_BOTTOM_LIMIT)
+                    customSettingValue[type] = VOLUME_BOTTOM_LIMIT;
+                break;
         }
-        else if (this.mode == 2)
-        {
-            this.volume += diff;
-            if(this.volume > 4)
-            {
-                this.volume = 4;
-            } else if( this.volume < 0)
-            {
-                this.volume = 0;
-            }
-        }
-
 
     }
+
+
 
     public void changeType() {
         //return this.mode;
