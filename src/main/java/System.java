@@ -34,20 +34,20 @@ public class System extends Function {
         Arrays.fill(functionNum, 0);
         functionNum[0] = 1;
         functionNum[1] = 2;
-        functionNum[2] = 5;
-        functionNum[3] = 6;
+        functionNum[2] = 3;
+        functionNum[3] = 4;
         status = 0b00;
         type = 0;
         selectedFid = 1;
 
         timeKeeping = new TimeKeeping(this);
         stopwatch = new Stopwatch(this);
-        timer = null;
-        d_day = null;
-//        timer = new Timer(this);
-//        d_day = new D_day(this);
-        alarm = new Alarm(this);
-        alarmCustom = new AlarmCustom(this);
+//        timer = null;
+//        d_day = null;
+        timer = new Timer(this);
+        d_day = new D_day(this);
+//        alarm = new Alarm(this);
+//        alarmCustom = new AlarmCustom(this);
 
         buzzer = new Buzzer();
 
