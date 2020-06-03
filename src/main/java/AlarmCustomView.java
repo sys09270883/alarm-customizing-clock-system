@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class AlarmCustomView extends DefaultLayout {
@@ -19,6 +20,7 @@ public class AlarmCustomView extends DefaultLayout {
     JPanel intervalImgPanel;
     JPanel intervalControlPanel;
     JPanel alarmListPanel;
+    JPanel borderPanel;
 
     public AlarmCustomView(System system) {
         super(system);
@@ -74,11 +76,91 @@ public class AlarmCustomView extends DefaultLayout {
         displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
                 , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE");
 
+        borderPanel = new JPanel();
+        borderPanel.setVisible(false);
+        borderPanel.setBorder(new LineBorder(Color.GRAY, 5));
+        borderPanel.setBounds(350 - 5, 240 - 5,
+                ALARM_LIST_WIDTH + 10, ALARM_LIST_HEIGHT + 10);
+
         add(intervalControlPanel, new Integer(1));
         add(intervalImgPanel, new Integer(1));
         add(volumeControlPanel, new Integer(1));
         add(alarmListPanel, new Integer(1));
         add(volumeImgPanel, new Integer(1));
+        add(borderPanel, new Integer(2));
+    }
+    public void setAlarmInterval(String str) {
+        displaySegment(550, 165, _WIDTH, _HEIGHT, str, layer++);
     }
 
+    public void setAlarmVolume(String str)
+    {
+        displaySegment(430, 165, _WIDTH, _HEIGHT, str, layer++);
+    }
+
+    public void setAlarmList(AlarmData[] alarmData, int pointer,  int size) { // pointer1은 커서
+        int pointer2 = pointer; //, pointer2는 화면
+
+        switch (size) {
+            case 0 :
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE");
+                displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE");
+                displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE");
+                break;
+            case 1:
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()) , layer++);
+                displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE" , layer++);
+                displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
+                break;
+            case 2:
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()), layer++);
+                displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].getTime().getCurrentTime()) , layer++);
+                displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "NONE", layer++);
+                break;
+            case 3:
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()), layer++);
+                displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].getTime().getCurrentTime()), layer++);
+                displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT,String.format("%6s",alarmData[2].getTime().getCurrentTime()), layer++);
+            default:
+                if(pointer2 == pointer)
+                    pointer2 = 1;
+
+                displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer].getTime().getCurrentTime()), layer++);
+                displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer+1].getTime().getCurrentTime()) , layer++);
+                displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_LIST_WIDTH
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer+2].getTime().getCurrentTime()), layer++);
+
+                break;
+        }
+
+    }
+
+    public void setAlarmList2(String str) {
+        if (str.substring(0, 6).equals("      "))
+            displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3, "  NONE", layer++);
+        else
+            displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3,
+                    str.substring(0, 6), layer++);
+
+        if (str.substring(6, 12).equals("      "))
+            displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3, "  NONE", layer++);
+        else
+            displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3,
+                    str.substring(6, 12), layer++);
+
+        if (str.substring(12, 18).equals("      "))
+            displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3 * 2, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3, "  NONE", layer++);
+        else
+            displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3 * 2, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3,
+                    str.substring(12, 18), layer++);
+    }
 }

@@ -1,5 +1,3 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
@@ -38,18 +36,21 @@ public class System extends Function {
         Arrays.fill(functionNum, 0);
         functionNum[0] = 1;
         functionNum[1] = 2;
-        functionNum[2] = 3;
-        functionNum[3] = 4;
+        functionNum[2] = 5;
+        functionNum[3] = 6;
         status = 0b00;
         type = 0;
         selectedFid = 1;
 
         timeKeeping = new TimeKeeping(this);
         stopwatch = new Stopwatch(this);
-        timer = new Timer(this);
-        d_day = new D_day(this);
-        alarm = null;
-        alarmCustom = null;
+        timer = null;
+        d_day = null;
+//        timer = new Timer(this);
+//        d_day = new D_day(this);
+        alarm = new Alarm(this);
+        alarmCustom = new AlarmCustom(this);
+
 
         buzzer = new Buzzer();
 
@@ -119,6 +120,12 @@ public class System extends Function {
                     GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
                     GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
                 }
+                break;
+            case 5: // alarm
+                cancel(alarm);
+                alarm.setMode(0);
+                GUI.alarmView.borderPanel.setVisible(false);
+                break;
         }
     }
 
@@ -131,6 +138,51 @@ public class System extends Function {
                 if (stopwatch.getMode() == 0) {
                     stopwatch.requestRecordCheckMode();
                     GUI.stopwatchView.borderPanel.setVisible(true);
+                }
+                break;
+            case 4: // d-day
+                if (d_day.getMode() == 0) {
+                    d_day.requestDeleteDday();
+
+                    GUI.d_dayView.setYear("  ");
+                    GUI.d_dayView.setMonth("NO");
+                    GUI.d_dayView.setDate("NE");
+                    GUI.d_dayView.setDday("000");
+                }
+                break;
+            case 5: // alarm
+                if (alarm.getMode() == 0) {
+                    alarm.requestAlarmSelectMode();
+
+                    // GUI
+                    GUI.alarmView.borderPanel.setVisible(true);
+                    GUI.alarmView.borderPanel.setBounds(350, 240,
+                            GUI.alarmView.alarmListPanel.getWidth(),
+                            GUI.alarmView.alarmListPanel.getHeight());
+                }
+                break;
+
+            case 6:
+                if (alarmCustom.getMode() == 0) {   // 기본 모드
+                    alarmCustom.requestAlarmSelectMode();
+
+                    if (alarmCustom.getMode() == 0)
+                        break;
+
+                    GUI.alarmCustomView.borderPanel.setVisible(true);
+                    GUI.alarmCustomView.borderPanel.setBounds(350 - 5, 240 - 5,
+                            GUI.alarmCustomView.ALARM_LIST_WIDTH + 10,
+                            GUI.alarmCustomView.ALARM_LIST_HEIGHT + 10);
+                }
+                else if (alarmCustom.getMode() == 1) {  // 알람리스트 조회 모드
+
+
+                }
+                else if (alarmCustom.getMode() == 2) {  // 알람 인터벌
+
+                }
+                else if (alarmCustom.getMode() == 3) {  // 알람 볼륨
+
                 }
         }
     }
@@ -162,13 +214,13 @@ public class System extends Function {
                     stopwatch.requestPauseStopwatch();
                 }
                 else {
+                    stopwatch.movePointer(1);
                     String[] tmp = stopwatch.getStopwatchRecord();
 
                     int curRecordPointer = stopwatch.getRecordPointer();
                     if (curRecordPointer > 2 && tmp[0 + curRecordPointer] == null)
                         break;
 
-                    stopwatch.movePointer(1);
                     String[] str = new String[3];
                     if (tmp[0 + curRecordPointer] == null)
                         str[0] = "      ";
@@ -228,11 +280,98 @@ public class System extends Function {
                 }
                 break;
             case 5: // alarm
+                if (alarm.getMode() == 0)   // 기본값
+                    return;
+                // GUI에 반영해야 함.
+                else if (alarm.getMode() == 1) { // 알람 설정
+                    alarm.changeValue(1);
+                    type = alarm.getType();
+                    int[] alarmSettingValue = alarm.getAlarmSettingValue();
+                    String str1 = "00", str2 = "00", str3 = "00";
+                    if(alarmSettingValue[0] < 10) {
+                        str1 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    } else {
+                        str1 = String.format("%2s", alarmSettingValue[0]);
+                    }
+                    if (alarmSettingValue[1] < 10)
+                    {
+                        str2 = "0" + String.format("%1s", alarmSettingValue[1]);
+                    }else {
+                        str2 = String.format("%2s", alarmSettingValue[1]);
+                    }if (alarmSettingValue[2] < 10)
+                    {
+                        str3 = "0" + String.format("%1s", alarmSettingValue[2]);
+                    }else {
+                        str3 = String.format("%2s", alarmSettingValue[2]);
+                    }
 
-                break;
-            case 6: // alarm custom
+                    GUI.alarmView.setAlarm(str1 + str2  + str3);
 
+                } else if (alarm.getMode() == 2) // 포인터 조종
+                {
+                    alarm.movePointer(1);
+                    AlarmData[] tmp = alarm.getAlarmList();
+                    int alarmPointer = alarm.getAlarmPointer();
+
+                    if (alarmPointer > 2 && tmp[0 + alarmPointer] == null) {
+                        break;
+                    }
+
+                    String[] str = new String[3];
+                    if (tmp[0 + alarmPointer] == null)
+                        str[0] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[0 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[0] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+                    if (tmp[1 + alarmPointer] == null)
+                        str[1] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[1 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[1] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+
+                    }
+                    if (tmp[2 + alarmPointer] == null)
+                        str[2] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[2 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[2] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+
+                    GUI.alarmView.setAlarmList2(str[0] + str[1] + str[2]);
+
+                }
                 break;
+//            case 6: // alarm custom
+//                if (alarmCustom.getMode() == 0) // 기본모드
+//                {
+//
+//                }
+//                else if (alarmCustom.getMode() == 1) { // 알람 리스트 조회 모드
+//                    alarmCustom.changeValue(1);
+//
+//                    // GUI처리는 나중에... 알람이랑 같이해야함...
+//
+//
+//                } else if (alarmCustom.getMode() == 2) // 알람 볼륨 설정
+//                {
+//                    alarmCustom.changeValue(1);
+//                    int setVolume = alarmCustom.getVolume();
+//                    String str2= "0";
+//                    str2 = String.format("%1s", setVolume);
+//
+//                    //java.lang.System.out.println(str2);
+//                    GUI.alarmCustomView.setAlarmVolume(str2);
+//                   // GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+//
+//                }
+//                break;
         }
     }
 
@@ -242,11 +381,12 @@ public class System extends Function {
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
-                if (timeKeeping.getMode() == 0) {
+                if (timeKeeping.getMode() == 0)
                     return;
-                }
                 // GUI에 반영해야 함.
                 timeKeeping.changeValue(-1);
+                int type = timeKeeping.getType();
+
                 int[] timeSettingValue = timeKeeping.getTimeSettingValue();
                 GUI.timekeepingView.setHour(String.format("%2s", timeSettingValue[0]));
                 GUI.timekeepingView.setMinute(String.format("%2s", timeSettingValue[1]));
@@ -254,6 +394,7 @@ public class System extends Function {
                 GUI.timekeepingView.setDate(String.format("%2s", timeSettingValue[3]).substring(2, 4)
                         + String.format("%2s", timeSettingValue[4])
                         + String.format("%2s", timeSettingValue[5]));
+
 
                 break;
             case 2: // stopwatch
@@ -326,11 +467,102 @@ public class System extends Function {
                 }
                 break;
             case 5: // alarm
+                if (alarm.getMode() == 0)
+                    return;
+                    // GUI에 반영해야 함.
+                else if (alarm.getMode() == 1) { // 알람 설정
+                    alarm.changeValue(-1);
+                    type = alarm.getType();
+                    int[] alarmSettingValue = alarm.getAlarmSettingValue();
+                    String str1 = "00", str2 = "00", str3 = "00";
+                    if(alarmSettingValue[0] < 10) {
+                        str1 = "0" + String.format("%1s", alarmSettingValue[0]);
+                    } else {
+                        str1 = String.format("%2s", alarmSettingValue[0]);
+                    }
+                    if (alarmSettingValue[1] < 10)
+                    {
+                        str2 = "0" + String.format("%1s", alarmSettingValue[1]);
+                    }else {
+                        str2 = String.format("%2s", alarmSettingValue[1]);
+                    }if (alarmSettingValue[2] < 10)
+                    {
+                        str3 = "0" + String.format("%1s", alarmSettingValue[2]);
+                    }else {
+                        str3 = String.format("%2s", alarmSettingValue[2]);
+                    }
 
-                break;
-            case 6: // alarm custom
+                    GUI.alarmView.setAlarm(str1 + str2  + str3);
+                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+                } else if (alarm.getMode() == 2) // 포인터 조종
+                {
+                    alarm.movePointer(-1);
 
+                    int alarmPointer = alarm.getAlarmPointer();
+                    AlarmData[] tmp = alarm.getAlarmList();
+
+                    String[] str = new String[3];
+                    if (tmp[0 + alarmPointer] == null)
+                        str[0] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[0 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[0] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+                    if (tmp[1 + alarmPointer] == null)
+                        str[1] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[1 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[1] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+
+                    }
+                    if (tmp[2 + alarmPointer] == null)
+                        str[2] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[2 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[2] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+
+                    GUI.alarmView.setAlarmList2(str[0] + str[1] + str[2]);
+
+
+                }
                 break;
+//            case 6: // alarm custom
+//                if (alarmCustom.getMode() == 0) // 알람 포인터
+//                {
+//                    alarm.movePointer(-1);
+//                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+//                }
+//                    // GUI에 반영해야 함.
+//                else if (alarmCustom.getMode() == 1) { // 알람 간격 설정
+//                    alarmCustom.changeValue(-1);
+//                    int setInterval = alarmCustom.getInterval();
+//                    String str1 = "00";
+//                    if(setInterval < 10) {
+//                        str1 = String.format("%1s", setInterval);
+//                    }
+//
+//                    GUI.alarmCustomView.setAlarmInterval(str1);
+//                //    GUI.alarmCustomView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
+//                } else if (alarmCustom.getMode() == 2) // 알람 볼륨 설정
+//                {
+//                    alarmCustom.changeValue(-1);
+//                    int setVolume = alarmCustom.getVolume();
+//                    String str2= "0";
+//                    if(setVolume < 10)
+//                    {
+//                        str2 = String.format("%1s", setVolume);
+//                    }
+//                    GUI.alarmCustomView.setAlarmVolume(str2);
+//
+//                }
+//                break;
         }
 
     }
@@ -519,10 +751,63 @@ public class System extends Function {
                 }
                 break;
             case 5: // alarm
+                if(alarm.getMode() == 0){
+                    alarm.requestAlarmSettingMode();
+
+                    GUI.alarmView.borderPanel.setVisible(true);
+                    int w = GUI.alarmView.borderPanel.getWidth();
+                    int h = GUI.alarmView.borderPanel.getHeight();
+                    int x = 350;
+                    int y = 180;
+                    GUI.alarmView.borderPanel.setBounds(x, y, w, h);
+                } else if (alarm.getMode() == 1) {
+                    alarm.changeType();
+
+                    int alarmType = alarm.getType();
+                    int w = GUI.alarmView.borderPanel.getWidth();
+                    int h = GUI.alarmView.borderPanel.getHeight();
+                    int x = 350;
+                    int y = 180;
+                    if (alarmType == 0) {
+                        GUI.alarmView.borderPanel.setBounds(x, y, w, h);
+                    }
+                    else if (alarmType == 1) {
+                        GUI.alarmView.borderPanel.setBounds(x + w, y, w, h);
+                    }
+                    else if (alarmType == 2) {
+                        GUI.alarmView.borderPanel.setBounds(x + 2 * w, y, w, h);
+                    }
+
+                } else { // 알람 리스트 확인모드
+                    alarm.requestDeleteAlarm();
+                    
+                }
 
                 break;
             case 6: // alarm custom
+                if(alarmCustom.getMode() == 1){ // 알람 리스트 조회 모드
+                    alarmCustom.requestIntervalSettingMode();
 
+                    GUI.alarmCustomView.borderPanel.setBounds(
+                            550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                    );
+                    GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
+                } else if (alarmCustom.getMode() == 2) { // 인터벌 설정 끝날때
+                    alarmCustom.requestAlarmVolumeMode();
+
+                    GUI.alarmCustomView.borderPanel.setBounds(
+                            430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                    );
+                    GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
+                }
+                else if (alarmCustom.getMode() == 3) {
+                    alarmCustom.requestIntervalSettingMode();
+
+                    GUI.alarmCustomView.borderPanel.setBounds(
+                            550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                    );
+                    GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
+                }
                 break;
         }
 
@@ -538,8 +823,37 @@ public class System extends Function {
                     nextFunction();
                 }
                 else {
+                    // 저장을 하면 d-day를 다시 계산하면 됨.
                     timeKeeping.requestSave();
                     GUI.timekeepingView.borderPanel.setVisible(false);
+                    d_day.setDate(d_day.getD_dayDate());
+
+                    GUI.d_dayView.borderPanel.setVisible(false);
+                    String curDate = d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+
+                    if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setYear("00");
+                        GUI.d_dayView.setMonth("NO");
+                        GUI.d_dayView.setDate("NE");
+                    }
+                    else {
+                        GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    }
+                    if (d_day.getD_day() > 999)
+                        GUI.d_dayView.setDday("999");
+                    else if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setDday("000");
+                    }
+                    else
+                        GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
+
+
+
+                    // 바뀐 d-day로 d-day view도 바꾸면 됨.
+
                 }
 
                 break;
@@ -561,6 +875,26 @@ public class System extends Function {
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
+                    GUI.d_dayView.borderPanel.setVisible(false);
+                    String curDate = d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+
+                    if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setYear("00");
+                        GUI.d_dayView.setMonth("NO");
+                        GUI.d_dayView.setDate("NE");
+                    }
+                    else {
+                        GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    }
+                    if (d_day.getD_day() > 999)
+                        GUI.d_dayView.setDday("999");
+                    else if (d_day.getD_day() == -1)
+                        GUI.d_dayView.setDday("000");
+                    else
+                        GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
                     nextFunction();
                 }
                 else {
@@ -571,9 +905,10 @@ public class System extends Function {
                     GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
                     GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
                     GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
-                    if (d_day.getD_day() > 999) {
+                    if (d_day.getD_day() > 999)
                         GUI.d_dayView.setDday("999");
-                    }
+                    else if (d_day.getD_day() == -1)
+                        GUI.d_dayView.setDday("000");
                     else
                         GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
 
@@ -583,12 +918,60 @@ public class System extends Function {
             case 5: // alarm
                 if (alarm.getMode() == 0) {
                     nextFunction();
+                }else if(alarm.getMode() == 1){
+                    alarm.requestSave();
+                    int alarmPointer = alarm.getAlarmPointer();
+                    AlarmData[] tmp = alarm.getAlarmList();
+
+                    GUI.alarmView.borderPanel.setVisible(false);
+                    GUI.alarmView.setAlarm("000000");
+
+
+                    String[] str = new String[3];
+                    if (tmp[0 + alarmPointer] == null)
+                        str[0] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[0 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[0] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+                    if (tmp[1 + alarmPointer] == null)
+                        str[1] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[1 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[1] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+
+                    }
+                    if (tmp[2 + alarmPointer] == null)
+                        str[2] = "      ";
+                    else {
+                        StringTokenizer st = new StringTokenizer(tmp[2 + alarmPointer].getTime().getCurrentTime(), " ");
+                        str[2] = String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken())) +
+                                String.format("%2d", Integer.parseInt(st.nextToken()));
+                    }
+
+                    GUI.alarmView.setAlarmList2(str[0] + str[1] + str[2]);
+                    GUI.alarmCustomView.setAlarmList2(str[0] + str[1] + str[2]);
+                } else {
+                    alarm.cancel();
+
                 }
 
                 break;
             case 6: // alarm custom
                 if (alarmCustom.getMode() == 0) {
                     nextFunction();
+                } else if (alarmCustom.getMode() == 1)
+                {
+                    //alarmCustom.requestAlarmVolumeMode();
+                } else  if(alarmCustom.getMode() == 2)
+                {
+//                    alarmCustom.requestSave();
+
                 }
 
                 break;
