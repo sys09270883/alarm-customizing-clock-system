@@ -7,7 +7,7 @@ public class AlarmCustom extends Function {
     /**
      * Default constructor
      */
-    public AlarmCustom() {
+    public AlarmCustom(System system) {
         fid = 6;
     }
 

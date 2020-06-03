@@ -34,18 +34,20 @@ public class System extends Function {
         Arrays.fill(functionNum, 0);
         functionNum[0] = 1;
         functionNum[1] = 2;
-        functionNum[2] = 3;
-        functionNum[3] = 4;
+        functionNum[2] = 5;
+        functionNum[3] = 6;
         status = 0b00;
         type = 0;
         selectedFid = 1;
 
         timeKeeping = new TimeKeeping(this);
         stopwatch = new Stopwatch(this);
-        timer = new Timer(this);
-        d_day = new D_day(this);
-        alarm = null;
-        alarmCustom = null;
+        timer = null;
+        d_day = null;
+//        timer = new Timer(this);
+//        d_day = new D_day(this);
+        alarm = new Alarm(this);
+        alarmCustom = new AlarmCustom(this);
 
         buzzer = new Buzzer();
 
@@ -127,6 +129,15 @@ public class System extends Function {
                 if (stopwatch.getMode() == 0) {
                     stopwatch.requestRecordCheckMode();
                     GUI.stopwatchView.borderPanel.setVisible(true);
+                }
+            case 4: // d-day
+                if (d_day.getMode() == 0) {
+                    d_day.requestDeleteDday();
+
+                    GUI.d_dayView.setYear("  ");
+                    GUI.d_dayView.setMonth("NO");
+                    GUI.d_dayView.setDate("NE");
+                    GUI.d_dayView.setDday("000");
                 }
         }
     }
@@ -224,6 +235,12 @@ public class System extends Function {
                 }
                 break;
             case 5: // alarm
+                if (alarm.getMode() == 0) {
+
+                }
+                else {
+
+                }
 
                 break;
             case 6: // alarm custom
@@ -534,8 +551,37 @@ public class System extends Function {
                     nextFunction();
                 }
                 else {
+                    // 저장을 하면 d-day를 다시 계산하면 됨.
                     timeKeeping.requestSave();
                     GUI.timekeepingView.borderPanel.setVisible(false);
+                    d_day.setDate(d_day.getD_dayDate());
+
+                    GUI.d_dayView.borderPanel.setVisible(false);
+                    String curDate = d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+
+                    if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setYear("00");
+                        GUI.d_dayView.setMonth("NO");
+                        GUI.d_dayView.setDate("NE");
+                    }
+                    else {
+                        GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    }
+                    if (d_day.getD_day() > 999)
+                        GUI.d_dayView.setDday("999");
+                    else if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setDday("000");
+                    }
+                    else
+                        GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
+
+
+
+                    // 바뀐 d-day로 d-day view도 바꾸면 됨.
+
                 }
 
                 break;
@@ -557,6 +603,26 @@ public class System extends Function {
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
+                    GUI.d_dayView.borderPanel.setVisible(false);
+                    String curDate = d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+
+                    if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setYear("00");
+                        GUI.d_dayView.setMonth("NO");
+                        GUI.d_dayView.setDate("NE");
+                    }
+                    else {
+                        GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    }
+                    if (d_day.getD_day() > 999)
+                        GUI.d_dayView.setDday("999");
+                    else if (d_day.getD_day() == -1)
+                        GUI.d_dayView.setDday("000");
+                    else
+                        GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
                     nextFunction();
                 }
                 else {
@@ -567,9 +633,10 @@ public class System extends Function {
                     GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
                     GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
                     GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
-                    if (d_day.getD_day() > 999) {
+                    if (d_day.getD_day() > 999)
                         GUI.d_dayView.setDday("999");
-                    }
+                    else if (d_day.getD_day() == -1)
+                        GUI.d_dayView.setDday("000");
                     else
                         GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
 

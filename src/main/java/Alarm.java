@@ -7,8 +7,9 @@ public class Alarm extends Function {
     /**
      * Default constructor
      */
-    public Alarm() {
+    public Alarm(System system) {
         fid = 5;
+        alarmList = new AlarmData[10];
     }
 
     /**
