@@ -1,6 +1,7 @@
 import javafx.util.Pair;
 
 import java.text.SimpleDateFormat;
+import java.util.StringTokenizer;
 
 /**
  * @author Yoonseop Shin
@@ -58,11 +59,12 @@ public class Date {
         return currentDate;
     }
 
-    public void deleteDday() {
+    public void deleteDday(String str) {
+        StringTokenizer st = new StringTokenizer(str, " ");
         synchronized(lock) {
-            year = 0;
-            month = 0;
-            day = 0;
+            year = Integer.parseInt(st.nextToken());
+            month = Integer.parseInt(st.nextToken());
+            day = Integer.parseInt(st.nextToken());
         }
     }
 
