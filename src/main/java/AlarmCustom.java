@@ -94,13 +94,13 @@ public class AlarmCustom extends Function {
     /**
      * 
      */
-    public void requestSave() {
-        // TODO implement here
-        AlarmCustom alarmCustom = new AlarmCustom();
-        alarmCustom.interval = this.interval;
-        alarmCustom.volume = this.volume;
-        setCustom(alarmCustom);
-    }
+//    public void requestSave() {
+//        // TODO implement here
+//        AlarmCustom alarmCustom = new AlarmCustom();
+//        alarmCustom.interval = this.interval;
+//        alarmCustom.volume = this.volume;
+//        setCustom(alarmCustom);
+//    }
 
     /**
      * @param alarmCustom
