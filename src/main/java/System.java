@@ -25,6 +25,10 @@ public class System extends Function {
     private Thread checkTimeOut;
     private long lastOperateTime;
 
+    public int getSelectedFid() {
+        return selectedFid;
+    }
+
     public System() {
         GUI = new MainFrame(this);
 
