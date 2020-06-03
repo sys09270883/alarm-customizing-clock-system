@@ -55,7 +55,6 @@ class Time implements Runnable {
         synchronized (pauseLock) {
             isPaused = true;
         }
-
     }
 
     // 추가

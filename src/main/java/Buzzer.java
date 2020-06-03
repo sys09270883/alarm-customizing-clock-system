@@ -60,7 +60,6 @@ public class Buzzer implements Runnable {
         synchronized (lock) {
             buzzerState = false;
         }
-        buzzerState = false;
     }
 
     public Thread getBeepThread() {

@@ -48,10 +48,7 @@ public class System extends Function {
         alarmCustom = null;
 
         buzzer = new Buzzer();
-
         blink = new Blink(this);
-
-
     }
 
     public static void main(String[] args) {

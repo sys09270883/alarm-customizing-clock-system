@@ -14,14 +14,16 @@ public class Timer extends Function {
 
     private int timeSettingValue[] = {-1, -1, -1};
 
-    /**
-     * Default constructor
-     */
+    System system;
+
     public Timer(System system) {
+        this.system = system;
         fid = 3;
         mode = 0;
         timer = new Time(0);
         timer.setTime(0, 0, 0);
+        timerCheckThread = null;
+
         timer.setSecondListener(() -> {
             if (mode == 2) {
                 String str = timer.getCurrentTime();
@@ -32,23 +34,28 @@ public class Timer extends Function {
 
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
-                    system.beepBuzzer();
-                    mode = 0;
+                    timerCheckThread = new Thread(() -> {
+                        try {
+                            timer.getTimeThread().join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        system.beepBuzzer();
+                        mode = 0;
+                    });
+
+                    timerCheckThread.start();
                 }
             }
         });
+
         type = 0;
     }
 
 
     private Time timer;
-
     private int type;
-
-
-    /**
-     * 
-     */
+    private Thread timerCheckThread;
 
     public void requestTimerSettingMode() {
         changeMode(1);
@@ -57,18 +64,12 @@ public class Timer extends Function {
         timer.setTime(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
-    /**
-     * 설정한 시간으로 timer을 세팅해 저장합니다.
-     */
     public void requestSave() {
         timer.setTime(timeSettingValue[0], timeSettingValue[1], timeSettingValue[2]);
         type = 0;
         changeMode(0);
     }
 
-    /**
-     * 
-     */
     public void requestStartTimer() {
         String str = timer.getCurrentTime();
         StringTokenizer st = new StringTokenizer(str, " ");
@@ -80,9 +81,6 @@ public class Timer extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void requestResetTimer() {
         if (mode == 2)
             requestPauseTimer();
@@ -90,9 +88,6 @@ public class Timer extends Function {
         changeMode(0);
     }
 
-    /**
-     * 
-     */
     public void requestPauseTimer() {
         timer.pauseTime();
         try {
