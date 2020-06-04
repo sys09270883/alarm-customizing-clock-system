@@ -129,4 +129,10 @@ public class TimekeepingView extends DefaultLayout {
     public void setMinute(String str) {
         displaySegment(310 + CUR_TIME1_WIDTH / 2, 235, CUR_TIME1_WIDTH / 2, CUR_TIME1_HEIGHT, str, layer++);
     }
+
+    public void setBorderPanel(int idx) {
+        int w = CUR_TIME1_WIDTH / 4 + 10, h = CUR_TIME1_HEIGHT + 10;
+        int x = 310 - 5 + CUR_TIME1_WIDTH / 4, y = 235 - 5;
+        borderPanel.setBounds(x + CUR_TIME1_WIDTH / 4 * idx, y, w, h);
+    }
 }

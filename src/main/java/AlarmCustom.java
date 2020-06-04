@@ -9,6 +9,7 @@ public class AlarmCustom extends Function {
      * Default constructor
      */
 
+    final static int FID = 6;
     private int ALARM_TOP_LIMIT;
     private final int ALARM_BOTTOM_LIMIT = 0;
 
