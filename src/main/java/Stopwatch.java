@@ -1,8 +1,5 @@
 import java.util.StringTokenizer;
 
-/**
- * @author Yoonseop Shin
- */
 public class Stopwatch extends Function {
 
     public final int STOPWATCH_TOP_LIMIT = 7;
@@ -11,9 +8,6 @@ public class Stopwatch extends Function {
     private final int TYPE_SIZE = 3;
     private int timeSettingValue[] = {-1, -1, -1};
 
-    /**
-     * Default constructor
-     */
     public Stopwatch(System system) {
         fid = 2;
         mode = 0;

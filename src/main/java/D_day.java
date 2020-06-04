@@ -1,9 +1,6 @@
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
-
-import static java.lang.Integer.parseInt;
 
 /**
  * @author Yoonseop Shin
@@ -82,22 +79,25 @@ public class D_day extends Function {
         String curDate = system.timeKeeping.getCurDate().getCurrentDate();
         StringTokenizer st = new StringTokenizer(curDate, " ");
         Calendar curDateCal = Calendar.getInstance();
-        curDateCal.set(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+        curDateCal.set(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()) - 1, Integer.parseInt(st.nextToken()));
 
         Calendar d_dayDateCal = Calendar.getInstance();
         d_dayDateCal.set(date.getYear(), date.getMonth()-1, date.getDay());
 
-        if(curDateCal.after(d_dayDateCal)) {
-            //현재 시간이 설정 시간보다 미래에 있으므로, d-day로 설정할 수 없음.
-        }
 
         if(curDateCal.before(d_dayDateCal)) {
-            //현재 시간이 설정 시간과 같거나 현재 시간이 설정 시간보다 과거라면, d-day로 설정할 수 있음.
+            // 현재 시간이 설정 시간과 같거나 현재 시간이 설정 시간보다 과거라면, d-day로 설정할 수 있음.
             long curDateTime = curDateCal.getTimeInMillis() / (60*60*24*1000);
             long d_dayDateTime = d_dayDateCal.getTimeInMillis() / (60*60*24*1000);
 
             this.d_dayDate = date;
             this.d_day = (int)(d_dayDateTime - curDateTime);
+        }
+        else {
+            st = new StringTokenizer(curDate, " '");
+            this.d_dayDate.setDate(Integer.parseInt(st.nextToken()),
+                    Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+            this.d_day = -1;
         }
     }
 
@@ -112,7 +112,8 @@ public class D_day extends Function {
      * 
      */
     public void requestDeleteDday() {
-        d_dayDate.deleteDday();
+        String str = system.timeKeeping.getCurDate().getCurrentDate();
+        d_dayDate.deleteDday(str);
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
     }
 

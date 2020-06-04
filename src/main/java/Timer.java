@@ -13,7 +13,6 @@ public class Timer extends Function {
     }
 
     private int timeSettingValue[] = {-1, -1, -1};
-
     System system;
 
     public Timer(System system) {
@@ -34,6 +33,7 @@ public class Timer extends Function {
 
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
+<<<<<<< HEAD
                     timerCheckThread = new Thread(() -> {
                         try {
                             timer.getTimeThread().join();
@@ -45,11 +45,26 @@ public class Timer extends Function {
                     });
 
                     timerCheckThread.start();
+=======
+                    mode = 0;
+                    system.beepBuzzer();
+                    // timer가 안주금.
+>>>>>>> c006184bc2c21e9645275dfd559cad2efabdebe6
                 }
             }
         });
 
         type = 0;
+    }
+
+    public void foo() {
+        try {
+            this.timer.getTimeThread().join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        mode = 0;
+        system.beepBuzzer();
     }
 
 
