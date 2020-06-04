@@ -9,6 +9,10 @@ public class Blink {
     public Blink(System system) {
     }
 
+    public boolean isBlinkState() {
+        return blinkState;
+    }
+
     /**
      * 
      */

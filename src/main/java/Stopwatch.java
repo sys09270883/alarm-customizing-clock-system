@@ -50,6 +50,9 @@ public class Stopwatch extends Function {
     private int type;
 
 
+    public Time getStopwatch() {
+        return stopwatch;
+    }
 
     /**
      * Stopwatch 실행 요청
