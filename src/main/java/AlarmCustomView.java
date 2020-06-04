@@ -144,6 +144,14 @@ public class AlarmCustomView extends DefaultLayout {
 
     }
 
+    public void setBorderPanel(int idx) {
+        int x = 350 - 5;
+        int y = 240 - 5;
+        int w = ALARM_LIST_WIDTH + 10;
+        int h = ALARM_LIST_HEIGHT / 3 + 10;
+        borderPanel.setBounds(x, y + ALARM_LIST_HEIGHT / 3 * idx, w, h);
+    }
+
     public void setAlarmList2(String str) {
         if (str.substring(0, 6).equals("      "))
             displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3, "  NONE", layer++);
