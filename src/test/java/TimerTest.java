@@ -27,4 +27,129 @@ public class TimerTest {
         assert(splitedTime[1].equals("2"));
         assert(splitedTime[2].equals("3"));
     }
+
+    @Test
+    public void startTimerTest() {
+        Timer timer = new Timer(system);
+        timer.requestTimerSettingMode();
+
+        timer.changeType();
+        timer.changeType();
+        timer.changeValue(5); // Timer를 5초로 Setting
+        timer.requestSave();
+
+        timer.requestStartTimer();
+
+        try {
+            Thread.sleep(3100); // 3초가 흐른게 되네요
+        } catch(InterruptedException e) {
+            java.lang.System.out.println(e.getMessage());
+        }
+
+        Time time = timer.getTimer();
+
+        String timeStr = time.getTime();
+        String splitedTime[] = timeStr.split(" ");
+
+        assert(splitedTime[2].equals("2"));
+
+    }
+
+    @Test
+    public void beepTimerTest() {
+        Timer timer = new Timer(system);
+        timer.requestTimerSettingMode();
+
+        timer.changeType();
+        timer.changeType();
+        timer.changeValue(3); // Timer를 3초로 Setting
+        timer.requestSave();
+
+        timer.requestStartTimer();
+
+        try {
+            Thread.sleep(3100); // 3초가 흐른게 되네요
+        } catch(InterruptedException e) {
+            java.lang.System.out.println(e.getMessage());
+        }
+
+        assertTrue(timer.system.buzzer.isBuzzerState());
+    }
+
+    @Test
+    public void resetTimerTest() {
+        Timer timer = new Timer(system);
+
+        timer.requestTimerSettingMode();
+
+        timer.changeType();
+        timer.changeType();
+        timer.changeValue(5); // Timer를 5초로 Setting
+        timer.requestSave();
+
+        timer.requestStartTimer();
+
+        Time time = timer.getTimer();
+
+        String timeStr = time.getTime();
+        String splitedTime[] = timeStr.split(" ");
+
+        assert(splitedTime[2].equals("5"));
+
+        timer.requestResetTimer();
+
+        time = timer.getTimer();
+
+        timeStr = time.getTime();
+        splitedTime = timeStr.split(" ");
+
+        assert(splitedTime[0].equals("0"));
+        assert(splitedTime[1].equals("0"));
+        assert(splitedTime[2].equals("0"));
+    }
+
+    @Test
+    public void pauseTimerTest() {
+        Timer timer = new Timer(system);
+
+        timer.requestTimerSettingMode();
+
+        timer.changeType();
+        timer.changeType();
+        timer.changeValue(5); // Timer를 5초로 Setting
+        timer.requestSave();
+
+        timer.requestStartTimer();
+
+        try {
+            Thread.sleep(1100); // 1초가 흐른게 되네요
+        } catch(InterruptedException e) {
+            java.lang.System.out.println(e.getMessage());
+        }
+
+        timer.requestPauseTimer();
+
+        try {
+            Thread.sleep(1100); // 1초가 흐른게 되네요
+        } catch(InterruptedException e) {
+            java.lang.System.out.println(e.getMessage());
+        }
+
+        Time time = timer.getTimer();
+
+        String timeStr = time.getTime();
+        String splitedTime[] = timeStr.split(" ");
+
+        assert(splitedTime[2].equals("4"));
+    }
+
+    @Test
+    public void stopTimerBuzzer() {
+        Timer timer = new Timer(system);
+
+        timer.system.buzzer.beepBuzzer();
+        timer.system.buzzer.stopBuzzer();
+
+        assertFalse(timer.system.buzzer.isBuzzerState());
+    }
 }
