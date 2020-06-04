@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 /**
@@ -29,8 +31,6 @@ public class System extends Function {
         return selectedFid;
     }
 
-
-
     public System() {
         GUI = new GUI(this);
 
@@ -38,24 +38,26 @@ public class System extends Function {
         Arrays.fill(functionNum, 0);
         functionNum[0] = 1;
         functionNum[1] = 2;
-        functionNum[2] = 5;
-        functionNum[3] = 6;
+        functionNum[2] = 3;
+        functionNum[3] = 4;
         status = 0b00;
-        type = 0;
+        type = 1;
         selectedFid = 1;
 
         timeKeeping = new TimeKeeping(this);
         stopwatch = new Stopwatch(this);
-        timer = null;
-        d_day = null;
-//        timer = new Timer(this);
-//        d_day = new D_day(this);
-        alarm = new Alarm(this);
-        alarmCustom = new AlarmCustom(this);
+//        timer = null;
+//        d_day = null;
+        timer = new Timer(this);
+        d_day = new D_day(this);
+//        alarm = new Alarm(this);
+//        alarmCustom = new AlarmCustom(this);
 
 
         buzzer = new Buzzer();
         blink = new Blink(this);
+        cacheValue = new int[4];
+        Arrays.fill(cacheValue, -1);
     }
 
     public static void main(String[] args) {
@@ -101,8 +103,14 @@ public class System extends Function {
             return;
         switch (selectedFid) {
             case 1:
-                cancel(timeKeeping);
-                GUI.timekeepingView.borderPanel.setVisible(false);
+                if (timeKeeping.getMode() == 0 && mode == 1) {
+                    cancel(this);
+                    GUI.setView(GUI.timekeepingView);
+                }
+                else if (timeKeeping.getMode() == 1 && mode == 0) {
+                    cancel(timeKeeping);
+                    GUI.timekeepingView.borderPanel.setVisible(false);
+                }
                 break;
             case 2:
                 if (stopwatch.getMode() == 2) {
@@ -135,13 +143,32 @@ public class System extends Function {
         }
     }
 
+    private int[] cacheValue;
+
     public void selectBtnLongPressed() {
         lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
             case 1: // timekeeping
+                if (timeKeeping.getMode() == 0 && mode == 0) {
+                    changeMode();
 
+                    GUI.setView(GUI.functionSelectingView);
+                    GUI.functionSelectingView.setdDay("   ");
+                    GUI.functionSelectingView.setDate("      ");
+                    GUI.functionSelectingView.setAlarmNum(" ");
+                    GUI.functionSelectingView.setCurTime2("  ");
+                    GUI.functionSelectingView.setDayofweek("   ");
+
+                    String str = "";
+                    for (int i = 0; i < 4; i++) {
+                        str += String.valueOf(cacheValue[i]);
+                    }
+                    GUI.functionSelectingView.setCurTime1(str);
+                    GUI.functionSelectingView.setBorderPanel(0);
+                    GUI.functionSelectingView.borderPanel.setVisible(true);
+                }
                 break;
             case 2: // 스탑워치
                 if (stopwatch.getMode() == 0) {
@@ -186,18 +213,28 @@ public class System extends Function {
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
-                if (timeKeeping.getMode() == 0) {
+                if (timeKeeping.getMode() == 0 && mode == 0) {
                     return;
                 }
-                // GUI에 반영해야 함.
-                timeKeeping.changeValue(1);
-                int[] timeSettingValue = timeKeeping.getTimeSettingValue();
-                GUI.timekeepingView.setHour(String.format("%02d", timeSettingValue[0]));
-                GUI.timekeepingView.setMinute(String.format("%02d", timeSettingValue[1]));
-                GUI.timekeepingView.setCurTime2(String.format("%02d", timeSettingValue[2]));
-                GUI.timekeepingView.setDate(String.format("%02d", timeSettingValue[3]).substring(2, 4)
-                        + String.format("%02d", timeSettingValue[4])
-                        + String.format("%02d", timeSettingValue[5]));
+                else if (timeKeeping.getMode() == 1 && mode == 0) {
+                    timeKeeping.changeValue(1);
+                    int[] timeSettingValue = timeKeeping.getTimeSettingValue();
+                    GUI.timekeepingView.setHour(String.format("%02d", timeSettingValue[0]));
+                    GUI.timekeepingView.setMinute(String.format("%02d", timeSettingValue[1]));
+                    GUI.timekeepingView.setCurTime2(String.format("%02d", timeSettingValue[2]));
+                    GUI.timekeepingView.setDate(String.format("%02d", timeSettingValue[3]).substring(2, 4)
+                            + String.format("%02d", timeSettingValue[4])
+                            + String.format("%02d", timeSettingValue[5]));
+                }
+                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                    changeValue(1);
+
+                    String str = "1";
+                    for (int i = 1; i < 4; i++) {
+                        str += String.valueOf(cacheValue[i]);
+                    }
+                    GUI.functionSelectingView.setCurTime1(str);
+                }
                 break;
             case 2: // stopwatch
                 if (stopwatch.getMode() == 0) {
@@ -375,19 +412,30 @@ public class System extends Function {
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
-                if (timeKeeping.getMode() == 0)
+                if (timeKeeping.getMode() == 0 && mode == 0)
                     return;
                 // GUI에 반영해야 함.
-                timeKeeping.changeValue(-1);
-                int type = timeKeeping.getType();
+                else if (timeKeeping.getMode() == 1 && mode == 0) {
+                    timeKeeping.changeValue(-1);
+                    int type = timeKeeping.getType();
 
-                int[] timeSettingValue = timeKeeping.getTimeSettingValue();
-                GUI.timekeepingView.setHour(String.format("%02d", timeSettingValue[0]));
-                GUI.timekeepingView.setMinute(String.format("%02d", timeSettingValue[1]));
-                GUI.timekeepingView.setCurTime2(String.format("%02d", timeSettingValue[2]));
-                GUI.timekeepingView.setDate(String.format("%02d", timeSettingValue[3]).substring(2, 4)
-                        + String.format("%02d", timeSettingValue[4])
-                        + String.format("%02d", timeSettingValue[5]));
+                    int[] timeSettingValue = timeKeeping.getTimeSettingValue();
+                    GUI.timekeepingView.setHour(String.format("%02d", timeSettingValue[0]));
+                    GUI.timekeepingView.setMinute(String.format("%02d", timeSettingValue[1]));
+                    GUI.timekeepingView.setCurTime2(String.format("%02d", timeSettingValue[2]));
+                    GUI.timekeepingView.setDate(String.format("%02d", timeSettingValue[3]).substring(2, 4)
+                            + String.format("%02d", timeSettingValue[4])
+                            + String.format("%02d", timeSettingValue[5]));
+                }
+                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                    changeValue(-1);
+
+                    String str = "1";
+                    for (int i = 1; i < 4; i++) {
+                        str += String.valueOf(cacheValue[i]);
+                    }
+                    GUI.functionSelectingView.setCurTime1(str);
+                }
 
 
                 break;
@@ -566,7 +614,7 @@ public class System extends Function {
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
-                if (timeKeeping.getMode() == 0) {
+                if (timeKeeping.getMode() == 0 && mode == 0) {
                     timeKeeping.requestTimeSettingMode();
                     startCheckTimeOut();
                     GUI.timekeepingView.borderPanel.setVisible(true);
@@ -577,7 +625,7 @@ public class System extends Function {
                             GUI.timekeepingView.curTimePanel1.getHeight() + 10
                     );
                 }
-                else {
+                else if (timeKeeping.getMode() == 1 && mode == 0){
                     timeKeeping.changeType();
                     int type = timeKeeping.getType();
                     GUI.timekeepingView.borderPanel.setVisible(true);
@@ -632,6 +680,10 @@ public class System extends Function {
                                 GUI.timekeepingView.datePanel.getHeight() + 10
                         );
                     }
+                }
+                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                    changeType();
+                    GUI.functionSelectingView.setBorderPanel(type - 1);
                 }
                 break;
             case 2: // stopwatch
@@ -850,8 +902,92 @@ public class System extends Function {
             return;
         switch (selectedFid) {
             case 1: // timekeeping에서 현재시간 설정하는 것
-                if (timeKeeping.getMode() == 0) {
+                if (timeKeeping.getMode() == 0 && mode == 0) {
                     nextFunction();
+                }
+                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                    // 5, 6은 세트
+                    HashSet<Integer> hs = new HashSet<>();
+                    for (int i = 1; i < 4; i++) {
+                        hs.add(cacheValue[i]);
+                    }
+                    if (hs.size() == 3) {
+                        if ((hs.contains(5) && hs.contains(6)) || (!hs.contains(5) && !hs.contains(6))) {   // 성공
+                            functionNum[1] = cacheValue[1];
+                            functionNum[2] = cacheValue[2];
+                            functionNum[3] = cacheValue[3];
+
+                            for (int i : functionNum) {
+                                if (i == Stopwatch.FID) {
+                                    if (stopwatch == null)
+                                        stopwatch = new Stopwatch(this);
+                                }
+                                else if (i == Timer.FID) {
+                                    if (timer == null)
+                                        timer = new Timer(this);
+                                }
+                                else if (i == D_day.FID) {
+                                    if (d_day == null)
+                                        d_day = new D_day(this);
+                                }
+                                else if (i == Alarm.FID) {
+                                    if (alarm == null)
+                                        alarm = new Alarm(this);
+                                }
+                                else if (i == AlarmCustom.FID) {
+                                    if (alarmCustom == null)
+                                        alarmCustom = new AlarmCustom(this);
+                                }
+                            }
+
+                            boolean flag = false;
+                            for (int i = 1; i < 4; i++) {
+                                if (Stopwatch.FID == functionNum[i]) {
+                                    flag = true;
+                                }
+                            }
+                            if (!flag)
+                                stopwatch = null;
+
+                            flag = false;
+                            for (int i = 1; i < 4; i++) {
+                                if (Timer.FID == functionNum[i]) {
+                                    flag = true;
+                                }
+                            }
+                            if (!flag)
+                                timer = null;
+
+                            flag = false;
+                            for (int i = 1; i < 4; i++) {
+                                if (D_day.FID == functionNum[i]) {
+                                    flag = true;
+                                }
+                            }
+                            if (!flag)
+                                d_day = null;
+
+                            flag = false;
+                            for (int i = 1; i < 4; i++) {
+                                if (Alarm.FID == functionNum[i]) {
+                                    flag = true;
+                                }
+                            }
+                            if (!flag)
+                                alarm = null;
+
+                            flag = false;
+                            for (int i = 1; i < 4; i++) {
+                                if (alarmCustom.FID == functionNum[i]) {
+                                    flag = true;
+                                }
+                            }
+                            if (!flag)
+                                alarmCustom = null;
+                        }
+                    }
+                    changeMode();
+                    GUI.setView(GUI.timekeepingView);
                 }
                 else {
                     // 저장을 하면 d-day를 다시 계산하면 됨.
@@ -1012,15 +1148,30 @@ public class System extends Function {
 
     @Override
     public void changeMode() {
+        mode ^= 1;
 
+        if (mode == 0) {
+            Arrays.fill(cacheValue, -1);
+        }
+        else {
+            for (int i = 0; i < 4; i++) {
+                cacheValue[i] = functionNum[i];
+            }
+        }
+        type = 1;
     }
 
     public void changeType() {
-        type = (type + 1) % 6;
+        type = (type + 1) % 3 + 1;
     }
 
     public void changeValue(int diff) {
-        // TODO implement here
+        cacheValue[type] += diff;
+
+        if (cacheValue[type] > 6)
+            cacheValue[type] = 6;
+        if (cacheValue[type] < 2)
+            cacheValue[type] = 2;
     }
 
     public void setFunction(int[] selected) {

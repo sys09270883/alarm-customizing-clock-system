@@ -29,6 +29,10 @@ public class Buzzer implements Runnable {
     private boolean buzzerState;
     private Object lock = new Object();
 
+    public boolean isBuzzerState() {
+        return buzzerState;
+    }
+
     public Buzzer() {
         interval = INTERVALS[2];
         volume = VOLUMES[2];

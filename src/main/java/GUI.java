@@ -12,6 +12,7 @@ public class GUI extends JFrame {
     public DDayView d_dayView;
     public AlarmView alarmView;
     public AlarmCustomView alarmCustomView;
+    public TimekeepingView functionSelectingView;
 
     public GUI(System system) {
         setTitle("Alarm Customizing Clock System");
@@ -24,13 +25,12 @@ public class GUI extends JFrame {
 
         this.system = system;
         timekeepingView = new TimekeepingView(system);
+        functionSelectingView = new TimekeepingView(system);
         stopwatchView = new StopwatchView(system);
         timerView = new TimerView(system);
         d_dayView = new DDayView(system);
         alarmView = new AlarmView(system);
         alarmCustomView = new AlarmCustomView(system);
-
-
 
         setView(timekeepingView);
     }

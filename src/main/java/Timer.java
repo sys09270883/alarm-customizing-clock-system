@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
  */
 public class Timer extends Function {
 
+    final static int FID = 3;
     private final int TYPE_SIZE = 3;
 
     public int[] getTimeSettingValue() {
