@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class MainFrame extends JFrame {
+public class GUI extends JFrame {
 
     final static int FRAME_WIDTH = 1000;
     final static int FRAME_HEIGHT = 550;
@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
     public AlarmView alarmView;
     public AlarmCustomView alarmCustomView;
 
-    public MainFrame(System system) {
+    public GUI(System system) {
         setTitle("Alarm Customizing Clock System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
