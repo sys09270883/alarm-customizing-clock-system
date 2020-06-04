@@ -62,7 +62,8 @@ public class AlarmCustom extends Function {
 
     public void requestAlarmSelectMode() {
         // TODO implement here
-
+        int[] tmp = {0, Math.min(2, system.alarm.getSize() - 1)};
+        system.alarm.setSegmentPointer(tmp);
         changeMode(1);
     }
 
@@ -78,7 +79,7 @@ public class AlarmCustom extends Function {
      */
     public void requestAlarmVolumeMode() {
         // TODO implement here
-        changeMode(3);
+        changeMode(2);
     }
 
     /**
@@ -114,21 +115,55 @@ public class AlarmCustom extends Function {
             customSettingValue[0] = 0;
         } else if (mode == 2)
         {
-            if (this.mode == 1) {
+            if (this.mode == 1) {   // 선택된 알람에서 옴.
                 AlarmData[] tmp = system.alarm.getAlarmList();
                 customSettingValue[1] = tmp[customSettingValue[0]].getInterval();
+                customSettingValue[2] = tmp[customSettingValue[0]].getVolume();
             }
-        } else if (mode == 3) {
-            AlarmData[] tmp = system.alarm.getAlarmList();
-            customSettingValue[2] = tmp[customSettingValue[0]].getVolume();
         }
         else {
             Arrays.fill(customSettingValue, -1);
+            system.alarm.setAlarmPointer(0);
         }
         this.mode = mode;
     }
 
-    int type;
+    public void requestSave() {
+        AlarmData[] alarmList = system.alarm.getAlarmList();
+        alarmList[customSettingValue[0]].setInterval(customSettingValue[1]);
+        alarmList[customSettingValue[0]].setVolume(customSettingValue[2]);
+        type = 0;
+        changeMode(0);
+    }
+
+    private int type;
+
+    public int getType() {
+        return this.type;
+    }
+
+    public void changeValue2(int diff) {
+        int alarmPointer = system.alarm.getAlarmPointer();
+        int[] segmentPointer = system.alarm.getSegmentPointer();
+        alarmPointer += diff;
+
+        if (alarmPointer > system.alarm.getSize() - 1)
+            alarmPointer = system.alarm.getSize() - 1;
+        if (alarmPointer < 0)
+            alarmPointer = 0;
+
+        if (alarmPointer > segmentPointer[1]) {
+            segmentPointer[0]++;
+            segmentPointer[1]++;
+        }
+        else if (alarmPointer < segmentPointer[0]) {
+            segmentPointer[0]--;
+            segmentPointer[1]--;
+        }
+
+        system.alarm.setSegmentPointer(segmentPointer);
+        system.alarm.setAlarmPointer(alarmPointer);
+    }
 
     public void changeValue(int diff) {
         customSettingValue[type] += diff;
@@ -159,7 +194,15 @@ public class AlarmCustom extends Function {
 
 
     public void changeType() {
-        //return this.mode;
+        if (type == 1) {
+            type = 2;
+        }
+        else if (type == 2) {
+            type = 1;
+        }
+        else if (type == 0) {
+            type = 1;
+        }
 
     }
 

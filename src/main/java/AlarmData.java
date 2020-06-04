@@ -23,6 +23,11 @@ public class AlarmData {
 
     private int volume;
 
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+
+
     public AlarmData() {
         alarmTime = new Time(2); // 증가도 감소도 아니라 의미 없게 2로 지정.
 
