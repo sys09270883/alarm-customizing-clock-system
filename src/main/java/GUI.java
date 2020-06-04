@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class MainFrame extends JFrame {
+public class GUI extends JFrame {
 
     final static int FRAME_WIDTH = 1000;
     final static int FRAME_HEIGHT = 550;
@@ -12,8 +12,9 @@ public class MainFrame extends JFrame {
     public DDayView d_dayView;
     public AlarmView alarmView;
     public AlarmCustomView alarmCustomView;
+    public TimekeepingView functionSelectingView;
 
-    public MainFrame(System system) {
+    public GUI(System system) {
         setTitle("Alarm Customizing Clock System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -24,13 +25,12 @@ public class MainFrame extends JFrame {
 
         this.system = system;
         timekeepingView = new TimekeepingView(system);
+        functionSelectingView = new TimekeepingView(system);
         stopwatchView = new StopwatchView(system);
         timerView = new TimerView(system);
         d_dayView = new DDayView(system);
         alarmView = new AlarmView(system);
         alarmCustomView = new AlarmCustomView(system);
-
-
 
         setView(timekeepingView);
     }

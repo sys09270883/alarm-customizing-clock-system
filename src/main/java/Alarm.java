@@ -4,6 +4,7 @@
  */
 public class Alarm extends Function {
 
+    final static int FID = 5;
     final static int ALARM_POINTER_MAX = 9;
     /**
      * Default constructor
@@ -13,6 +14,7 @@ public class Alarm extends Function {
         curAlarm = new AlarmData();
         alarmList = new AlarmData[10];
         mode = 0; // 기본 모드
+        segmentPointer = new int[2];
 
         typeindex = 0;
 
@@ -27,6 +29,7 @@ public class Alarm extends Function {
 
 
     private int alarmPointer;
+    public int[] segmentPointer;
     private int mode;
     private int typeindex; // 시분초 구분
     private int alarmSettingValue[] = {-1,-1,-1};
@@ -88,6 +91,7 @@ public class Alarm extends Function {
     public void requestDeleteAlarm() {
         // TODO implement here
         deleteAlarm(this.alarmPointer);
+        changeMode(0);
     }
 
     public void setMode(int mode) {
@@ -101,13 +105,14 @@ public class Alarm extends Function {
     public void deleteAlarm(int alarmIdx) {
         // TODO implement here
         //delete하면 그 사이를 이어붙임.
-        for(int i = alarmIdx ; i < 9 ; i++)
+        int i;
+        for(i = alarmIdx; i < 9 ; i++)
         {
+            if (alarmList[i + 1] == null)
+                break;
             this.alarmList[i] = this.alarmList[i+1];
         }
-
-        this.alarmList[9] = new AlarmData();
-
+        alarmList[i] = null;
     }
 
     /**
@@ -148,6 +153,8 @@ public class Alarm extends Function {
      */
     public void requestAlarmSelectMode() {
         // TODO implement here
+        segmentPointer[0] = 0;
+        segmentPointer[1] = Math.min(2, getSize() - 1);
         changeMode(2);
     }
 
@@ -156,6 +163,9 @@ public class Alarm extends Function {
      */
     public void timeout() {}
 
+    public void setAlarmPointer(int alarmPointer) {
+        this.alarmPointer = alarmPointer;
+    }
 
     /**
      * 
@@ -192,8 +202,35 @@ public class Alarm extends Function {
                 alarmSettingValue[i] = -1;
 
             typeindex = 0;
+            alarmPointer = 0;
         }
 
+    }
+
+    public void changeValue2(int diff) {
+        alarmPointer += diff;
+
+        if (alarmPointer > getSize() - 1)
+            alarmPointer = getSize() - 1;
+        if (alarmPointer < 0)
+            alarmPointer = 0;
+
+        if (alarmPointer > segmentPointer[1]) {
+            segmentPointer[0]++;
+            segmentPointer[1]++;
+        }
+        else if (alarmPointer < segmentPointer[0]) {
+            segmentPointer[0]--;
+            segmentPointer[1]--;
+        }
+    }
+
+    public int[] getSegmentPointer() {
+        return this.segmentPointer;
+    }
+
+    public void setSegmentPointer(int[] segmentPointer) {
+        this.segmentPointer = segmentPointer;
     }
 
 

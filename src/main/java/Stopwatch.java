@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
  */
 public class Stopwatch extends Function {
 
+    final static int FID = 2;
     public final int STOPWATCH_TOP_LIMIT = 7;
     public final int STOPWATCH_BOTTOM_LIMIT = 0;
 
@@ -50,6 +51,9 @@ public class Stopwatch extends Function {
     private int type;
 
 
+    public Time getStopwatch() {
+        return stopwatch;
+    }
 
     /**
      * Stopwatch 실행 요청

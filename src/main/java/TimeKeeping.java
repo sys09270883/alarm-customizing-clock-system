@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 
 public class TimeKeeping extends Function {
 
+    final static int FID = 1;
     final static String[] DAY_OF_THE_WEEK = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
     private final int TYPE_SIZE = 6;
 

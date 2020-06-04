@@ -44,6 +44,14 @@ public class AlarmView extends DefaultLayout {
         add(borderPanel, new Integer(2));
     }
 
+    public void setBorderPanel(int idx) {
+        int x = 350 - 5;
+        int y = 240 - 5;
+        int w = ALARM_WIDTH + 10;
+        int h = ALARM_HEIGHT + 10;
+        borderPanel.setBounds(x, y + ALARM_HEIGHT * idx, w, h);
+    }
+
     public void setAlarm(String str) {
         displaySegment(350, 180, ALARM_WIDTH, ALARM_HEIGHT, str, layer++);
     }

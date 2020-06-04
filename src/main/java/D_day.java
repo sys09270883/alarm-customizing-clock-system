@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
  */
 public class D_day extends Function {
 
+    final static int FID = 4;
     private final int TYPE_SIZE = 3;
 
     public int[] getDateSettingValue() {

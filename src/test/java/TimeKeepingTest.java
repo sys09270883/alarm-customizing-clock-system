@@ -58,7 +58,7 @@ public class TimeKeepingTest {
     }
 
     @Test
-    public void displayTimeTest() {
+    public void displayTimeTest() { //display는 test하기 애매해요
         TimeKeeping timekeeping = new TimeKeeping(system);
 
         //시간 출력
