@@ -4,6 +4,7 @@
  */
 public class Alarm extends Function {
 
+    final static int FID = 5;
     final static int ALARM_POINTER_MAX = 9;
     /**
      * Default constructor
