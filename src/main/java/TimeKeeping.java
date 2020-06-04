@@ -16,10 +16,17 @@ public class TimeKeeping extends Function {
     public Date getCurDate() {
         return curDate;
     }
+    public Time getCurTime() { return curTime; }
+    public int getD_day() { return d_day; }
 
     private Date curDate;
     private int d_day;
     private int alarmCnt;
+
+    public int getDayOfTheWeek() {
+        return dayOfTheWeek;
+    }
+
     private int dayOfTheWeek; // 1 : 일요일 7 : 토요일
     private int type;
 

@@ -15,6 +15,16 @@ public class Timer extends Function {
     private int timeSettingValue[] = {-1, -1, -1};
     System system;
 
+<<<<<<< HEAD
+=======
+    public Time getTimer() {
+        return timer;
+    }
+
+    /**
+     * Default constructor
+     */
+>>>>>>> 87bbac5e6eaf4c6f3dcedf5f32df54bb2463e4c9
     public Timer(System system) {
         this.system = system;
         fid = 3;
