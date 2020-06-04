@@ -71,7 +71,6 @@ public class AlarmCustom extends Function {
      */
     public void requestIntervalSettingMode() {
         changeMode(2);
-
     }
 
     /**

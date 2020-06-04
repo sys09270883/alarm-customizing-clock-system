@@ -3,21 +3,13 @@
  */
 public abstract class Function {
 
-    /**
-     * Default constructor
-     */
     public Function() {
     }
 
-    /**
-     * 
-     */
     protected int mode;
     protected int fid;
 
-    protected void changeMode() {
-
-    }
+    protected void changeMode() { }
 
     public abstract void changeValue(int diff);
     public abstract void changeType();
