@@ -1,8 +1,5 @@
 import java.util.StringTokenizer;
 
-/**
- * @author Yoonseop Shin
- */
 public class Stopwatch extends Function {
 
     final static int FID = 2;
@@ -11,10 +8,12 @@ public class Stopwatch extends Function {
 
     private final int TYPE_SIZE = 3;
     private int timeSettingValue[] = {-1, -1, -1};
+    private int mode;
+    private Time stopwatch;
+    private String[] stopwatchRecord;
+    private int recordPointer;
+    private int type;
 
-    /**
-     * Default constructor
-     */
     public Stopwatch(System system) {
         fid = 2;
         mode = 0;
@@ -36,21 +35,6 @@ public class Stopwatch extends Function {
         recordPointer = 0;
     }
 
-    private int mode;
-
-    private Time stopwatch;
-
-    public String[] getStopwatchRecord() {
-        return stopwatchRecord;
-    }
-
-    private String[] stopwatchRecord;
-
-    private int recordPointer;
-
-    private int type;
-
-
     public Time getStopwatch() {
         return stopwatch;
     }
@@ -70,9 +54,6 @@ public class Stopwatch extends Function {
         changeMode(0);
     }
 
-    /*
-     * requestResetStopwatch() Class Diagram에 추가해야합니다
-     */
     public void requestResetStopwatch() {
         if (mode == 1)
             requestPauseStopwatch();
@@ -80,26 +61,21 @@ public class Stopwatch extends Function {
         clearList();
     }
 
-    /**
-     * stopwatch record list를 초기화
-     */
+    public String[] getStopwatchRecord() {
+        return stopwatchRecord;
+    }
+
     public void clearList() {
         for(int i=0; i<10; i++) {
             stopwatchRecord[i] = null;
         }
     }
 
-    /**
-     *
-     */
     public void requestSaveRecord() {
         String time = stopwatch.getCurrentTime();
         record(time);
     }
 
-    /**
-     * @param stopwatchTime
-     */
     public void record(String stopwatchTime) {
         for(int i=0; i<10; i++) {
             //stopwatch의 기록이 10개 미만일 때
@@ -118,21 +94,14 @@ public class Stopwatch extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void requestRecordCheckMode() {
         changeMode(2);
-        // TODO move pointer 후 Recordcheck가 끝나면 changeMode()가 한번 더 필요함.
     }
-
 
     public int getRecordPointer() {
         return this.recordPointer;
     }
-    /**
-     * @param diff
-     */
+
     public void movePointer(int diff) {
         recordPointer+=diff;
 
@@ -142,30 +111,12 @@ public class Stopwatch extends Function {
             recordPointer = STOPWATCH_TOP_LIMIT;
     }
 
-    /**
-     * 
-     */
-
-    public void timeout() {
-
-    }
-
-    /**
-     * 
-     */
     public void cancel() {}
 
-    /**
-     * 
-     */
     public void changeMode(int mode) {
         this.mode = mode;
     }
 
-
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {
         timeSettingValue[type] += diff;
         switch(type) {

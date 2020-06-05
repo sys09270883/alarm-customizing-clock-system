@@ -2,9 +2,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
-/**
- * @author Yoonseop Shin
- */
 public class D_day extends Function {
 
     final static int FID = 4;
@@ -16,9 +13,6 @@ public class D_day extends Function {
 
     private int dateSettingValue[] = {-1, -1, -1};
 
-    /**
-     * Default constructor
-     */
     public D_day(System system) {
         fid = 4;
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
@@ -28,47 +22,29 @@ public class D_day extends Function {
         this.system = system;
     }
 
-
-
-    public int getD_day() {
-        return d_day;
-    }
-
     private int d_day;
-
-    public Date getD_dayDate() {
-        return d_dayDate;
-    }
-
     private Date d_dayDate;
-
     private int mode;
-
     private int type;
-
-    // system의 blink에 접근하기 위하여
     private System system;
 
     public void requestDdaySettingMode() {
-        changeMode(); // d-day setting mode로 변경
+        changeMode(-1); // d-day setting mode로 변경
         String curDateStr = d_dayDate.getCurrentDate();
         String splited[] = curDateStr.split(" ");
         d_dayDate.setDate(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
-    /**
-     *
-     */
     public void requestSave() {
         if (dateSettingValue[2] > d_dayDate.numOfDays[dateSettingValue[1]]) {
-            changeMode();
+            changeMode(-1);
             return;
         }
 
         Date saveDdayDate = new Date();
         saveDdayDate.setDate(dateSettingValue[0], dateSettingValue[1], dateSettingValue[2]);
         setDate(saveDdayDate);
-        changeMode(); // d-day setting이 끝났으면 원래 모드로 변경
+        changeMode(-1); // d-day setting이 끝났으면 원래 모드로 변경
         type = 0;
     }
 
@@ -102,36 +78,27 @@ public class D_day extends Function {
         }
     }
 
-    /**
-     *
-     */
+    public int getD_day() {
+        return d_day;
+    }
+
+    public Date getD_dayDate() { return d_dayDate; }
+
     public void requestStopDdayBlink() {
         system.border.stopBlink();
     }
 
-    /**
-     * 
-     */
     public void requestDeleteDday() {
         String str = system.timeKeeping.getCurDate().getCurrentDate();
         d_dayDate.deleteDday(str);
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
     }
 
-    /**
-     * 
-     */
-    public void timeout() {}
+    public void cancel() {
 
-    /**
-     * 
-     */
-    public void cancel() {}
+    }
 
-    /**
-     *
-     */
-    public void changeMode() {
+    public void changeMode(int _mode) {
         mode ^= 1;
         if (mode == 0) {
             Arrays.fill(dateSettingValue, -1);
@@ -148,9 +115,7 @@ public class D_day extends Function {
     public int getType() {
         return this.type;
     }
-    /**
-     * @param diff
-     */
+
     public void changeValue(int diff) {
         dateSettingValue[type] += diff;
         switch(type) {
@@ -175,9 +140,6 @@ public class D_day extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void changeType() { type = (type + 1) % TYPE_SIZE; }
 
     public int getMode() {

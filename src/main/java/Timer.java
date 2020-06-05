@@ -8,21 +8,15 @@ public class Timer extends Function {
 
     final static int FID = 3;
     private final int TYPE_SIZE = 3;
-
-    public int[] getTimeSettingValue() {
-        return timeSettingValue;
-    }
-
     private int timeSettingValue[] = {-1, -1, -1};
+    private Time timer;
+    private int type;
     System system;
 
     public Time getTimer() {
         return timer;
     }
 
-    /**
-     * Default constructor
-     */
     public Timer(System system) {
         this.system = system;
         fid = 3;
@@ -48,26 +42,6 @@ public class Timer extends Function {
         type = 0;
     }
 
-    public void foo() {
-        try {
-            this.timer.getTimeThread().join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        mode = 0;
-        system.beepBuzzer();
-    }
-
-
-    private Time timer;
-
-    private int type;
-
-
-    /**
-     * 
-     */
-
     public void requestTimerSettingMode() {
         changeMode(1);
     }
@@ -81,9 +55,6 @@ public class Timer extends Function {
         changeMode(0);
     }
 
-    /**
-     * 
-     */
     public void requestStartTimer() {
         String str = timer.getCurrentTime();
         StringTokenizer st = new StringTokenizer(str, " ");
@@ -95,9 +66,6 @@ public class Timer extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void requestResetTimer() {
         if (mode == 2)
             requestPauseTimer();
@@ -122,6 +90,10 @@ public class Timer extends Function {
         }
         else if (this.mode == 1)
             Arrays.fill(timeSettingValue, 0);
+    }
+
+    public int[] getTimeSettingValue() {
+        return timeSettingValue;
     }
 
     public void changeValue(int diff) {
