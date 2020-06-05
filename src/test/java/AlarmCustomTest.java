@@ -56,10 +56,10 @@ public class AlarmCustomTest {
         time.setTime(1,2,3);
         system.alarm.addTimeToAlarmList(time);
         alarmCustom.requestAlarmSelectMode();
-
-        alarmCustom.changeValue(1);
+        alarmCustom.alarm.movePointer(1);
         alarmCustom.requestIntervalSettingMode();
 
+        alarmCustom.changeType();
 
         //인터벌이 범위 내에서 잘 바뀌는 지 확인.
         alarmCustom.changeValue(1);
@@ -94,8 +94,16 @@ public class AlarmCustomTest {
         time.setTime(1,1,2);
 
         system.alarm.addTimeToAlarmList(time);
+        alarmCustom.alarm.movePointer(1);
+        alarmCustom.changeValue(1);
+        alarmCustom.changeType();
+        alarmCustom.changeValue(1);
+        alarmCustom.changeType();
         alarmCustom.requestAlarmVolumeMode();
 
+
+
+        // 범위에 맞게 볼륨값이 잘 바뀌는 지 확인
         alarmCustom.changeValue(1);
         java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
 
@@ -116,6 +124,7 @@ public class AlarmCustomTest {
         alarmCustom.changeValue(-1);
         java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
 
+        // 저장이 잘 되는지 확인
         alarmCustom.setCustom();
 
         java.lang.System.out.println(system.alarm.getAlarmList()[0].getAlarmInterval());
