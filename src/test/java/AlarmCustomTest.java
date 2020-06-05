@@ -127,8 +127,8 @@ public class AlarmCustomTest {
         // 저장이 잘 되는지 확인
         alarmCustom.setCustom();
 
-        java.lang.System.out.println(system.alarm.getAlarmList()[0].getAlarmInterval());
-        java.lang.System.out.println(system.alarm.getAlarmList()[0].getAlarmVolume());
+        java.lang.System.out.println(system.alarm.getAlarmList()[0].getInterval());
+        java.lang.System.out.println(system.alarm.getAlarmList()[0].getVolume());
 
     }
 
