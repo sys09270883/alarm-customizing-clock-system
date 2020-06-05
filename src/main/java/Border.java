@@ -1,12 +1,12 @@
 /**
  * @author Yoonseop Shin
  */
-public class Blink {
+public class Border {
 
     /**
      * Default constructor
      */
-    public Blink(System system) {
+    public Border(System system) {
     }
 
     public boolean isBlinkState() {

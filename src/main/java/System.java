@@ -17,7 +17,7 @@ public class System extends Function {
     Alarm alarm;
     AlarmCustom alarmCustom;
     Buzzer buzzer;
-    public Blink blink;
+    public Border border;
     private int functionNumIdx = 0;
     private int[] functionNum;
     private int selectedFid;
@@ -55,15 +55,14 @@ public class System extends Function {
 
         buzzer = new Buzzer();
 
-        blink = new Blink(this);
+        border = new Border(this);
         cacheValue = new int[4];
         Arrays.fill(cacheValue, -1);
     }
 
     public static void main(String[] args) {
-        System system = new System();
+        new System();
     }
-
 
     public void startCheckTimeOut() {
         checkTimeOut = new Thread() {
@@ -1153,11 +1152,11 @@ public class System extends Function {
     public int updateStatus() {
         if (status == 0b11) {
             status = 0b01;
-            blink.stopBlink();
+            border.stopBlink();
             return 2;
         } else if (status == 0b10) {
             status = 0b00;
-            blink.stopBlink();
+            border.stopBlink();
             return 1;
         } else if (status == 0b01) {
             status = 0b00;

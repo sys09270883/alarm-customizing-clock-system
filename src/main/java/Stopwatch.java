@@ -55,17 +55,11 @@ public class Stopwatch extends Function {
         return stopwatch;
     }
 
-    /**
-     * Stopwatch 실행 요청
-     */
     public void requestStartStopwatch() {
         changeMode(1);
         stopwatch.startTime();
     }
 
-    /**
-     * Stopwatch 멈춤 요청
-     */
     public void requestPauseStopwatch() {
         stopwatch.pauseTime();
         try {

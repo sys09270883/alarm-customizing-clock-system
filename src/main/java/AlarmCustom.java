@@ -96,16 +96,12 @@ public class AlarmCustom extends Function {
 //    }
 
     System system;
-    /**
-     * @param alarmCustom
-     */
-    public void setCustom(AlarmCustom alarmCustom) {
-        // TODO implement here
-        int size = this.alarm.getSize();
-        this.alarm.getAlarmList()[size].setAlarmCustom(alarmCustom);
-        mode = 0;
-        changeMode();
 
+    public void setCustom() {
+        // TODO implement here
+        AlarmData[] alarmList = system.alarm.getAlarmList();
+        alarmList[customSettingValue[0]].setInterval(customSettingValue[1]);
+        alarmList[customSettingValue[0]].setVolume(customSettingValue[2]);
     }
 
     public void changeMode(int mode) {
@@ -131,9 +127,7 @@ public class AlarmCustom extends Function {
     }
 
     public void requestSave() {
-        AlarmData[] alarmList = system.alarm.getAlarmList();
-        alarmList[customSettingValue[0]].setInterval(customSettingValue[1]);
-        alarmList[customSettingValue[0]].setVolume(customSettingValue[2]);
+        setCustom();
         type = 0;
         changeMode(0);
     }
