@@ -70,7 +70,7 @@ public class TimeKeeping extends Function {
                 // Alarm
                 if (system.alarm != null) {
                     int alarmNum = system.alarm.getSize();
-                    system.GUI.timekeepingView.setAlarmNum(String.format("%02d", alarmNum));
+                    system.GUI.timekeepingView.setAlarmNum(String.valueOf(alarmNum));
                 } else
                     system.GUI.timekeepingView.setAlarmNum("0");
 
@@ -79,6 +79,10 @@ public class TimeKeeping extends Function {
 
         curTime.startTime();
         type = 0;
+    }
+
+    public void setAlarmCnt(int cnt) {
+        this.alarmCnt = cnt;
     }
 
     public void changeMode(int _mode) {

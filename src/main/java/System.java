@@ -854,7 +854,7 @@ public class System extends Function {
                     int acType = alarmCustom.getType();
 
                     if (acType == 2) {  // 볼륨
-                        alarmCustom.requestAlarmVolumeMode();
+                        alarmCustom.requestVolumeSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
                                 430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
                         );
@@ -977,9 +977,9 @@ public class System extends Function {
                     nextFunction();
                 } else if (alarm.getMode() == 1) {
                     alarm.requestSave();
+                    timeKeeping.setAlarmCnt(alarm.getSize());
                     int alarmPointer = alarm.getAlarmPointer();
                     AlarmData[] tmp = alarm.getAlarmList();
-
 
                     GUI.alarmView.borderPanel.setVisible(false);
                     GUI.alarmView.setAlarm("000000");

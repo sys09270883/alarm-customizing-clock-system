@@ -40,15 +40,17 @@ public class Alarm extends Function {
     }
 
     public void addTimeToAlarmList(Time alarmTime) {
-        // TODO implement here
         int size = getSize();
-        if(size >= 10)
-        {
-            // 꽉 찼으니 저장 안함.
-        } else {
+        if (size >= 10) {}// 꽉 찼으니 저장 안함.
+        else {
             Time newTime = new Time(0);
             newTime.setTime(0, 0, 0);
             curAlarm.setAlarmTime(newTime);
+
+            for (int i = 0; i < size; i++) {
+                if (alarmList[i].getAlarmTime().equals(alarmTime))
+                    return;
+            }
 
             if (alarmList[size] == null)
                 alarmList[size] = new AlarmData();
