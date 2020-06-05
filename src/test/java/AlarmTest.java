@@ -122,26 +122,7 @@ public class AlarmTest  {
 
     }
 
-    @Test
-    public void DisplayAlarmListTest() {
-        Alarm alarm = new Alarm(system);
-
-        Time time = new Time(2);
-        time.setTime(1,1,1);
-        alarm.addTimeToAlarmList(time);
-        time.setTime(2,2,2);
-        alarm.addTimeToAlarmList(time);
-        time.setTime(3,3,3);
-        alarm.addTimeToAlarmList(time);
-
-        // 1번째 출력
-        java.lang.System.out.println(alarm.getAlarmList()[0]);
-        // 2번째 출력
-        java.lang.System.out.println(alarm.getAlarmList()[1]);
-        // 3번째 출력
-        java.lang.System.out.println(alarm.getAlarmList()[2]);
-
-    }
+    // DisplayAlarmList는 system에서 확인
 
     @Test
     public void ControlAlarmListTest() {

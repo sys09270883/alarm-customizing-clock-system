@@ -98,12 +98,7 @@ public class StopwatchTest {
             assert(rec[i].equals("0 0 " + (i+1)));
     }
 
-    @Test
-    public void displayStopwatchTest() { //display는 test하기 애매해요
-        Stopwatch stopwatch = new Stopwatch(system);
-
-        //
-    }
+    // DisplayStopwatch는 system에서 확인
 
     @Test
     public void controlStopwatchRecord() {

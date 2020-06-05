@@ -57,19 +57,7 @@ public class TimeKeepingTest {
         //1: 일요일~ 7: 토요일
     }
 
-    @Test
-    public void displayTimeTest() { //display는 test하기 애매해요
-        TimeKeeping timekeeping = new TimeKeeping(system);
-
-        //시간 출력
-        java.lang.System.out.println(timekeeping.getCurTime().getTime());
-        //날짜 출력
-        java.lang.System.out.println(timekeeping.getCurDate().getCurrentDate());
-        //요일 출력
-        java.lang.System.out.println(timekeeping.getDayOfTheWeek());
-        //d-day 출력
-        java.lang.System.out.println(timekeeping.getD_day());
-    }
+    // DisplayTimeSet는 system에서 확인
 
     @Test
     public void setDisplayTest() {
