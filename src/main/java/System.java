@@ -977,9 +977,9 @@ public class System extends Function {
                     nextFunction();
                 } else if (alarm.getMode() == 1) {
                     alarm.requestSave();
+                    timeKeeping.setAlarmCnt(alarm.getSize());
                     int alarmPointer = alarm.getAlarmPointer();
                     AlarmData[] tmp = alarm.getAlarmList();
-
 
                     GUI.alarmView.borderPanel.setVisible(false);
                     GUI.alarmView.setAlarm("000000");
