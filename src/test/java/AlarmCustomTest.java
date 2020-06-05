@@ -99,7 +99,7 @@ public class AlarmCustomTest {
         alarmCustom.changeType();
         alarmCustom.changeValue(1);
         alarmCustom.changeType();
-        alarmCustom.requestAlarmVolumeMode();
+        alarmCustom.requestVolumeSettingMode();
 
 
 

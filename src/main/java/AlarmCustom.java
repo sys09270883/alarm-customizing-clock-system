@@ -41,7 +41,7 @@ public class AlarmCustom extends Function {
         changeMode(2);
     }
 
-    public void requestAlarmVolumeMode() {
+    public void requestVolumeSettingMode() {
         changeMode(2);
     }
 

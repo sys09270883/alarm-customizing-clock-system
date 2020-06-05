@@ -1,4 +1,3 @@
-import junit.framework.TestCase;
 import org.junit.Test;
 
 public class SystemTest  {
@@ -124,7 +123,7 @@ public class SystemTest  {
         system.cancel(alarmCustom);
         java.lang.System.out.println(alarmCustom.getMode()); // 기본 단계로 돌아갔는지 확인.
 
-        alarmCustom.requestAlarmVolumeMode();
+        alarmCustom.requestVolumeSettingMode();
         system.cancel(alarmCustom);
         java.lang.System.out.println(alarmCustom.getMode());// 기본 단계로 돌아갔는지 확인.
 

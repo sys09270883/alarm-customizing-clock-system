@@ -854,7 +854,7 @@ public class System extends Function {
                     int acType = alarmCustom.getType();
 
                     if (acType == 2) {  // 볼륨
-                        alarmCustom.requestAlarmVolumeMode();
+                        alarmCustom.requestVolumeSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
                                 430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
                         );

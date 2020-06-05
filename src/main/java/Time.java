@@ -59,7 +59,12 @@ class Time implements Runnable {
         synchronized (pauseLock) {
             isPaused = true;
         }
+    }
 
+    public boolean equals(Time time) {
+        if (this.hour == time.hour && this.min == time.min && this.sec == time.sec)
+            return true;
+        return false;
     }
 
     // 추가
