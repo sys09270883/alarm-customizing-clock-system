@@ -70,9 +70,6 @@ public class Timer extends Function {
 
     public void requestTimerSettingMode() {
         changeMode(1);
-        String curTimeStr = timer.getCurrentTime();
-        String splited[] = curTimeStr.split(" ");
-        timer.setTime(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
     /**
@@ -108,9 +105,6 @@ public class Timer extends Function {
         changeMode(0);
     }
 
-    /**
-     * 
-     */
     public void requestPauseTimer() {
         timer.pauseTime();
         try {
@@ -121,10 +115,6 @@ public class Timer extends Function {
         changeMode(0);
     }
 
-
-    /**
-     * 
-     */
     public void changeMode(int mode) {
         this.mode = mode;
         if (this.mode == 0) {
@@ -134,10 +124,6 @@ public class Timer extends Function {
             Arrays.fill(timeSettingValue, 0);
     }
 
-
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {
         timeSettingValue[type] += diff;
         switch(type) {
@@ -162,9 +148,6 @@ public class Timer extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void changeType() { type = (type + 1) % TYPE_SIZE; }
 
     public int getMode() {

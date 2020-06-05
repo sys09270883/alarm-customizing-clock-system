@@ -106,7 +106,7 @@ public class D_day extends Function {
      *
      */
     public void requestStopDdayBlink() {
-        system.blink.stopBlink();
+        system.border.stopBlink();
     }
 
     /**

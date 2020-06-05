@@ -1,12 +1,12 @@
 /**
  * @author Yoonseop Shin
  */
-public class Blink {
+public class Border {
 
     /**
      * Default constructor
      */
-    public Blink(System system) {
+    public Border(System system) {
     }
 
     public boolean isBlinkState() {
@@ -14,20 +14,20 @@ public class Blink {
     }
 
     /**
-     * 
+     *
      */
     private boolean blinkState;
 
 
     /**
-     * 
+     *
      */
     public void stopBlink() {
         // TODO implement here
     }
 
     /**
-     * 
+     *
      */
     public void startBlink() {
         // TODO implement here

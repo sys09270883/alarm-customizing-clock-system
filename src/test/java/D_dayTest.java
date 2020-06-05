@@ -58,18 +58,18 @@ public class D_dayTest {
             java.lang.System.out.println(e.getMessage());
         }
 
-        assertTrue(system.blink.isBlinkState());
+        assertTrue(system.border.isBlinkState());
     }
 
     @Test
     public void stopDdayBlinkTest() {
         D_day d_day = new D_day(system);
 
-        system.blink.startBlink();
-        assertTrue(system.blink.isBlinkState());
+        system.border.startBlink();
+        assertTrue(system.border.isBlinkState());
 
         d_day.requestStopDdayBlink();
-        assertFalse(system.blink.isBlinkState());
+        assertFalse(system.border.isBlinkState());
     }
 
     @Test
