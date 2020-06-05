@@ -5,68 +5,40 @@
 public class Alarm extends Function {
 
     final static int FID = 5;
-    final static int ALARM_POINTER_MAX = 9;
-    /**
-     * Default constructor
-     */
+
     public Alarm(System system) {
         fid = 5;
         curAlarm = new AlarmData();
         alarmList = new AlarmData[10];
         mode = 0; // 기본 모드
         segmentPointer = new int[2];
-
         typeindex = 0;
-
-
     }
 
     private AlarmData curAlarm;
-
     private AlarmData[] alarmList;
-
-
-
-
     private int alarmPointer;
-    public int[] segmentPointer;
+    private int[] segmentPointer;
     private int mode;
     private int typeindex; // 시분초 구분
     private int alarmSettingValue[] = {-1,-1,-1};
-
 
     public int[] getAlarmSettingValue() {
        return this.alarmSettingValue;
     }
 
-
-    /**
-     * 
-     */
     public void requestAlarmSettingMode() {
-        // TODO implement here
         changeMode(1);
     }
 
-    /**
-     * 
-     */
     public void requestSave() {
-        // TODO implement here
         Time time = new Time(2);
         time.setTime(alarmSettingValue[0],alarmSettingValue[1], alarmSettingValue[2]);
         this.curAlarm.setAlarmTime(time);
-
-        //this.curAlarm.setAlarmTime(time);
-        //this.curAlarm.setAlarmTime();
         addTimeToAlarmList(time);
         changeMode(0);
-
     }
 
-    /**
-     * @param alarmTime
-     */
     public void addTimeToAlarmList(Time alarmTime) {
         // TODO implement here
         int size = getSize();
@@ -85,11 +57,7 @@ public class Alarm extends Function {
 
     }
 
-    /**
-     * 
-     */
     public void requestDeleteAlarm() {
-        // TODO implement here
         deleteAlarm(this.alarmPointer);
         changeMode(0);
     }
@@ -98,12 +66,7 @@ public class Alarm extends Function {
         this.mode = mode;
     }
 
-    /**
-     * @param alarmIdx
-     */
-
     public void deleteAlarm(int alarmIdx) {
-        // TODO implement here
         //delete하면 그 사이를 이어붙임.
         int i;
         for(i = alarmIdx; i < 9 ; i++)
@@ -115,26 +78,18 @@ public class Alarm extends Function {
         alarmList[i] = null;
     }
 
-    /**
-     * 
-     */
     public void requestStopAlarmBuzzer() {
         // TODO implement here
         Buzzer buzzer = new Buzzer();
         buzzer.stopBuzzer();
     }
 
-    /**
-     * @param diff
-     */
     public void movePointer(int diff) {
         // TODO implement here
         int size = this.getSize();
 
         if (size == 0)
-        {
             return;
-        }
 
         this.alarmPointer += diff;
 
@@ -148,9 +103,6 @@ public class Alarm extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void requestAlarmSelectMode() {
         // TODO implement here
         segmentPointer[0] = 0;
@@ -158,28 +110,14 @@ public class Alarm extends Function {
         changeMode(2);
     }
 
-    /**
-     * 
-     */
-    public void timeout() {}
-
     public void setAlarmPointer(int alarmPointer) {
         this.alarmPointer = alarmPointer;
     }
 
-    /**
-     * 
-     */
     public void cancel() {
-
         mode = 0;
-        changeMode();
+        changeMode(-1);
     }
-
-    /**
-     * 
-     */
-
 
     public void changeMode(int mode) { // 기본 화면, 알람 리스트 확인, 알람 설정 이렇게 3개가 있음.
         this.mode = mode;
@@ -189,18 +127,13 @@ public class Alarm extends Function {
             alarmSettingValue[0] = 0;
             alarmSettingValue[1] = 0;
             alarmSettingValue[2] = 0;
-
-
         } else if (this.mode == 2){ // 알람 리스트 확인.
             // 포인터를 0으로 초기화
             alarmPointer = 0;
-
-
         } else { // 기본 화면
             // alarmSettingValue -1로 비활성화
             for(int i=0; i< 3; ++i)
                 alarmSettingValue[i] = -1;
-
             typeindex = 0;
             alarmPointer = 0;
         }
@@ -234,9 +167,6 @@ public class Alarm extends Function {
     }
 
 
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {
         alarmSettingValue[typeindex] += diff;
 
@@ -264,9 +194,6 @@ public class Alarm extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void changeType() {
         typeindex = (typeindex + 1) % 3; // 시(0), 분(1), 초(2) 타입 변경.
     }
@@ -297,7 +224,5 @@ public class Alarm extends Function {
 
     public AlarmData[] getAlarmList(){
         return this.alarmList;
-
     }
-
 }

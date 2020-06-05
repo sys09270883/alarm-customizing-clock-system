@@ -13,21 +13,9 @@ public class TimeKeeping extends Function {
     // 0 -> Default Mode, 1 -> TimeSettingMode
     private int mode;
     private Time curTime;
-
-    public Date getCurDate() {
-        return curDate;
-    }
-    public Time getCurTime() { return curTime; }
-    public int getD_day() { return d_day; }
-
     private Date curDate;
     private int d_day;
     private int alarmCnt;
-
-    public int getDayOfTheWeek() {
-        return dayOfTheWeek;
-    }
-
     private int dayOfTheWeek; // 1 : 일요일 7 : 토요일
     private int type;
 
@@ -93,7 +81,7 @@ public class TimeKeeping extends Function {
         type = 0;
     }
 
-    public void changeMode() {
+    public void changeMode(int _mode) {
         mode ^= 1;
 
         // 현재 시, 분, 초, 년, 월, 일로 timeSettingValue 초기화
@@ -181,7 +169,7 @@ public class TimeKeeping extends Function {
 
     public void requestSave() {
         if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
-            changeMode();
+            changeMode(-1);
             return;
         }
 
@@ -197,11 +185,11 @@ public class TimeKeeping extends Function {
         setDayOfTheWeek();
 
         curTime.startTime();
-        changeMode();
+        changeMode(-1);
     }
 
     public void requestTimeSettingMode() {
-        this.changeMode();
+        this.changeMode(-1);
     }
 
     public int[] getTimeSettingValue() {
@@ -215,4 +203,9 @@ public class TimeKeeping extends Function {
     public int getMode() {
         return mode;
     }
+
+    public Date getCurDate() { return curDate; }
+    public Time getCurTime() { return curTime; }
+    public int getD_day() { return d_day; }
+    public int getDayOfTheWeek() { return dayOfTheWeek; }
 }

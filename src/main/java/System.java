@@ -9,14 +9,14 @@ public class System extends Function {
 
     // 6개 중 4개 인스턴스만 갖고있음.
     // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.
-    GUI GUI;
-    TimeKeeping timeKeeping;
-    Stopwatch stopwatch;
-    Timer timer;
-    D_day d_day;
-    Alarm alarm;
-    AlarmCustom alarmCustom;
-    Buzzer buzzer;
+    public GUI GUI;
+    public TimeKeeping timeKeeping;
+    public Stopwatch stopwatch;
+    public Timer timer;
+    public D_day d_day;
+    public Alarm alarm;
+    public AlarmCustom alarmCustom;
+    public Buzzer buzzer;
     public Border border;
     private int functionNumIdx = 0;
     private int[] functionNum;
@@ -25,6 +25,7 @@ public class System extends Function {
     private int type;
     private Thread checkTimeOut;
     private long lastOperateTime;
+    private int[] cacheValue;
 
     public int getSelectedFid() {
         return selectedFid;
@@ -45,16 +46,12 @@ public class System extends Function {
 
         timeKeeping = new TimeKeeping(this);
         stopwatch = new Stopwatch(this);
-//        timer = null;
-//        d_day = null;
         timer = new Timer(this);
         d_day = new D_day(this);
-//        alarm = new Alarm(this);
-//        alarmCustom = new AlarmCustom(this);
-
+        alarm = null;
+        alarmCustom = null;
 
         buzzer = new Buzzer();
-
         border = new Border(this);
         cacheValue = new int[4];
         Arrays.fill(cacheValue, -1);
@@ -151,7 +148,6 @@ public class System extends Function {
         }
     }
 
-    private int[] cacheValue;
 
     public void selectBtnLongPressed() {
         lastOperateTime = java.lang.System.currentTimeMillis();
@@ -160,7 +156,7 @@ public class System extends Function {
         switch (selectedFid) {
             case 1: // timekeeping
                 if (timeKeeping.getMode() == 0 && mode == 0) {
-                    changeMode();
+                    requestFunctionSettingMode();
 
                     GUI.setView(GUI.functionSelectingView);
                     GUI.functionSelectingView.setdDay("   ");
@@ -213,6 +209,10 @@ public class System extends Function {
                 }
                 break;
         }
+    }
+
+    public void requestFunctionSettingMode() {
+        changeMode(-1);
     }
 
     public void startBtnPressed() {
@@ -341,7 +341,7 @@ public class System extends Function {
                 {
                     alarm.changeValue2(1);
                     int alarmPointer = alarm.getAlarmPointer();
-                    int[] segmentPointer = alarm.segmentPointer;
+                    int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
                     if (alarmPointer >= segmentPointer[1]) {    // 같을 때
@@ -371,7 +371,7 @@ public class System extends Function {
                     alarmCustom.changeValue2(1);
 
                     int alarmPointer = alarm.getAlarmPointer();
-                    int[] segmentPointer = alarm.segmentPointer;
+                    int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
                     if (alarmPointer >= segmentPointer[1]) {    // 같을 때
@@ -534,7 +534,7 @@ public class System extends Function {
                 {
                     alarm.changeValue2(-1);
                     int alarmPointer = alarm.getAlarmPointer();
-                    int[] segmentPointer = alarm.segmentPointer;
+                    int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
                     if (alarmPointer <= segmentPointer[0]) {    // 같을 때
@@ -568,7 +568,7 @@ public class System extends Function {
                 else if (alarmCustom.getMode() == 1) {
                     alarmCustom.changeValue2(-1);
                     int alarmPointer = alarm.getAlarmPointer();
-                    int[] segmentPointer = alarm.segmentPointer;
+                    int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
                     if (alarmPointer <= segmentPointer[0]) {    // 같을 때
@@ -884,7 +884,7 @@ public class System extends Function {
                     // 5, 6은 세트
                     setFunction();
 
-                    changeMode();
+                    changeMode(-1);
                     GUI.setView(GUI.timekeepingView);
                 } else {
                     // 저장을 하면 d-day를 다시 계산하면 됨.
@@ -1032,11 +1032,10 @@ public class System extends Function {
     }
 
     public void cancel(Function curFunction) {
-        curFunction.changeMode();
+        curFunction.changeMode(-1);
     }
 
-    @Override
-    public void changeMode() {
+    public void changeMode(int _mode) {
         mode ^= 1;
 
         if (mode == 0) {
