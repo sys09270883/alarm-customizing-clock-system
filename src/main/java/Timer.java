@@ -70,9 +70,6 @@ public class Timer extends Function {
 
     public void requestTimerSettingMode() {
         changeMode(1);
-        String curTimeStr = timer.getCurrentTime();
-        String splited[] = curTimeStr.split(" ");
-        timer.setTime(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
     /**
