@@ -81,46 +81,44 @@ public class AlarmView extends DefaultLayout {
         Time alarmData1;
 
         switch (size) {
-            case 0 :
+            case 0:
                 displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE" , layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
                         , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
                 break;
             case 1:
-                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()) , layer++);
+                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[0].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE" , layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
                         , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
                 break;
             case 2:
                 alarmData1 = alarmData[0].getTime();
-                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()), layer++);
+                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[0].getTime().getCurrentTime()), layer++);
 
                 alarmData1 = alarmData[1].getTime();
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].getTime().getCurrentTime()) , layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[1].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
                         , ALARM_LIST_HEIGHT / DISPLAY_AMT, "  NONE", layer++);
                 break;
             case 3:
-                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[0].getTime().getCurrentTime()), layer++);
+                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[0].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[1].getTime().getCurrentTime()), layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[1].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT,String.format("%6s",alarmData[2].getTime().getCurrentTime()), layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[2].getTime().getCurrentTime()), layer++);
             default:
-                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer-1].getTime().getCurrentTime()), layer++);
+                displaySegment(350, 240, ALARM_WIDTH, ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[pointer - 1].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer].getTime().getCurrentTime()) , layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[pointer].getTime().getCurrentTime()), layer++);
                 displaySegment(350, 240 + 2 * ALARM_LIST_HEIGHT / DISPLAY_AMT, ALARM_WIDTH
-                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s",alarmData[pointer+1].getTime().getCurrentTime()), layer++);
+                        , ALARM_LIST_HEIGHT / DISPLAY_AMT, String.format("%6s", alarmData[pointer + 1].getTime().getCurrentTime()), layer++);
                 break;
         }
-
-
 
 
     }

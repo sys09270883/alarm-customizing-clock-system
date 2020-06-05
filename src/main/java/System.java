@@ -1,6 +1,5 @@
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 /**
@@ -66,26 +65,37 @@ public class System extends Function {
     }
 
 
-
-
     public void startCheckTimeOut() {
         checkTimeOut = new Thread() {
             public void run() {
                 Function curFunction;
-                switch(functionNum[functionNumIdx]) {
-                    case 1 : curFunction = timeKeeping; break;
-                    case 2 : curFunction = stopwatch; break;
-                    case 3 : curFunction = timer; break;
-                    case 4 : curFunction = d_day; break;
-                    case 5 : curFunction = alarm; break;
-                    case 6 : curFunction = alarmCustom; break;
-                    default: curFunction = null;
+                switch (functionNum[functionNumIdx]) {
+                    case 1:
+                        curFunction = timeKeeping;
+                        break;
+                    case 2:
+                        curFunction = stopwatch;
+                        break;
+                    case 3:
+                        curFunction = timer;
+                        break;
+                    case 4:
+                        curFunction = d_day;
+                        break;
+                    case 5:
+                        curFunction = alarm;
+                        break;
+                    case 6:
+                        curFunction = alarmCustom;
+                        break;
+                    default:
+                        curFunction = null;
                 }
 
-                while(curFunction.getMode() == 1) {
+                while (curFunction.getMode() == 1) {
                     try {
                         Thread.sleep(1000);
-                        if(java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
+                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
                             cancel(curFunction);
                         }
                     } catch (InterruptedException e) {
@@ -107,8 +117,7 @@ public class System extends Function {
                 if (timeKeeping.getMode() == 0 && mode == 1) {
                     cancel(this);
                     GUI.setView(GUI.timekeepingView);
-                }
-                else if (timeKeeping.getMode() == 1 && mode == 0) {
+                } else if (timeKeeping.getMode() == 1 && mode == 0) {
                     cancel(timeKeeping);
                     GUI.timekeepingView.borderPanel.setVisible(false);
                 }
@@ -127,8 +136,7 @@ public class System extends Function {
                     GUI.d_dayView.setYear("  ");
                     GUI.d_dayView.setMonth("NO");
                     GUI.d_dayView.setDate("NE");
-                }
-                else {
+                } else {
                     String curDate = d_day.getD_dayDate().getCurrentDate();
                     StringTokenizer st = new StringTokenizer(curDate, " ");
                     GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
@@ -216,8 +224,7 @@ public class System extends Function {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     return;
-                }
-                else if (timeKeeping.getMode() == 1 && mode == 0) {
+                } else if (timeKeeping.getMode() == 1 && mode == 0) {
                     timeKeeping.changeValue(1);
                     int[] timeSettingValue = timeKeeping.getTimeSettingValue();
                     GUI.timekeepingView.setHour(String.format("%02d", timeSettingValue[0]));
@@ -226,8 +233,7 @@ public class System extends Function {
                     GUI.timekeepingView.setDate(String.format("%02d", timeSettingValue[3]).substring(2, 4)
                             + String.format("%02d", timeSettingValue[4])
                             + String.format("%02d", timeSettingValue[5]));
-                }
-                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                } else if (timeKeeping.getMode() == 0 && mode == 1) {
                     changeValue(1);
 
                     String str = "1";
@@ -240,11 +246,9 @@ public class System extends Function {
             case 2: // stopwatch
                 if (stopwatch.getMode() == 0) {
                     stopwatch.requestStartStopwatch();
-                }
-                else if (stopwatch.getMode() == 1){
+                } else if (stopwatch.getMode() == 1) {
                     stopwatch.requestPauseStopwatch();
-                }
-                else {
+                } else {
                     stopwatch.movePointer(1);
                     String[] tmp = stopwatch.getStopwatchRecord();
 
@@ -285,15 +289,13 @@ public class System extends Function {
             case 3: // timer
                 if (timer.getMode() == 0) {
                     timer.requestStartTimer();
-                }
-                else if (timer.getMode() == 1){
+                } else if (timer.getMode() == 1) {
                     timer.changeValue(1);
                     int[] tsv = timer.getTimeSettingValue();
                     GUI.timerView.setHour(String.format("%02d", tsv[0]));
                     GUI.timerView.setMinute(String.format("%02d", tsv[1]));
                     GUI.timerView.setSecond(String.format("%02d", tsv[2]));
-                }
-                else {
+                } else {
                     timer.requestPauseTimer();
                 }
 
@@ -301,8 +303,7 @@ public class System extends Function {
             case 4: // d-day
                 if (d_day.getMode() == 0) {
                     // 아무것도 없음.
-                }
-                else {
+                } else {
                     d_day.changeValue(1);
                     int[] curDate = d_day.getDateSettingValue();
                     GUI.d_dayView.setYear(String.format("%02d", curDate[0] % 100));
@@ -313,30 +314,29 @@ public class System extends Function {
             case 5: // alarm
                 if (alarm.getMode() == 0)   // 기본값
                     return;
-                // GUI에 반영해야 함.
+                    // GUI에 반영해야 함.
                 else if (alarm.getMode() == 1) { // 알람 설정
                     alarm.changeValue(1);
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
                     String str1 = "00", str2 = "00", str3 = "00";
-                    if(alarmSettingValue[0] < 10) {
+                    if (alarmSettingValue[0] < 10) {
                         str1 = "0" + String.format("%1s", alarmSettingValue[0]);
                     } else {
                         str1 = String.format("%02d", alarmSettingValue[0]);
                     }
-                    if (alarmSettingValue[1] < 10)
-                    {
+                    if (alarmSettingValue[1] < 10) {
                         str2 = "0" + String.format("%1s", alarmSettingValue[1]);
-                    }else {
+                    } else {
                         str2 = String.format("%02d", alarmSettingValue[1]);
-                    }if (alarmSettingValue[2] < 10)
-                    {
+                    }
+                    if (alarmSettingValue[2] < 10) {
                         str3 = "0" + String.format("%1s", alarmSettingValue[2]);
-                    }else {
+                    } else {
                         str3 = String.format("%02d", alarmSettingValue[2]);
                     }
 
-                    GUI.alarmView.setAlarm(str1 + str2  + str3);
+                    GUI.alarmView.setAlarm(str1 + str2 + str3);
 
                 } else if (alarm.getMode() == 2) // 포인터 조종
                 {
@@ -368,8 +368,7 @@ public class System extends Function {
                 if (alarmCustom.getMode() == 0) // 기본모드
                 {
 
-                }
-                else if (alarmCustom.getMode() == 1) { // 알람 리스트 조회 모드
+                } else if (alarmCustom.getMode() == 1) { // 알람 리스트 조회 모드
                     alarmCustom.changeValue2(1);
 
                     int alarmPointer = alarm.getAlarmPointer();
@@ -415,7 +414,7 @@ public class System extends Function {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0 && mode == 0)
                     return;
-                // GUI에 반영해야 함.
+                    // GUI에 반영해야 함.
                 else if (timeKeeping.getMode() == 1 && mode == 0) {
                     timeKeeping.changeValue(-1);
                     int type = timeKeeping.getType();
@@ -427,8 +426,7 @@ public class System extends Function {
                     GUI.timekeepingView.setDate(String.format("%02d", timeSettingValue[3]).substring(2, 4)
                             + String.format("%02d", timeSettingValue[4])
                             + String.format("%02d", timeSettingValue[5]));
-                }
-                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                } else if (timeKeeping.getMode() == 0 && mode == 1) {
                     changeValue(-1);
 
                     String str = "1";
@@ -475,8 +473,7 @@ public class System extends Function {
                     }
 
                     GUI.stopwatchView.setStopwatchList(str[0] + str[1] + str[2]);
-                }
-                else {
+                } else {
                     stopwatch.requestResetStopwatch();
                     GUI.stopwatchView.setStopwatch("000000");
                     GUI.stopwatchView.setStopwatchList("  NONE  NONE  NONE");
@@ -489,8 +486,7 @@ public class System extends Function {
                     GUI.timerView.setHour(String.format("%02d", tsv[0]));
                     GUI.timerView.setMinute(String.format("%02d", tsv[1]));
                     GUI.timerView.setSecond(String.format("%02d", tsv[2]));
-                }
-                else {
+                } else {
                     timer.requestResetTimer();
                     GUI.timerView.setHour("00");
                     GUI.timerView.setMinute("00");
@@ -500,8 +496,7 @@ public class System extends Function {
             case 4: // d-day
                 if (d_day.getMode() == 0) {
                     // 아무것도 없음.
-                }
-                else {
+                } else {
                     d_day.changeValue(-1);
                     int[] curDate = d_day.getDateSettingValue();
                     GUI.d_dayView.setYear(String.format("%02d", curDate[0] % 100));
@@ -518,24 +513,23 @@ public class System extends Function {
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
                     String str1 = "00", str2 = "00", str3 = "00";
-                    if(alarmSettingValue[0] < 10) {
+                    if (alarmSettingValue[0] < 10) {
                         str1 = "0" + String.format("%1s", alarmSettingValue[0]);
                     } else {
                         str1 = String.format("%02d", alarmSettingValue[0]);
                     }
-                    if (alarmSettingValue[1] < 10)
-                    {
+                    if (alarmSettingValue[1] < 10) {
                         str2 = "0" + String.format("%1s", alarmSettingValue[1]);
-                    }else {
+                    } else {
                         str2 = String.format("%02d", alarmSettingValue[1]);
-                    }if (alarmSettingValue[2] < 10)
-                    {
+                    }
+                    if (alarmSettingValue[2] < 10) {
                         str3 = "0" + String.format("%1s", alarmSettingValue[2]);
-                    }else {
+                    } else {
                         str3 = String.format("%02d", alarmSettingValue[2]);
                     }
 
-                    GUI.alarmView.setAlarm(str1 + str2  + str3);
+                    GUI.alarmView.setAlarm(str1 + str2 + str3);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 } else if (alarm.getMode() == 2) // 포인터 조종
                 {
@@ -571,7 +565,7 @@ public class System extends Function {
                     alarm.movePointer(-1);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 }
-                    // GUI에 반영해야 함.
+                // GUI에 반영해야 함.
                 else if (alarmCustom.getMode() == 1) {
                     alarmCustom.changeValue2(-1);
                     int alarmPointer = alarm.getAlarmPointer();
@@ -597,8 +591,7 @@ public class System extends Function {
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
-                }
-                else if (alarmCustom.getMode() == 2) { // 알람 간격, 볼륨 설정
+                } else if (alarmCustom.getMode() == 2) { // 알람 간격, 볼륨 설정
                     alarmCustom.changeValue(-1);
                     int[] csvArr = alarmCustom.getCustomSettingValue();
                     GUI.alarmCustomView.setAlarmInterval(String.valueOf(csvArr[1]));
@@ -625,8 +618,7 @@ public class System extends Function {
                             (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
                             GUI.timekeepingView.curTimePanel1.getHeight() + 10
                     );
-                }
-                else if (timeKeeping.getMode() == 1 && mode == 0){
+                } else if (timeKeeping.getMode() == 1 && mode == 0) {
                     timeKeeping.changeType();
                     int type = timeKeeping.getType();
                     GUI.timekeepingView.borderPanel.setVisible(true);
@@ -637,8 +629,7 @@ public class System extends Function {
                                 (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
                                 GUI.timekeepingView.curTimePanel1.getHeight() + 10
                         );
-                    }
-                    else if (type == 1) {
+                    } else if (type == 1) {
                         GUI.timekeepingView.borderPanel.setBounds(
                                 GUI.timekeepingView.curTimePanel1.getX() - 5 +
                                         (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
@@ -646,24 +637,21 @@ public class System extends Function {
                                 (GUI.timekeepingView.curTimePanel1.getWidth() + 10) / 2,
                                 GUI.timekeepingView.curTimePanel1.getHeight() + 10
                         );
-                    }
-                    else if (type == 2) {
+                    } else if (type == 2) {
                         GUI.timekeepingView.borderPanel.setBounds(
                                 GUI.timekeepingView.curTimePanel2.getX() - 5,
                                 GUI.timekeepingView.curTimePanel2.getY() - 5,
                                 GUI.timekeepingView.curTimePanel2.getWidth() + 10,
                                 GUI.timekeepingView.curTimePanel2.getHeight() + 10
                         );
-                    }
-                    else if (type == 3) {
+                    } else if (type == 3) {
                         GUI.timekeepingView.borderPanel.setBounds(
                                 GUI.timekeepingView.datePanel.getX() - 5,
                                 GUI.timekeepingView.datePanel.getY() - 5,
                                 (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
                                 GUI.timekeepingView.datePanel.getHeight() + 10
                         );
-                    }
-                    else if (type == 4) {
+                    } else if (type == 4) {
                         GUI.timekeepingView.borderPanel.setBounds(
                                 GUI.timekeepingView.datePanel.getX() - 5
                                         + (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
@@ -671,8 +659,7 @@ public class System extends Function {
                                 (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
                                 GUI.timekeepingView.datePanel.getHeight() + 10
                         );
-                    }
-                    else if (type == 5) {
+                    } else if (type == 5) {
                         GUI.timekeepingView.borderPanel.setBounds(
                                 GUI.timekeepingView.datePanel.getX() - 5
                                         + 2 * (GUI.timekeepingView.datePanel.getWidth() + 10) / 3,
@@ -681,8 +668,7 @@ public class System extends Function {
                                 GUI.timekeepingView.datePanel.getHeight() + 10
                         );
                     }
-                }
-                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                } else if (timeKeeping.getMode() == 0 && mode == 1) {
                     changeType();
                     GUI.functionSelectingView.setBorderPanel(type - 1);
                 }
@@ -690,8 +676,7 @@ public class System extends Function {
             case 2: // stopwatch
                 if (stopwatch.getMode() == 0) {
 
-                }
-                else {
+                } else {
                     stopwatch.requestSaveRecord();
                     String[] tmp = stopwatch.getStopwatchRecord();
 
@@ -740,8 +725,7 @@ public class System extends Function {
                     int x = GUI.timerView.borderPanel.getX() % w + 2 * w;
                     int y = GUI.timerView.borderPanel.getY();
                     GUI.timerView.borderPanel.setBounds(x, y, w, h);
-                }
-                else {
+                } else {
                     timer.changeType();
                     int timerType = timer.getType();
                     int w = GUI.timerView.borderPanel.getWidth();
@@ -751,11 +735,9 @@ public class System extends Function {
 
                     if (timerType == 0) {
                         GUI.timerView.borderPanel.setBounds(x, y, w, h);
-                    }
-                    else if (timerType == 1) {
+                    } else if (timerType == 1) {
                         GUI.timerView.borderPanel.setBounds(x + w, y, w, h);
-                    }
-                    else if (timerType == 2) {
+                    } else if (timerType == 2) {
                         GUI.timerView.borderPanel.setBounds(x + 2 * w, y, w, h);
                     }
                 }
@@ -777,8 +759,7 @@ public class System extends Function {
                     GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
                     GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
                     GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
-                }
-                else {
+                } else {
                     d_day.changeType();
                     int d_dayType = d_day.getType();
                     int w = GUI.d_dayView.borderPanel.getWidth();
@@ -787,17 +768,15 @@ public class System extends Function {
                     int y = GUI.d_dayView.borderPanel.getY();
                     if (d_dayType == 0) {
                         GUI.d_dayView.borderPanel.setBounds(x, y, w, h);
-                    }
-                    else if (d_dayType == 1) {
+                    } else if (d_dayType == 1) {
                         GUI.d_dayView.borderPanel.setBounds(x + w, y, w, h);
-                    }
-                    else if (d_dayType == 2) {
+                    } else if (d_dayType == 2) {
                         GUI.d_dayView.borderPanel.setBounds(x + 2 * w, y, w, h);
                     }
                 }
                 break;
             case 5: // alarm
-                if(alarm.getMode() == 0){
+                if (alarm.getMode() == 0) {
                     alarm.requestAlarmSettingMode();
 
                     GUI.alarmView.borderPanel.setVisible(true);
@@ -816,11 +795,9 @@ public class System extends Function {
                     int y = 180;
                     if (alarmType == 0) {
                         GUI.alarmView.borderPanel.setBounds(x, y, w, h);
-                    }
-                    else if (alarmType == 1) {
+                    } else if (alarmType == 1) {
                         GUI.alarmView.borderPanel.setBounds(x + w, y, w, h);
-                    }
-                    else if (alarmType == 2) {
+                    } else if (alarmType == 2) {
                         GUI.alarmView.borderPanel.setBounds(x + 2 * w, y, w, h);
                     }
 
@@ -866,7 +843,7 @@ public class System extends Function {
                 break;
             case 6: // alarm custom
                 alarmCustom.changeType();
-                if (alarmCustom.getMode() == 1){ // 알람 리스트 조회 모드
+                if (alarmCustom.getMode() == 1) { // 알람 리스트 조회 모드
                     alarmCustom.requestIntervalSettingMode();
 
                     GUI.alarmCustomView.borderPanel.setBounds(
@@ -883,8 +860,7 @@ public class System extends Function {
                                 430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
                         );
                         GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
-                    }
-                    else if (acType == 1) { // 인터벌
+                    } else if (acType == 1) { // 인터벌
                         alarmCustom.requestIntervalSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
                                 550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
@@ -905,92 +881,13 @@ public class System extends Function {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     nextFunction();
-                }
-                else if (timeKeeping.getMode() == 0 && mode == 1) {
+                } else if (timeKeeping.getMode() == 0 && mode == 1) {
                     // 5, 6은 세트
-                    HashSet<Integer> hs = new HashSet<>();
-                    for (int i = 1; i < 4; i++) {
-                        hs.add(cacheValue[i]);
-                    }
-                    if (hs.size() == 3) {
-                        if ((hs.contains(5) && hs.contains(6)) || (!hs.contains(5) && !hs.contains(6))) {   // 성공
-                            functionNum[1] = cacheValue[1];
-                            functionNum[2] = cacheValue[2];
-                            functionNum[3] = cacheValue[3];
+                    setFunction();
 
-                            for (int i : functionNum) {
-                                if (i == Stopwatch.FID) {
-                                    if (stopwatch == null)
-                                        stopwatch = new Stopwatch(this);
-                                }
-                                else if (i == Timer.FID) {
-                                    if (timer == null)
-                                        timer = new Timer(this);
-                                }
-                                else if (i == D_day.FID) {
-                                    if (d_day == null)
-                                        d_day = new D_day(this);
-                                }
-                                else if (i == Alarm.FID) {
-                                    if (alarm == null)
-                                        alarm = new Alarm(this);
-                                }
-                                else if (i == AlarmCustom.FID) {
-                                    if (alarmCustom == null)
-                                        alarmCustom = new AlarmCustom(this);
-                                }
-                            }
-
-                            boolean flag = false;
-                            for (int i = 1; i < 4; i++) {
-                                if (Stopwatch.FID == functionNum[i]) {
-                                    flag = true;
-                                }
-                            }
-                            if (!flag)
-                                stopwatch = null;
-
-                            flag = false;
-                            for (int i = 1; i < 4; i++) {
-                                if (Timer.FID == functionNum[i]) {
-                                    flag = true;
-                                }
-                            }
-                            if (!flag)
-                                timer = null;
-
-                            flag = false;
-                            for (int i = 1; i < 4; i++) {
-                                if (D_day.FID == functionNum[i]) {
-                                    flag = true;
-                                }
-                            }
-                            if (!flag)
-                                d_day = null;
-
-                            flag = false;
-                            for (int i = 1; i < 4; i++) {
-                                if (Alarm.FID == functionNum[i]) {
-                                    flag = true;
-                                }
-                            }
-                            if (!flag)
-                                alarm = null;
-
-                            flag = false;
-                            for (int i = 1; i < 4; i++) {
-                                if (alarmCustom.FID == functionNum[i]) {
-                                    flag = true;
-                                }
-                            }
-                            if (!flag)
-                                alarmCustom = null;
-                        }
-                    }
                     changeMode();
                     GUI.setView(GUI.timekeepingView);
-                }
-                else {
+                } else {
                     // 저장을 하면 d-day를 다시 계산하면 됨.
                     timeKeeping.requestSave();
                     try {
@@ -1005,8 +902,7 @@ public class System extends Function {
                             GUI.d_dayView.setYear("00");
                             GUI.d_dayView.setMonth("NO");
                             GUI.d_dayView.setDate("NE");
-                        }
-                        else {
+                        } else {
                             GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
                             GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
                             GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
@@ -1015,11 +911,9 @@ public class System extends Function {
                             GUI.d_dayView.setDday("999");
                         else if (d_day.getD_day() == -1) {
                             GUI.d_dayView.setDday("000");
-                        }
-                        else
+                        } else
                             GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
-                    }
-                    catch (NullPointerException e) {
+                    } catch (NullPointerException e) {
                     }
                 }
 
@@ -1033,8 +927,7 @@ public class System extends Function {
             case 3: // timer
                 if (timer.getMode() == 0) {
                     nextFunction();
-                }
-                else {
+                } else {
                     timer.requestSave();
                     GUI.timerView.borderPanel.setVisible(false);
                 }
@@ -1050,8 +943,7 @@ public class System extends Function {
                         GUI.d_dayView.setYear("00");
                         GUI.d_dayView.setMonth("NO");
                         GUI.d_dayView.setDate("NE");
-                    }
-                    else {
+                    } else {
                         GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
                         GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
                         GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
@@ -1063,8 +955,7 @@ public class System extends Function {
                     else
                         GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
                     nextFunction();
-                }
-                else {
+                } else {
                     d_day.requestSave();
                     GUI.d_dayView.borderPanel.setVisible(false);
                     String curDate = d_day.getD_dayDate().getCurrentDate();
@@ -1085,7 +976,7 @@ public class System extends Function {
             case 5: // alarm
                 if (alarm.getMode() == 0) {
                     nextFunction();
-                }else if(alarm.getMode() == 1){
+                } else if (alarm.getMode() == 1) {
                     alarm.requestSave();
                     int alarmPointer = alarm.getAlarmPointer();
                     AlarmData[] tmp = alarm.getAlarmList();
@@ -1128,11 +1019,9 @@ public class System extends Function {
             case 6: // alarm custom
                 if (alarmCustom.getMode() == 0) {
                     nextFunction();
-                } else if (alarmCustom.getMode() == 1)
-                {
+                } else if (alarmCustom.getMode() == 1) {
                     //alarmCustom.requestAlarmVolumeMode();
-                } else  if(alarmCustom.getMode() == 2)
-                {
+                } else if (alarmCustom.getMode() == 2) {
                     alarmCustom.requestSave();
                     GUI.alarmCustomView.borderPanel.setVisible(false);
                     GUI.alarmCustomView.setAlarmVolume(" ");
@@ -1153,8 +1042,7 @@ public class System extends Function {
 
         if (mode == 0) {
             Arrays.fill(cacheValue, -1);
-        }
-        else {
+        } else {
             for (int i = 0; i < 4; i++) {
                 cacheValue[i] = functionNum[i];
             }
@@ -1175,8 +1063,82 @@ public class System extends Function {
             cacheValue[type] = 2;
     }
 
-    public void setFunction(int[] selected) {
-        // TODO implement here
+    public void setFunction() {
+        HashSet<Integer> hs = new HashSet<>();
+        for (int i = 1; i < 4; i++) {
+            hs.add(cacheValue[i]);
+        }
+        if (hs.size() == 3) {
+            if ((hs.contains(5) && hs.contains(6)) || (!hs.contains(5) && !hs.contains(6))) {   // 성공
+                functionNum[1] = cacheValue[1];
+                functionNum[2] = cacheValue[2];
+                functionNum[3] = cacheValue[3];
+
+                for (int i : functionNum) {
+                    if (i == Stopwatch.FID) {
+                        if (stopwatch == null)
+                            stopwatch = new Stopwatch(this);
+                    } else if (i == Timer.FID) {
+                        if (timer == null)
+                            timer = new Timer(this);
+                    } else if (i == D_day.FID) {
+                        if (d_day == null)
+                            d_day = new D_day(this);
+                    } else if (i == Alarm.FID) {
+                        if (alarm == null)
+                            alarm = new Alarm(this);
+                    } else if (i == AlarmCustom.FID) {
+                        if (alarmCustom == null)
+                            alarmCustom = new AlarmCustom(this);
+                    }
+                }
+
+                boolean flag = false;
+                for (int i = 1; i < 4; i++) {
+                    if (Stopwatch.FID == functionNum[i]) {
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                    stopwatch = null;
+
+                flag = false;
+                for (int i = 1; i < 4; i++) {
+                    if (Timer.FID == functionNum[i]) {
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                    timer = null;
+
+                flag = false;
+                for (int i = 1; i < 4; i++) {
+                    if (D_day.FID == functionNum[i]) {
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                    d_day = null;
+
+                flag = false;
+                for (int i = 1; i < 4; i++) {
+                    if (Alarm.FID == functionNum[i]) {
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                    alarm = null;
+
+                flag = false;
+                for (int i = 1; i < 4; i++) {
+                    if (alarmCustom.FID == functionNum[i]) {
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                    alarmCustom = null;
+            }
+        }
     }
 
     public void selectFunction() {
@@ -1193,13 +1155,11 @@ public class System extends Function {
             status = 0b01;
             blink.stopBlink();
             return 2;
-        }
-        else if (status == 0b10) {
+        } else if (status == 0b10) {
             status = 0b00;
             blink.stopBlink();
             return 1;
-        }
-        else if (status == 0b01) {
+        } else if (status == 0b01) {
             status = 0b00;
             try {
                 buzzer.stopBuzzer();

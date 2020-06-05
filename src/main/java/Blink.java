@@ -14,20 +14,20 @@ public class Blink {
     }
 
     /**
-     * 
+     *
      */
     private boolean blinkState;
 
 
     /**
-     * 
+     *
      */
     public void stopBlink() {
         // TODO implement here
     }
 
     /**
-     * 
+     *
      */
     public void startBlink() {
         // TODO implement here
