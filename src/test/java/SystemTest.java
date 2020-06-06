@@ -70,6 +70,8 @@ public class SystemTest  {
 
         int[] alarmFunction = {1, 3, 5, 6};
         system.setFunctionNum(alarmFunction);
+        system.alarm = new Alarm(system);
+        system.alarmCustom = new AlarmCustom(system);
         alarm = system.alarm;
         alarmCustom = system.alarmCustom;
 
@@ -120,6 +122,8 @@ public class SystemTest  {
 
         int[] alarmFunction = {1, 3, 5, 6};
         system.setFunctionNum(alarmFunction);
+        system.alarm = new Alarm(system);
+        system.alarmCustom = new AlarmCustom(system);
         alarm = system.alarm;
         alarmCustom = system.alarmCustom;
 

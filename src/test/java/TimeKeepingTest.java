@@ -49,6 +49,9 @@ public class TimeKeepingTest {
         }
         dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
+        java.lang.System.out.println(timekeeping.getCurTime().getCurrentTime());
+        java.lang.System.out.println(time);
+
         assert (timekeeping.getCurTime().getCurrentTime().equals(time));
         assert (timekeeping.getCurDate().getCurrentDate().equals(date));
         assert (timekeeping.getDayOfTheWeek() == dayOfTheWeek);
