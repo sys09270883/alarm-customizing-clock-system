@@ -9,7 +9,5 @@ public abstract class Function {
     protected void changeMode(int mode) {}
     public abstract void changeValue(int diff);
     public abstract void changeType();
-    protected int getMode() {
-        return this.mode;
-    }
+    protected abstract int getMode();
 }

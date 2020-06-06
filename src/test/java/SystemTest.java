@@ -29,12 +29,12 @@ public class SystemTest  {
     @Test
     public  void TimeoutTest() {
 
-        TimeKeeping timeKeeping = new TimeKeeping(system);
-        Stopwatch stopwatch = new Stopwatch(system);
-        Timer timer = new Timer(system);
-        D_day d_day = new D_day(system);
-        Alarm alarm = new Alarm(system);
-        AlarmCustom alarmCustom = new AlarmCustom(system);
+        TimeKeeping timeKeeping = system.timeKeeping;
+        Stopwatch stopwatch = system.stopwatch;
+        Timer timer = system.timer;
+        D_day d_day = system.d_day;
+        Alarm alarm = null;
+        AlarmCustom alarmCustom = null;
 
         // 타임 키핑
         java.lang.System.out.println(system.getSelectedFid());
@@ -68,6 +68,11 @@ public class SystemTest  {
 
         // 알람
 
+        int[] alarmFunction = {1, 3, 5, 6};
+        system.setFunctionNum(alarmFunction);
+        alarm = system.alarm;
+        alarmCustom = system.alarmCustom;
+
         java.lang.System.out.println(system.getSelectedFid());
         alarm.requestAlarmSettingMode();
         system.startCheckTimeOut();
@@ -86,50 +91,55 @@ public class SystemTest  {
 
     @Test
     public void CancelTest() {
-        TimeKeeping timeKeeping = new TimeKeeping(system);
-        Stopwatch stopwatch = new Stopwatch(system);
-        Timer timer = new Timer(system);
-        D_day d_day = new D_day(system);
-        Alarm alarm = new Alarm(system);
-        AlarmCustom alarmCustom = new AlarmCustom(system);
+        TimeKeeping timeKeeping = system.timeKeeping;
+        Stopwatch stopwatch = system.stopwatch;
+        Timer timer = system.timer;
+        D_day d_day = system.d_day;
+        Alarm alarm = null;
+        AlarmCustom alarmCustom = null;
 
         //타임 키핑
         timeKeeping.requestTimeSettingMode();
-        system.cancel(timeKeeping);
-        java.lang.System.out.println(timeKeeping.getMode()); // 기본 단계로 돌아갔는지 확인.
+        timeKeeping.cancel();
+        assert(timeKeeping.getMode() == 0);
 
         // 스톱워치
         stopwatch.requestRecordCheckMode();
-        system.cancel(stopwatch);
-        java.lang.System.out.println(stopwatch.getMode()); // 기본 단계로 돌아갔는지 확인.
+        stopwatch.cancel();
+        assert(stopwatch.getMode() == 0);
 
         //타이머
         timer.requestTimerSettingMode();
-        system.cancel(timer);
-        java.lang.System.out.println(timer.getMode()); // 기본 단계로 돌아갔는지 확인.
+        timer.cancel();
+        assert(timer.getMode() == 0);
 
         //디데이
         d_day.requestDdaySettingMode();
-        system.cancel(d_day);
-        java.lang.System.out.println(d_day.getMode()); // 기본 단계로 돌아갔는지 확인.
+        d_day.cancel();
+        assert(d_day.getMode() == 0);
+
+        int[] alarmFunction = {1, 3, 5, 6};
+        system.setFunctionNum(alarmFunction);
+        alarm = system.alarm;
+        alarmCustom = system.alarmCustom;
 
         // 알람
         alarm.requestAlarmSettingMode();
-        system.cancel(alarm);
-        java.lang.System.out.println(alarm.getMode()); // 기본 단계로 돌아갔는지 확인.
+        alarm.cancel();
+        assert(alarm.getMode() == 0);
 
         // 알람 커스텀
         alarmCustom.requestIntervalSettingMode();
-        system.cancel(alarmCustom);
-        java.lang.System.out.println(alarmCustom.getMode()); // 기본 단계로 돌아갔는지 확인.
+        alarmCustom.cancel();
+        assert(alarmCustom.getMode() == 0);
 
         alarmCustom.requestVolumeSettingMode();
-        system.cancel(alarmCustom);
-        java.lang.System.out.println(alarmCustom.getMode());// 기본 단계로 돌아갔는지 확인.
+        alarmCustom.cancel();
+        assert(alarmCustom.getMode() == 0);
 
         alarmCustom.requestAlarmSelectMode();
-        system.cancel(alarmCustom);
-        java.lang.System.out.println(alarmCustom.getMode()); // 기본 단계로 돌아갔는지 확인.
+        alarmCustom.cancel();
+        assert(alarmCustom.getMode() == 0);
 
 
     }

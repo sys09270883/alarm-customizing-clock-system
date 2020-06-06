@@ -7,7 +7,7 @@ public class StopwatchTest {
 
     @Test
     public void startStopwatchTest() {
-        Stopwatch stopwatch = new Stopwatch(system);
+        Stopwatch stopwatch = system.stopwatch;
 
         stopwatch.requestStartStopwatch();
 
@@ -19,7 +19,7 @@ public class StopwatchTest {
 
         Time time = stopwatch.getStopwatch();
 
-        String timeStr = time.getTime();
+        String timeStr = time.getCurrentTime();
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("3"));
@@ -27,7 +27,7 @@ public class StopwatchTest {
 
     @Test
     public void pauseStopwatchTest() {
-        Stopwatch stopwatch = new Stopwatch(system);
+        Stopwatch stopwatch = system.stopwatch;
 
         stopwatch.requestStartStopwatch();
 
@@ -47,7 +47,7 @@ public class StopwatchTest {
 
         Time time = stopwatch.getStopwatch();
 
-        String timeStr = time.getTime();
+        String timeStr = time.getCurrentTime();
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("3"));
@@ -55,7 +55,7 @@ public class StopwatchTest {
 
     @Test
     public void resetStopwatchTest() {
-        Stopwatch stopwatch = new Stopwatch(system);
+        Stopwatch stopwatch = system.stopwatch;
 
         stopwatch.requestStartStopwatch();
 
@@ -67,20 +67,20 @@ public class StopwatchTest {
 
         Time time = stopwatch.getStopwatch();
 
-        String timeStr = time.getTime();
+        String timeStr = time.getCurrentTime();
         String splitedTime[] = timeStr.split(" ");
         assert(splitedTime[2].equals("3"));
 
         stopwatch.requestResetStopwatch(); //reset
 
-        timeStr = time.getTime();
+        timeStr = time.getCurrentTime();
         splitedTime = timeStr.split(" ");
         assert(splitedTime[2].equals("0"));
     }
 
     @Test
     public void recordStopwatchTest() {
-        Stopwatch stopwatch = new Stopwatch(system);
+        Stopwatch stopwatch = system.stopwatch;
 
         stopwatch.requestStartStopwatch();
 
@@ -102,7 +102,7 @@ public class StopwatchTest {
 
     @Test
     public void controlStopwatchRecord() {
-        Stopwatch stopwatch = new Stopwatch(system);
+        Stopwatch stopwatch = system.stopwatch;
 
         stopwatch.movePointer(1);
         assert(stopwatch.getRecordPointer()==1);

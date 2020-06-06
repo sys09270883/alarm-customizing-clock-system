@@ -7,7 +7,7 @@ public class TimerTest {
 
     @Test
     public void setTimerTest() {
-        Timer timer = new Timer(system);
+        Timer timer = system.timer;
 
         timer.requestTimerSettingMode();
 
@@ -20,7 +20,7 @@ public class TimerTest {
 
         Time time = timer.getTimer();
 
-        String timeStr = time.getTime();
+        String timeStr = time.getCurrentTime();
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[0].equals("1"));
@@ -30,7 +30,7 @@ public class TimerTest {
 
     @Test
     public void startTimerTest() {
-        Timer timer = new Timer(system);
+        Timer timer = system.timer;
         timer.requestTimerSettingMode();
 
         timer.changeType();
@@ -48,7 +48,7 @@ public class TimerTest {
 
         Time time = timer.getTimer();
 
-        String timeStr = time.getTime();
+        String timeStr = time.getCurrentTime();
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("2"));
@@ -57,7 +57,7 @@ public class TimerTest {
 
     @Test
     public void beepTimerTest() {
-        Timer timer = new Timer(system);
+        Timer timer = system.timer;
         timer.requestTimerSettingMode();
 
         timer.changeType();
@@ -78,7 +78,7 @@ public class TimerTest {
 
     @Test
     public void resetTimerTest() {
-        Timer timer = new Timer(system);
+        Timer timer = system.timer;
 
         timer.requestTimerSettingMode();
 
@@ -91,7 +91,7 @@ public class TimerTest {
 
         Time time = timer.getTimer();
 
-        String timeStr = time.getTime();
+        String timeStr = time.getCurrentTime();
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("5"));
@@ -100,7 +100,7 @@ public class TimerTest {
 
         time = timer.getTimer();
 
-        timeStr = time.getTime();
+        timeStr = time.getCurrentTime();
         splitedTime = timeStr.split(" ");
 
         assert(splitedTime[0].equals("0"));
@@ -110,7 +110,7 @@ public class TimerTest {
 
     @Test
     public void pauseTimerTest() {
-        Timer timer = new Timer(system);
+        Timer timer = system.timer;
 
         timer.requestTimerSettingMode();
 
@@ -137,7 +137,7 @@ public class TimerTest {
 
         Time time = timer.getTimer();
 
-        String timeStr = time.getTime();
+        String timeStr = time.getCurrentTime();
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("4"));
@@ -145,9 +145,9 @@ public class TimerTest {
 
     @Test
     public void stopTimerBuzzer() {
-        Timer timer = new Timer(system);
+        Timer timer = system.timer;
 
-        timer.system.buzzer.beepBuzzer();
+        timer.system.buzzer.beepBuzzer(1, 1);
         timer.system.buzzer.stopBuzzer();
 
         assertFalse(timer.system.buzzer.isBuzzerState());

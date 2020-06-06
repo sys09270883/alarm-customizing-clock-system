@@ -61,6 +61,12 @@ public class System extends Function {
 
     public static void main(String[] args) { new System(); }
 
+    public int getStatus() { return this.status; }
+
+    public void setFunctionNum(int[] functionNum) {
+        this.functionNum = functionNum;
+    }
+
     public void startCheckTimeOut() {
         checkTimeOut = new Thread(() -> {
             while(true) {
@@ -1124,6 +1130,11 @@ public class System extends Function {
 
     public void changeType() {
         type = (type + 1) % 3 + 1;
+    }
+
+    @Override
+    protected int getMode() {
+        return this.mode;
     }
 
     public void changeValue(int diff) {
