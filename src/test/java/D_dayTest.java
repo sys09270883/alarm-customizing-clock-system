@@ -10,7 +10,7 @@ public class D_dayTest {
 
     @Test
     public void setDdayTest() {
-        D_day d_day = new D_day(system);
+        D_day d_day = system.d_day;
 
         d_day.requestDdaySettingMode();
 
@@ -43,7 +43,7 @@ public class D_dayTest {
 
     @Test
     public void blinkDdayTest() {
-        D_day d_day = new D_day(system);
+        D_day d_day = system.d_day;
 
         d_day.changeValue(0);
         d_day.changeType();
@@ -63,7 +63,7 @@ public class D_dayTest {
 
     @Test
     public void stopDdayBlinkTest() {
-        D_day d_day = new D_day(system);
+        D_day d_day = system.d_day;
 
         system.border.startBorder();
         assertTrue(system.border.isBorderState());
@@ -74,7 +74,7 @@ public class D_dayTest {
 
     @Test
     public void deleteDdayTest() {
-        D_day d_day = new D_day(system);
+        D_day d_day = system.d_day;
 
         String curDate = d_day.getD_dayDate().getCurrentDate();
         String splited[] = curDate.split(" ");

@@ -63,7 +63,11 @@ public class System extends Function {
         new System();
     }
 
-    public int getStatus() { return this.status };
+    public int getStatus() { return this.status; }
+
+    public void setFunctionNum(int[] functionNum) {
+        this.functionNum = functionNum;
+    }
 
     public void startCheckTimeOut() {
         checkTimeOut = new Thread(() -> {

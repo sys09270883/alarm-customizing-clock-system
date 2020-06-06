@@ -7,15 +7,14 @@ import java.util.Calendar;
 
 public class TimeKeepingTest {
     System system = new System();
-    private int type = 0;
 
     @Test
     public void setTimeTest() {
-        TimeKeeping timekeeping = new TimeKeeping(system);
+        TimeKeeping timekeeping = system.timeKeeping;
 
         timekeeping.requestTimeSettingMode();
 
-        String time = timekeeping.getCurTime().getTime();
+        String time = timekeeping.getCurTime().getCurrentTime();
         String date = timekeeping.getCurDate().getCurrentDate();
         int dayOfTheWeek;
         //1: 일요일~ 7: 토요일
@@ -50,7 +49,7 @@ public class TimeKeepingTest {
         }
         dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-        assert (timekeeping.getCurTime().getTime().equals(time));
+        assert (timekeeping.getCurTime().getCurrentTime().equals(time));
         assert (timekeeping.getCurDate().getCurrentDate().equals(date));
         assert (timekeeping.getDayOfTheWeek() == dayOfTheWeek);
 
