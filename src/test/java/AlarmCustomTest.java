@@ -6,84 +6,121 @@ import static junit.framework.TestCase.assertTrue;
 
 public class AlarmCustomTest {
     System system = new System();
-
+  //  Alarm alarm = new Alarm(system);
 
     @Test
     public void ControlAlarmListTest() {
+
         AlarmCustom alarmCustom = new AlarmCustom(system);
-
-        alarmCustom.requestAlarmSelectMode();
-        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
-
 
         // alarm 리스트 설정
         Time time = new Time(2);
         time.setTime(1,2,3);
-        alarmCustom.getAlarm().addTimeToAlarmList(time);
-        time.setTime(1,2,3);
-        alarmCustom.getAlarm().addTimeToAlarmList(time);
-        time.setTime(1,2,3);
-        alarmCustom.getAlarm().addTimeToAlarmList(time);
+        system.alarm.addTimeToAlarmList(time);
+
+        Time time2 = new Time(2);
+        time2.setTime(1,2,3);
+        system.alarm.addTimeToAlarmList(time2);
+
+        Time time3 = new Time(2);
+        time3.setTime(1,2,3);
+        system.alarm.addTimeToAlarmList(time3);
+
+
+        alarmCustom.requestAlarmSelectMode();
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
+        assertEquals(0, alarmCustom.getAlarm().getAlarmPointer());
+        assertEquals(0, alarmCustom.getAlarm().getSegmentPointer());
+
 
         //선택 모드 진입
         alarmCustom.requestAlarmSelectMode();
 
         // 알람 리스트 잘 확인 되는지 확인.
-        alarmCustom.getAlarm().movePointer(1);
+        alarmCustom.changeValue2(1);
         java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(1, alarmCustom.getAlarm().getAlarmPointer()); // 0에서 포인터가 하나 증가하는 지 확인
 
-        alarmCustom.getAlarm().movePointer(1);
-        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
-        alarmCustom.getAlarm().movePointer(1);
+        alarmCustom.changeValue2(1);
         java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(1, alarmCustom.getAlarm().getAlarmPointer()); // 1에서 포인터가 하나 증가하는 지 확인
 
-        alarmCustom.getAlarm().movePointer(-1);
+        alarmCustom.changeValue2(1);
         java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(2, alarmCustom.getAlarm().getAlarmPointer()); // 2에서 포인터가 하나 증가하는 지 확인 (마지막이라 안 올라감)
 
-        alarmCustom.getAlarm().movePointer(-1);
-        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
-        alarmCustom.getAlarm().movePointer(-1);
+        alarmCustom.changeValue2(-1);
         java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(1, alarmCustom.getAlarm().getAlarmPointer()); // 2에서 포인터가 하나 감소하는 지 확인
+
+        alarmCustom.changeValue2(-1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(0, alarmCustom.getAlarm().getAlarmPointer()); // 1에서 포인터가 하나 감소하는 지 확인
+
+        alarmCustom.changeValue2(-1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(0, alarmCustom.getAlarm().getAlarmPointer()); // 0에서 포인터가 하나 감소하는 지 확인
 
     }
 
     @Test
     public void SetAlarmIntervalTest() {
+
+
         AlarmCustom alarmCustom = new AlarmCustom(system);
+
+        // alarm 리스트 설정
         Time time = new Time(2);
         time.setTime(1,2,3);
         system.alarm.addTimeToAlarmList(time);
-        alarmCustom.requestAlarmSelectMode();
-        alarmCustom.getAlarm().movePointer(1);
-        alarmCustom.requestIntervalSettingMode();
 
-        alarmCustom.changeType();
+
+        alarmCustom.requestAlarmSelectMode(); // 알람 선택 모드
+        alarmCustom.getAlarm().movePointer(1); // 포인터 +1
+
+        alarmCustom.requestIntervalSettingMode(); // 알람 인터벌 설정 모드
+        alarmCustom.changeType(); // type  0: 기본 -> 1 : 인터벌
+
+        assertEquals(1, alarmCustom.getType());
+        assertEquals(2, alarmCustom.getCustomSettingValue()[1]); // 초기값 2인지 확인
 
         //인터벌이 범위 내에서 잘 바뀌는 지 확인.
         alarmCustom.changeValue(1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[1]);
+        assertEquals(3, alarmCustom.getCustomSettingValue()[1]); // 1이 올라갔는지 확인
 
         alarmCustom.changeValue(1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[1]);
+        assertEquals(3, alarmCustom.getCustomSettingValue()[1]); // 한계값 3에 막혀 안 올라가는지 확인
 
         alarmCustom.changeValue(1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[1]);
+        assertEquals(3, alarmCustom.getCustomSettingValue()[1]); // 또 한계값 3에 막혀 안 올라가는지 확인
 
         alarmCustom.changeValue(-1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[1]);
+        assertEquals(2, alarmCustom.getCustomSettingValue()[1]); // 3에서 값이 1 내려가는지 확인
 
         alarmCustom.changeValue(-1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[1]);
+        assertEquals(1, alarmCustom.getCustomSettingValue()[1]); // 2에서 값이 1 내려가는지 확인
 
         alarmCustom.changeValue(-1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[1]);
+        assertEquals(1, alarmCustom.getCustomSettingValue()[1]); // 한계값 1에 막혀 값이 안 내려가는지 확인
 
         alarmCustom.changeValue(-1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[1]);
+        assertEquals(1, alarmCustom.getCustomSettingValue()[1]); // 또 한계값 1에 막혀 값이 안 내려가는지 확인
 
-        //assert();
+        alarmCustom.changeValue(1);
+        assertEquals(2, alarmCustom.getCustomSettingValue()[1]); // 1에서 값이 1 올라가는지 확인
+
+        alarmCustom.changeValue(1);
+        assertEquals(3, alarmCustom.getCustomSettingValue()[1]); // 2에서 값이 1 올라가는지 확인
+
+
     }
 
     @Test
@@ -92,37 +129,53 @@ public class AlarmCustomTest {
 
         Time time = new Time(2);
         time.setTime(1,1,2);
-
         system.alarm.addTimeToAlarmList(time);
-        alarmCustom.getAlarm().movePointer(1);
-        alarmCustom.changeValue(1);
-        alarmCustom.changeType();
-        alarmCustom.changeValue(1);
-        alarmCustom.changeType();
-        alarmCustom.requestVolumeSettingMode();
 
+        alarmCustom.requestAlarmSelectMode(); // 알람 선택 모드
+        alarmCustom.getAlarm().movePointer(1); // 포인터 +1
+
+        alarmCustom.requestIntervalSettingMode(); // 알람 인터벌 설정 모드
+        alarmCustom.changeType(); // type  0: 기본 -> 1 : 인터벌
+        alarmCustom.changeValue(1);
+
+        alarmCustom.requestVolumeSettingMode(); // 알람 볼륨 설정 모드
+        alarmCustom.changeType(); // type  1: 인터벌 -> 2 : 볼륨
+
+
+        assertEquals(2, alarmCustom.getCustomSettingValue()[2]); // 초기 볼륨값 2인지 확인
 
 
         // 범위에 맞게 볼륨값이 잘 바뀌는 지 확인
         alarmCustom.changeValue(1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
+        assertEquals(3, alarmCustom.getCustomSettingValue()[2]); // 2에서 값이 1 올라가는지 확인
 
         alarmCustom.changeValue(1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
+        assertEquals(4, alarmCustom.getCustomSettingValue()[2]); // 3에서 값이 1 올라가는지 확인
 
         alarmCustom.changeValue(1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
+        assertEquals(4, alarmCustom.getCustomSettingValue()[2]); // 한계값 4에 막혀 값이 안 올라가는지 확인
+
+        alarmCustom.changeValue(-1);
+        assertEquals(3, alarmCustom.getCustomSettingValue()[2]); // 4에서 값이 1 내려가는지 확인
+
+        alarmCustom.changeValue(-1);
+        assertEquals(2, alarmCustom.getCustomSettingValue()[2]); // 3에서 값이 1 내려가는지 확인
 
 
         alarmCustom.changeValue(-1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
+        assertEquals(1, alarmCustom.getCustomSettingValue()[2]); // 2에서 값이 1 내려가는지 확인
 
         alarmCustom.changeValue(-1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
-
+        assertEquals(0, alarmCustom.getCustomSettingValue()[2]); // 1에서 값이 1 내려가는지 확인
 
         alarmCustom.changeValue(-1);
-        java.lang.System.out.println(alarmCustom.getCustomSettingValue()[2]);
+        assertEquals(0, alarmCustom.getCustomSettingValue()[2]); // 한계값 0에 막혀 값이 안 내려가는지 확인
+
+        alarmCustom.changeValue(1);
+        assertEquals(1, alarmCustom.getCustomSettingValue()[2]); // 0에서 값이 1 올라가는지 확인
+
+        alarmCustom.changeValue(1);
+        assertEquals(2, alarmCustom.getCustomSettingValue()[2]); // 1에서 값이 1 올라가는지 확인
 
         // 저장이 잘 되는지 확인
         alarmCustom.setCustom();
