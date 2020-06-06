@@ -13,39 +13,39 @@ public class AlarmCustomTest {
         AlarmCustom alarmCustom = new AlarmCustom(system);
 
         alarmCustom.requestAlarmSelectMode();
-        java.lang.System.out.println(alarmCustom.alarm.getAlarmPointer());
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
 
         // alarm 리스트 설정
         Time time = new Time(2);
         time.setTime(1,2,3);
-        alarmCustom.alarm.addTimeToAlarmList(time);
+        alarmCustom.getAlarm().addTimeToAlarmList(time);
         time.setTime(1,2,3);
-        alarmCustom.alarm.addTimeToAlarmList(time);
+        alarmCustom.getAlarm().addTimeToAlarmList(time);
         time.setTime(1,2,3);
-        alarmCustom.alarm.addTimeToAlarmList(time);
+        alarmCustom.getAlarm().addTimeToAlarmList(time);
 
         //선택 모드 진입
         alarmCustom.requestAlarmSelectMode();
 
         // 알람 리스트 잘 확인 되는지 확인.
-        alarmCustom.alarm.movePointer(1);
-        java.lang.System.out.println(alarmCustom.alarm.getAlarmPointer());
+        alarmCustom.getAlarm().movePointer(1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
-        alarmCustom.alarm.movePointer(1);
-        java.lang.System.out.println(alarmCustom.alarm.getAlarmPointer());
+        alarmCustom.getAlarm().movePointer(1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
-        alarmCustom.alarm.movePointer(1);
-        java.lang.System.out.println(alarmCustom.alarm.getAlarmPointer());
+        alarmCustom.getAlarm().movePointer(1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
-        alarmCustom.alarm.movePointer(-1);
-        java.lang.System.out.println(alarmCustom.alarm.getAlarmPointer());
+        alarmCustom.getAlarm().movePointer(-1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
-        alarmCustom.alarm.movePointer(-1);
-        java.lang.System.out.println(alarmCustom.alarm.getAlarmPointer());
+        alarmCustom.getAlarm().movePointer(-1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
-        alarmCustom.alarm.movePointer(-1);
-        java.lang.System.out.println(alarmCustom.alarm.getAlarmPointer());
+        alarmCustom.getAlarm().movePointer(-1);
+        java.lang.System.out.println(alarmCustom.getAlarm().getAlarmPointer());
 
     }
 
@@ -56,7 +56,7 @@ public class AlarmCustomTest {
         time.setTime(1,2,3);
         system.alarm.addTimeToAlarmList(time);
         alarmCustom.requestAlarmSelectMode();
-        alarmCustom.alarm.movePointer(1);
+        alarmCustom.getAlarm().movePointer(1);
         alarmCustom.requestIntervalSettingMode();
 
         alarmCustom.changeType();
@@ -94,7 +94,7 @@ public class AlarmCustomTest {
         time.setTime(1,1,2);
 
         system.alarm.addTimeToAlarmList(time);
-        alarmCustom.alarm.movePointer(1);
+        alarmCustom.getAlarm().movePointer(1);
         alarmCustom.changeValue(1);
         alarmCustom.changeType();
         alarmCustom.changeValue(1);

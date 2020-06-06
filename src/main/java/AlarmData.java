@@ -50,7 +50,13 @@ public class AlarmData {
 
     private AlarmCustom alarmCustom;
 
+    public int getAlarmInterval() {
+        return this.interval;
+    }
 
+    public int getAlarmVolume() {
+        return this.volume;
+    }
 
     public Time getTime(){
         return this.alarmTime;

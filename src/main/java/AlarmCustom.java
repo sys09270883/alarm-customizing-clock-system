@@ -37,6 +37,10 @@ public class AlarmCustom extends Function {
         changeMode(1);
     }
 
+    public Alarm getAlarm() {
+        return this.alarm;
+    }
+
     public void requestIntervalSettingMode() {
         changeMode(2);
     }
