@@ -37,7 +37,7 @@ public class Timer extends Function {
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
                     mode = 0;
-                    system.beepBuzzer();
+                    system.beepBuzzer(1,1);
                     // timer가 안주금.
                 }
             }
