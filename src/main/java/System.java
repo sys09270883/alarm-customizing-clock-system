@@ -57,49 +57,45 @@ public class System extends Function {
         Arrays.fill(cacheValue, -1);
     }
 
-    public static void main(String[] args) {
-        new System();
-    }
+    public static void main(String[] args) { new System(); }
 
     public void startCheckTimeOut() {
-        checkTimeOut = new Thread() {
-            public void run() {
-                Function curFunction;
-                switch (functionNum[functionNumIdx]) {
-                    case 1:
-                        curFunction = timeKeeping;
-                        break;
-                    case 2:
-                        curFunction = stopwatch;
-                        break;
-                    case 3:
-                        curFunction = timer;
-                        break;
-                    case 4:
-                        curFunction = d_day;
-                        break;
-                    case 5:
-                        curFunction = alarm;
-                        break;
-                    case 6:
-                        curFunction = alarmCustom;
-                        break;
-                    default:
-                        curFunction = null;
-                }
+        checkTimeOut = new Thread(() -> {
+            Function curFunction;
+            switch (functionNum[functionNumIdx]) {
+                case 1:
+                    curFunction = timeKeeping;
+                    break;
+                case 2:
+                    curFunction = stopwatch;
+                    break;
+                case 3:
+                    curFunction = timer;
+                    break;
+                case 4:
+                    curFunction = d_day;
+                    break;
+                case 5:
+                    curFunction = alarm;
+                    break;
+                case 6:
+                    curFunction = alarmCustom;
+                    break;
+                default:
+                    curFunction = null;
+            }
 
-                while (curFunction.getMode() == 1) {
-                    try {
-                        Thread.sleep(1000);
-                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
-                            cancel(curFunction);
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            while (curFunction.getMode() == 1) {
+                try {
+                    Thread.sleep(1000);
+                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
+                        curFunction.cancel();
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
-        };
+        });
 
         checkTimeOut.start();
     }
@@ -610,7 +606,6 @@ public class System extends Function {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     timeKeeping.requestTimeSettingMode();
-                    startCheckTimeOut();
                     GUI.timekeepingView.borderPanel.setVisible(true);
                     GUI.timekeepingView.borderPanel.setBounds(
                             GUI.timekeepingView.curTimePanel1.getX() - 5,
