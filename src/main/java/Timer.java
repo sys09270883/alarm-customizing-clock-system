@@ -23,6 +23,7 @@ public class Timer extends Function {
         mode = 0;
         timer = new Time(0);
         timer.setTime(0, 0, 0);
+
         timer.setSecondListener(() -> {
             if (mode == 2) {
                 String str = timer.getCurrentTime();
@@ -33,9 +34,10 @@ public class Timer extends Function {
 
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
-                    mode = 0;
-                    system.beepBuzzer();
-                    // timer가 안주금.
+
+                    changeMode(0);
+                    system.beepBuzzer(1,1);
+                    timer.pauseTime();
                 }
             }
         });
@@ -46,9 +48,6 @@ public class Timer extends Function {
         changeMode(1);
     }
 
-    /**
-     * 설정한 시간으로 timer을 세팅해 저장합니다.
-     */
     public void requestSave() {
         timer.setTime(timeSettingValue[0], timeSettingValue[1], timeSettingValue[2]);
         type = 0;
@@ -128,5 +127,9 @@ public class Timer extends Function {
 
     public int getType() {
         return this.type;
+    }
+
+    public void cancel() {
+        changeMode(0);
     }
 }

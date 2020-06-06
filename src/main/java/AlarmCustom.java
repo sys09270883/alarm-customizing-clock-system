@@ -13,18 +13,9 @@ public class AlarmCustom extends Function {
     private Alarm alarm;
     private int type;
 
-    public int[] getCustomSettingValue() {
-        return customSettingValue;
-    }
-
-    public void setCustomSettingValue(int[] customSettingValue) {
-        this.customSettingValue = customSettingValue;
-    }
-
     public AlarmCustom(System system) {
         fid = 6;
         mode = 0;
-
         alarm = system.alarm;
         customSettingValue = new int[3];
         Arrays.fill(customSettingValue, -1);
@@ -53,6 +44,11 @@ public class AlarmCustom extends Function {
         AlarmData[] alarmList = alarm.getAlarmList();
         alarmList[customSettingValue[0]].setInterval(customSettingValue[1]);
         alarmList[customSettingValue[0]].setVolume(customSettingValue[2]);
+    }
+
+    @Override
+    protected void cancel() {
+        changeMode(0);
     }
 
     public void changeMode(int mode) {
@@ -149,5 +145,13 @@ public class AlarmCustom extends Function {
 
     public void setMode(int mode) {
         this.mode = mode;
+    }
+
+    public int[] getCustomSettingValue() {
+        return customSettingValue;
+    }
+
+    public void setCustomSettingValue(int[] customSettingValue) {
+        this.customSettingValue = customSettingValue;
     }
 }
