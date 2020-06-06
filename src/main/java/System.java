@@ -63,45 +63,49 @@ public class System extends Function {
         new System();
     }
 
-    public void startCheckTimeOut() {
-        checkTimeOut = new Thread() {
-            public void run() {
-                Function curFunction;
-                switch (functionNum[functionNumIdx]) {
-                    case 1:
-                        curFunction = timeKeeping;
-                        break;
-                    case 2:
-                        curFunction = stopwatch;
-                        break;
-                    case 3:
-                        curFunction = timer;
-                        break;
-                    case 4:
-                        curFunction = d_day;
-                        break;
-                    case 5:
-                        curFunction = alarm;
-                        break;
-                    case 6:
-                        curFunction = alarmCustom;
-                        break;
-                    default:
-                        curFunction = null;
-                }
+    public int getStatus() { return this.status; }
 
-                while (curFunction.getMode() == 1) {
-                    try {
-                        Thread.sleep(1000);
-                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
-                            curFunction.cancel();
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+    public void setFunctionNum(int[] functionNum) {
+        this.functionNum = functionNum;
+    }
+
+    public void startCheckTimeOut() {
+        checkTimeOut = new Thread(() -> {
+            Function curFunction;
+            switch (functionNum[functionNumIdx]) {
+                case 1:
+                    curFunction = timeKeeping;
+                    break;
+                case 2:
+                    curFunction = stopwatch;
+                    break;
+                case 3:
+                    curFunction = timer;
+                    break;
+                case 4:
+                    curFunction = d_day;
+                    break;
+                case 5:
+                    curFunction = alarm;
+                    break;
+                case 6:
+                    curFunction = alarmCustom;
+                    break;
+                default:
+                    curFunction = null;
+            }
+
+            while (curFunction.getMode() == 1) {
+                try {
+                    Thread.sleep(1000);
+                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                        curFunction.cancel();
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
-        };
+        });
 
         checkTimeOut.start();
     }
@@ -1077,6 +1081,11 @@ public class System extends Function {
 
     public void changeType() {
         type = (type + 1) % 3 + 1;
+    }
+
+    @Override
+    protected int getMode() {
+        return this.mode;
     }
 
     public void changeValue(int diff) {
