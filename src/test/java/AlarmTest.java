@@ -106,8 +106,11 @@ public class AlarmTest  {
         // 현재 시각과 알람 시간이 같으면
         if(timeKeeping.getCurTime().getTime().equals(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime()))
         {
-            buzzer.beepBuzzer(); // 버저 울리기.
+            system.beepBuzzer(); // 버저 울리기.
+            assertEquals(1, system.getStatus() & 1);
             // buzzer에서 interval과 volume을 get할 방법이 없음. -> getter로 신규 함수 추가해야함.
+            assertEquals(1000, system.buzzer.getInterval());
+            assertEquals(0.07, system.buzzer.getVolume());
         }
 
 
@@ -119,6 +122,8 @@ public class AlarmTest  {
         Buzzer buzzer = new Buzzer();
         buzzer.beepBuzzer();
         alarm.requestStopAlarmBuzzer();
+
+        assertEquals(0, system.getStatus() & 0);
 
     }
 
