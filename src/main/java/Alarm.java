@@ -214,7 +214,6 @@ public class Alarm extends Function {
             if (alarmData != null)
             {
                 cnt++;
-
             }
         }
         return cnt;

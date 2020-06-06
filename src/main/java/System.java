@@ -1143,9 +1143,9 @@ public class System extends Function {
         // TODO implement here
     }
 
-    public void beepBuzzer() {
+    public void beepBuzzer(int interval, int volume) {
         status |= 1;
-        buzzer.beepBuzzer();
+        buzzer.beepBuzzer(interval, volume);
     }
 
     public int updateStatus() {
