@@ -8,22 +8,16 @@ public class Timer extends Function {
 
     final static int FID = 3;
     private final int TYPE_SIZE = 3;
-
-    public int[] getTimeSettingValue() {
-        return timeSettingValue;
-    }
-
     private int timeSettingValue[] = {-1, -1, -1};
+    private Time timer;
+    private int type;
+    private Time timerCheckThread;
     System system;
 
     public Time getTimer() {
         return timer;
     }
 
-    /**
-     * Default constructor
-     */
->>>>>>> 87bbac5e6eaf4c6f3dcedf5f32df54bb2463e4c9
     public Timer(System system) {
         this.system = system;
         fid = 3;
@@ -42,44 +36,15 @@ public class Timer extends Function {
 
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
-<<<<<<< HEAD
-                    timerCheckThread = new Thread(() -> {
-                        try {
-                            timer.getTimeThread().join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        system.beepBuzzer();
-                        mode = 0;
-                    });
-
-                    timerCheckThread.start();
-=======
                     mode = 0;
                     system.beepBuzzer();
                     // timer가 안주금.
->>>>>>> c006184bc2c21e9645275dfd559cad2efabdebe6
                 }
             }
         });
 
         type = 0;
     }
-
-    public void foo() {
-        try {
-            this.timer.getTimeThread().join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        mode = 0;
-        system.beepBuzzer();
-    }
-
-
-    private Time timer;
-    private int type;
-    private Thread timerCheckThread;
 
     public void requestTimerSettingMode() {
         changeMode(1);
@@ -119,10 +84,6 @@ public class Timer extends Function {
         changeMode(0);
     }
 
-
-    /**
-     * 
-     */
     public void changeMode(int mode) {
         this.mode = mode;
         if (this.mode == 0) {
@@ -132,10 +93,10 @@ public class Timer extends Function {
             Arrays.fill(timeSettingValue, 0);
     }
 
+    public int[] getTimeSettingValue() {
+        return timeSettingValue;
+    }
 
-    /**
-     * @param diff
-     */
     public void changeValue(int diff) {
         timeSettingValue[type] += diff;
         switch(type) {
@@ -160,9 +121,6 @@ public class Timer extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void changeType() { type = (type + 1) % TYPE_SIZE; }
 
     public int getMode() {

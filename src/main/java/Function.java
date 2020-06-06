@@ -1,16 +1,11 @@
-/**
- * @author Yoonseop Shin
- */
 public abstract class Function {
 
-    public Function() {
-    }
+    public Function() {}
 
     protected int mode;
     protected int fid;
 
-    protected void changeMode() { }
-
+    protected void changeMode(int mode){ }
     public abstract void changeValue(int diff);
     public abstract void changeType();
     protected int getMode() {

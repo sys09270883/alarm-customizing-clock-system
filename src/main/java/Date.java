@@ -13,14 +13,13 @@ public class Date {
     public final int YEAR_BOTTON_LIMIT = 2020;
     public final int MONTH_TOP_LIMIT = 12;
     public final int MONTH_BOTTON_LIMIT = 1;
-
     // 인덱스 1 ~ 12가 월에 대응하는 일 수. 인덱스 0는 TimeSettingMode일 때 순환적인 처리를 위해 '일'의 최솟값 1을 넣어놨다.
-    public int numOfDays[] = {1,31,28,31,30,31,30,31,31,30,31,30,31};
+    public final static int numOfDays[] = {1,31,28,31,30,31,30,31,31,30,31,30,31};
 
     private int year;
     private int month;
     private int day;
-    private Object lock = new Object(); // 쓰레드 race condition 방지 위한 lock
+    private Object lock; // 쓰레드 race condition 방지 위한 lock
 
     public void setDate(int y, int m, int d) {
         year = y;
@@ -37,6 +36,7 @@ public class Date {
         year = Integer.parseInt(splited[0]);
         month = Integer.parseInt(splited[1]);
         day = Integer.parseInt(splited[2]);
+        lock = new Object();
     }
 
     public int getYear() {
@@ -71,8 +71,5 @@ public class Date {
     public void raiseDate() {
         if(++day == numOfDays[month]) { day = 0; ++month; }
         if(month > 12) { month = 0; ++year; }
-
-        // TODO 2099년이 넘어가면 어떻게 처리할지 의논해야됨 (-> 2020 1 1)
-        //if(year > 2099) {  }
     }
 }
