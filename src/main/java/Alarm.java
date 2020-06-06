@@ -116,15 +116,6 @@ public class Alarm extends Function {
     }
 
     /**
-     * 
-     */
-    public void requestStopAlarmBuzzer() {
-        // TODO implement here
-        Buzzer buzzer = new Buzzer();
-        buzzer.stopBuzzer();
-    }
-
-    /**
      * @param diff
      */
     public void movePointer(int diff) {

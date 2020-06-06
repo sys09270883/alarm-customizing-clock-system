@@ -16,8 +16,6 @@ public class Timer extends Function {
     private int timeSettingValue[] = {-1, -1, -1};
     System system;
 
-<<<<<<< HEAD
-=======
     public Time getTimer() {
         return timer;
     }
@@ -85,9 +83,6 @@ public class Timer extends Function {
 
     public void requestTimerSettingMode() {
         changeMode(1);
-        String curTimeStr = timer.getCurrentTime();
-        String splited[] = curTimeStr.split(" ");
-        timer.setTime(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
     public void requestSave() {

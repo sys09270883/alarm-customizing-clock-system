@@ -51,9 +51,6 @@ public class D_day extends Function {
 
     public void requestDdaySettingMode() {
         changeMode(); // d-day setting mode로 변경
-        String curDateStr = d_dayDate.getCurrentDate();
-        String splited[] = curDateStr.split(" ");
-        d_dayDate.setDate(Integer.parseInt(splited[0]), Integer.parseInt(splited[1]), Integer.parseInt(splited[2]));
     }
 
     /**
@@ -118,15 +115,6 @@ public class D_day extends Function {
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
     }
 
-    /**
-     * 
-     */
-    public void timeout() {}
-
-    /**
-     * 
-     */
-    public void cancel() {}
 
     /**
      *

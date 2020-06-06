@@ -35,30 +35,11 @@ public class AlarmCustom extends Function {
         this.system = system;
         fid = 6;
         mode = 0;
-        intervalPointer = 0;
-        volumePointer = 0;
-        customPointer = 0;
-        valueIndex = 0;
         alarm = system.alarm;
         customSettingValue = new int[3];
         Arrays.fill(customSettingValue, -1);
         type = 0;
     }
-
-
-    /**
-     * 
-     */
-    private int intervalPointer;
-    private int volumePointer;
-    private int customPointer;
-    private int valueIndex;
-
-
-    /**
-     * 
-     */
-
     Alarm alarm;
 
     public void requestAlarmSelectMode() {
