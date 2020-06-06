@@ -252,8 +252,10 @@ public class System extends Function {
                     String[] tmp = stopwatch.getStopwatchRecord();
 
                     int curRecordPointer = stopwatch.getRecordPointer();
-                    if (curRecordPointer > 2 && tmp[0 + curRecordPointer] == null)
+                    if (curRecordPointer > 2 && tmp[0 + curRecordPointer] == null) {
+                        stopwatch.movePointer(-1);
                         break;
+                    }
 
                     String[] str = new String[3];
                     if (tmp[0 + curRecordPointer] == null)
@@ -439,7 +441,6 @@ public class System extends Function {
                 break;
             case 2: // stopwatch
                 if (stopwatch.getMode() == 2) {
-
                     stopwatch.movePointer(-1);
                     String[] tmp = stopwatch.getStopwatchRecord();
                     int curRecordPointer = stopwatch.getRecordPointer();
@@ -964,8 +965,12 @@ public class System extends Function {
                     GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
                     if (d_day.getD_day() > 999)
                         GUI.d_dayView.setDday("999");
-                    else if (d_day.getD_day() == -1)
+                    else if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setYear("00");
+                        GUI.d_dayView.setMonth("NO");
+                        GUI.d_dayView.setDate("NE");
                         GUI.d_dayView.setDday("000");
+                    }
                     else
                         GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
 
