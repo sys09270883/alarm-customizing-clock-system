@@ -138,7 +138,6 @@ public class Alarm extends Function {
             typeindex = 0;
             alarmPointer = 0;
         }
-
     }
 
     public void changeValue2(int diff) {
