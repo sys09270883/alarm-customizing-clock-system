@@ -9,28 +9,20 @@ public class Border {
     public Border(System system) {
     }
 
-    public boolean isBlinkState() {
+    public boolean isBorderState() {
         return blinkState;
     }
 
-    /**
-     *
-     */
     private boolean blinkState;
 
-
-    /**
-     *
-     */
-    public void stopBlink() {
+    public void stopBorder() {
         // TODO implement here
     }
 
     /**
      *
      */
-    public void startBlink() {
+    public void startBorder() {
         // TODO implement here
     }
-
 }

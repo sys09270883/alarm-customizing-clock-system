@@ -1151,11 +1151,11 @@ public class System extends Function {
     public int updateStatus() {
         if (status == 0b11) {
             status = 0b01;
-            border.stopBlink();
+            border.stopBorder();
             return 2;
         } else if (status == 0b10) {
             status = 0b00;
-            border.stopBlink();
+            border.stopBorder();
             return 1;
         } else if (status == 0b01) {
             status = 0b00;
