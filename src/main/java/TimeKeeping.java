@@ -212,4 +212,8 @@ public class TimeKeeping extends Function {
     public Time getCurTime() { return curTime; }
     public int getD_day() { return d_day; }
     public int getDayOfTheWeek() { return dayOfTheWeek; }
+
+    public void cancel() {
+        changeMode(-1);
+    }
 }

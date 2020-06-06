@@ -111,7 +111,9 @@ public class Stopwatch extends Function {
             recordPointer = STOPWATCH_TOP_LIMIT;
     }
 
-    public void cancel() {}
+    public void cancel() {
+        changeMode(0);
+    }
 
     public void changeMode(int mode) {
         this.mode = mode;

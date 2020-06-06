@@ -46,6 +46,11 @@ public class AlarmCustom extends Function {
         alarmList[customSettingValue[0]].setVolume(customSettingValue[2]);
     }
 
+    @Override
+    protected void cancel() {
+        changeMode(0);
+    }
+
     public void changeMode(int mode) {
         if (mode == 1){
             if ((ALARM_TOP_LIMIT = alarm.getSize()) == 0) {

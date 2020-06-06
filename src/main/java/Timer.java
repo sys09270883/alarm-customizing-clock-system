@@ -34,6 +34,7 @@ public class Timer extends Function {
 
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
+
                     changeMode(0);
                     system.beepBuzzer(1,1);
                     timer.pauseTime();
@@ -126,5 +127,9 @@ public class Timer extends Function {
 
     public int getType() {
         return this.type;
+    }
+
+    public void cancel() {
+        changeMode(0);
     }
 }
