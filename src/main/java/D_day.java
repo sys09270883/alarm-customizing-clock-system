@@ -85,7 +85,7 @@ public class D_day extends Function {
     public Date getD_dayDate() { return d_dayDate; }
 
     public void requestStopDdayBlink() {
-        system.border.stopBlink();
+        system.border.stopBorder();
     }
 
     public void requestDeleteDday() {

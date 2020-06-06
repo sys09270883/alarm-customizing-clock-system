@@ -66,6 +66,11 @@ public class Buzzer implements Runnable {
         synchronized (lock) {
             buzzerState = false;
         }
+        try {
+            beepThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         interval = INTERVALS[1];
         volume = VOLUMES[1];
     }
