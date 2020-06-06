@@ -10,10 +10,10 @@ public class Border {
     }
 
     public boolean isBorderState() {
-        return blinkState;
+        return borderState;
     }
 
-    private boolean blinkState;
+    private boolean borderState;
 
     public void stopBorder() {
         // TODO implement here

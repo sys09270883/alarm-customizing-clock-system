@@ -11,15 +11,10 @@ public class TimeKeepingTest {
     @Test
     public void setTimeTest() {
         TimeKeeping timekeeping = system.timeKeeping;
-
         timekeeping.requestTimeSettingMode();
-
         String time = timekeeping.getCurTime().getCurrentTime();
         String date = timekeeping.getCurDate().getCurrentDate();
         int dayOfTheWeek;
-        //1: 일요일~ 7: 토요일
-
-        // 시간, 분, 초, 년, 월, 일 순으로 설정
         for (int i = 0; i < 5; i++) {
             timekeeping.changeValue(2);
             timekeeping.changeType();
@@ -52,15 +47,12 @@ public class TimeKeepingTest {
         assert (timekeeping.getCurTime().getCurrentTime().equals(time));
         assert (timekeeping.getCurDate().getCurrentDate().equals(date));
         assert (timekeeping.getDayOfTheWeek() == dayOfTheWeek);
-
-        //1: 일요일~ 7: 토요일
     }
 
     // DisplayTimeSet는 system에서 확인
 
     @Test
     public void setDisplayTest() {
-        //java.lang.System.out.println(system.getSelectedFid());
         system.nextFunction();
         assert (system.getSelectedFid() == 2);
     }
