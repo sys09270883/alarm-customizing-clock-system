@@ -59,7 +59,6 @@ class Time implements Runnable {
         synchronized (pauseLock) {
             isPaused = true;
         }
-
     }
 
     public boolean equals(Time time) {

@@ -34,8 +34,8 @@ public class Buzzer implements Runnable {
     }
 
     public Buzzer() {
-        interval = INTERVALS[2];
-        volume = VOLUMES[2];
+        interval = INTERVALS[1];
+        volume = VOLUMES[1];
         buzzerState = false;
     }
 
@@ -52,10 +52,12 @@ public class Buzzer implements Runnable {
         }
     }
 
-    public void beepBuzzer() {
+    public void beepBuzzer(int interval, int volume) {
         synchronized (lock) {
             buzzerState = true;
         }
+        this.interval = INTERVALS[interval];
+        this.volume = VOLUMES[volume];
         beepThread = new Thread(this);
         beepThread.start();
     }
@@ -64,6 +66,8 @@ public class Buzzer implements Runnable {
         synchronized (lock) {
             buzzerState = false;
         }
+        interval = INTERVALS[1];
+        volume = VOLUMES[1];
     }
 
     public Thread getBeepThread() {
