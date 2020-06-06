@@ -27,10 +27,6 @@ class Time implements Runnable {
         this.sec = sec;
     }
 
-    public String getTime() {
-        return Integer.toString(hour) + " " + Integer.toString(min) + " " + Integer.toString(sec);
-    }
-
     @Override
     public String toString() {
         return hour + " " + min + " " + sec;

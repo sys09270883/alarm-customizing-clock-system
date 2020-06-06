@@ -5,7 +5,8 @@ public abstract class Function {
     protected int mode;
     protected int fid;
 
-    protected void changeMode(int mode){ }
+    abstract protected void cancel();
+    protected void changeMode(int mode) {}
     public abstract void changeValue(int diff);
     public abstract void changeType();
     protected int getMode() {

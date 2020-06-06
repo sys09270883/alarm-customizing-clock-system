@@ -55,6 +55,8 @@ public class System extends Function {
         border = new Border(this);
         cacheValue = new int[4];
         Arrays.fill(cacheValue, -1);
+
+        startCheckTimeOut();
     }
 
     public static void main(String[] args) {
@@ -91,8 +93,8 @@ public class System extends Function {
                 while (curFunction.getMode() == 1) {
                     try {
                         Thread.sleep(1000);
-                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
-                            cancel(curFunction);
+                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                            curFunction.cancel();
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -111,22 +113,32 @@ public class System extends Function {
         switch (selectedFid) {
             case 1:
                 if (timeKeeping.getMode() == 0 && mode == 1) {
-                    cancel(this);
+                    cancel();
                     GUI.setView(GUI.timekeepingView);
                 } else if (timeKeeping.getMode() == 1 && mode == 0) {
-                    cancel(timeKeeping);
+                    timeKeeping.cancel();
                     GUI.timekeepingView.borderPanel.setVisible(false);
                 }
                 break;
             case 2:
                 if (stopwatch.getMode() == 2) {
-                    // cancel
-                    stopwatch.changeMode(0);
+                    stopwatch.cancel();
                     GUI.stopwatchView.borderPanel.setVisible(false);
                 }
                 break;
+            case 3:
+                if (timer.getMode() == 1) {
+                    timer.cancel();
+                    GUI.timerView.borderPanel.setVisible(false);
+                    String tmp = timer.getTimer().getCurrentTime();
+                    StringTokenizer st = new StringTokenizer(tmp, " ");
+                    GUI.timerView.setHour(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    GUI.timerView.setMinute(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    GUI.timerView.setSecond(String.format("%02d", Integer.parseInt(st.nextToken())));
+                }
+                break;
             case 4: // dday
-                cancel(d_day);
+                d_day.cancel();
                 GUI.d_dayView.borderPanel.setVisible(false);
                 if (d_day.getD_day() == -1) {
                     GUI.d_dayView.setYear("  ");
@@ -141,9 +153,16 @@ public class System extends Function {
                 }
                 break;
             case 5: // alarm
-                cancel(alarm);
-                alarm.setMode(0);
-                GUI.alarmView.borderPanel.setVisible(false);
+                if (alarm.getMode() != 0) {
+                    alarm.cancel();
+                    GUI.alarmView.borderPanel.setVisible(false);
+                }
+                break;
+            case 6:
+                if (alarmCustom.getMode() != 0) {
+                    alarmCustom.cancel();
+                    GUI.alarmCustomView.borderPanel.setVisible(false);
+                }
                 break;
         }
     }
@@ -288,16 +307,16 @@ public class System extends Function {
                 }
                 break;
             case 3: // timer
-                if (timer.getMode() == 0) {
+                if (timer.getMode() == 0) {     // 타이머가 기본 화면일 때
                     timer.requestStartTimer();
-                } else if (timer.getMode() == 1) {
+                } else if (timer.getMode() == 1) {  // 타이머 설정 모드
                     timer.changeValue(1);
                     int[] tsv = timer.getTimeSettingValue();
                     GUI.timerView.setHour(String.format("%02d", tsv[0]));
                     GUI.timerView.setMinute(String.format("%02d", tsv[1]));
                     GUI.timerView.setSecond(String.format("%02d", tsv[2]));
-                } else {
-                    timer.requestPauseTimer();
+                } else {    // 타이머 실행중일 때
+
                 }
 
                 break;
@@ -610,7 +629,6 @@ public class System extends Function {
             case 1: // timekeeping에서 현재시간 설정하는 것
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     timeKeeping.requestTimeSettingMode();
-                    startCheckTimeOut();
                     GUI.timekeepingView.borderPanel.setVisible(true);
                     GUI.timekeepingView.borderPanel.setBounds(
                             GUI.timekeepingView.curTimePanel1.getX() - 5,
@@ -725,7 +743,8 @@ public class System extends Function {
                     int x = GUI.timerView.borderPanel.getX() % w + 2 * w;
                     int y = GUI.timerView.borderPanel.getY();
                     GUI.timerView.borderPanel.setBounds(x, y, w, h);
-                } else {
+                }
+                else if (timer.getMode() == 1){
                     timer.changeType();
                     int timerType = timer.getType();
                     int w = GUI.timerView.borderPanel.getWidth();
@@ -741,6 +760,7 @@ public class System extends Function {
                         GUI.timerView.borderPanel.setBounds(x + 2 * w, y, w, h);
                     }
                 }
+                else { }
 
                 break;
             case 4: // d-day
@@ -927,10 +947,12 @@ public class System extends Function {
             case 3: // timer
                 if (timer.getMode() == 0) {
                     nextFunction();
-                } else {
+                }
+                else if (timer.getMode() == 1) {
                     timer.requestSave();
                     GUI.timerView.borderPanel.setVisible(false);
                 }
+                else { nextFunction(); }
 
                 break;
             case 4: // d-day
@@ -1036,8 +1058,8 @@ public class System extends Function {
         }
     }
 
-    public void cancel(Function curFunction) {
-        curFunction.changeMode(-1);
+    public void cancel() {
+        changeMode(-1);
     }
 
     public void changeMode(int _mode) {
@@ -1173,10 +1195,6 @@ public class System extends Function {
             return 0;
         }
         return -1;
-    }
-
-    public void set() {
-        // TODO implement here
     }
 
     public void nextFunction() {
