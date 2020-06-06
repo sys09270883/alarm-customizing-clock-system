@@ -6,29 +6,22 @@ public class SystemTest  {
 
     @Test
     public void ChangeScreenTest() {
+        int[] functionNum = system.getFunctionNum();
+        int functionNumIdx = system.getFunctionNumIdx();
+        int selectedFid;
 
-        system.selectFunction();
-
-        // 화면이 잘 넘어가는지 확인 : 1,2,5,6  설정순
-        java.lang.System.out.println(system.getSelectedFid());
+        functionNumIdx = (functionNumIdx + 1) % 4;
+        selectedFid = functionNum[functionNumIdx];
         system.nextFunction();
-        java.lang.System.out.println(system.getSelectedFid());
+        assert(selectedFid == system.getSelectedFid());
+        functionNumIdx = (functionNumIdx + 1) % 4;
+        selectedFid = functionNum[functionNumIdx];
         system.nextFunction();
-        java.lang.System.out.println(system.getSelectedFid());
-        system.nextFunction();
-        java.lang.System.out.println(system.getSelectedFid());
-        system.nextFunction();
-        java.lang.System.out.println(system.getSelectedFid());
-        system.nextFunction();
-        java.lang.System.out.println(system.getSelectedFid());
-        system.nextFunction();
-        java.lang.System.out.println(system.getSelectedFid());
-
+        assert(selectedFid == system.getSelectedFid());
     }
 
     @Test
-    public  void TimeoutTest() {
-
+    public void TimeoutTest() {
         TimeKeeping timeKeeping = system.timeKeeping;
         Stopwatch stopwatch = system.stopwatch;
         Timer timer = system.timer;
@@ -37,11 +30,9 @@ public class SystemTest  {
         AlarmCustom alarmCustom = null;
 
         // 타임 키핑
-        java.lang.System.out.println(system.getSelectedFid());
         timeKeeping.requestTimeSettingMode();
         system.startCheckTimeOut();
         // (임시로 10분을 10초로 바꾸고) 10초 정지 후 어떻게 되는 지 확인
-        java.lang.System.out.println(system.getMode());
 
         // 스톱워치
         java.lang.System.out.println(system.getSelectedFid());
@@ -144,8 +135,6 @@ public class SystemTest  {
         alarmCustom.requestAlarmSelectMode();
         alarmCustom.cancel();
         assert(alarmCustom.getMode() == 0);
-
-
     }
 
 }
