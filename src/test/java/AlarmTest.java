@@ -44,7 +44,7 @@ public class AlarmTest  {
 
 
         // 잘 저장 되었는 지 확인.
-        assert(alarm.getAlarmList()[0].getAlarmTime().getTime().equals(time.getTime()));
+        assert(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime().equals(time.getCurrentTime()));
 
     }
 
@@ -100,13 +100,13 @@ public class AlarmTest  {
         timeKeeping.changeValue(60);
         timeKeeping.requestSave(); // "23 59 59"
 
-        java.lang.System.out.println(timeKeeping.getCurTime().getTime());
-        java.lang.System.out.println(alarm.getAlarmList()[0].getAlarmTime().getTime());
+        java.lang.System.out.println(timeKeeping.getCurTime().getCurrentTime());
+        java.lang.System.out.println(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime());
 
         // 현재 시각과 알람 시간이 같으면
-        if(timeKeeping.getCurTime().getTime().equals(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime()))
+        if(timeKeeping.getCurTime().getCurrentTime().equals(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime()))
         {
-            system.beepBuzzer(); // 버저 울리기.
+            system.beepBuzzer(1, 1); // 버저 울리기.
             assertEquals(1, system.getStatus() & 1);
             // buzzer에서 interval과 volume을 get할 방법이 없음. -> getter로 신규 함수 추가해야함.
             assertEquals(1000, system.buzzer.getInterval());
@@ -120,7 +120,7 @@ public class AlarmTest  {
     public void StopAlarmBuzzerTest() {
         Alarm alarm = new Alarm(system);
         Buzzer buzzer = new Buzzer();
-        buzzer.beepBuzzer();
+        buzzer.beepBuzzer(1, 1);
         alarm.requestStopAlarmBuzzer();
 
         assertEquals(0, system.getStatus() & 0);
