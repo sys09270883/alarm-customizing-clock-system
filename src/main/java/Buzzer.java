@@ -63,8 +63,10 @@ public class Buzzer implements Runnable {
     }
 
     public void stopBuzzer() {
-        synchronized (lock) {
-            buzzerState = false;
+        while (buzzerState) {
+            synchronized (lock) {
+                buzzerState = false;
+            }
         }
         try {
             beepThread.join();

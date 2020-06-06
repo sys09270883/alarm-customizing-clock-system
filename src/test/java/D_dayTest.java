@@ -68,7 +68,7 @@ public class D_dayTest {
         system.border.startBlink();
         assertTrue(system.border.isBlinkState());
 
-        d_day.requestStopDdayBlink();
+        d_day.requestStopDdayBorder();
         assertFalse(system.border.isBlinkState());
     }
 

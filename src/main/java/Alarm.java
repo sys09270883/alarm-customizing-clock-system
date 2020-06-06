@@ -117,8 +117,7 @@ public class Alarm extends Function {
     }
 
     public void cancel() {
-        mode = 0;
-        changeMode(-1);
+        changeMode(0);
     }
 
     public void changeMode(int mode) { // 기본 화면, 알람 리스트 확인, 알람 설정 이렇게 3개가 있음.
