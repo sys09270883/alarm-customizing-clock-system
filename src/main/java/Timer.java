@@ -11,7 +11,6 @@ public class Timer extends Function {
     private int timeSettingValue[] = {-1, -1, -1};
     private Time timer;
     private int type;
-    private Time timerCheckThread;
     System system;
 
     public Time getTimer() {
@@ -24,7 +23,6 @@ public class Timer extends Function {
         mode = 0;
         timer = new Time(0);
         timer.setTime(0, 0, 0);
-        timerCheckThread = null;
 
         timer.setSecondListener(() -> {
             if (mode == 2) {
@@ -36,13 +34,12 @@ public class Timer extends Function {
 
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
-                    mode = 0;
+                    changeMode(0);
                     system.beepBuzzer(1,1);
-                    // timer가 안주금.
+                    timer.pauseTime();
                 }
             }
         });
-
         type = 0;
     }
 
