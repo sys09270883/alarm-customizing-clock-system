@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/_OOAD__alarm_customizing_clock_jar</output-path>
     <root id="archive" name="[OOAD]_alarm_customizing_clock.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>

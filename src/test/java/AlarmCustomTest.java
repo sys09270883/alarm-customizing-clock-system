@@ -55,7 +55,12 @@ public class AlarmCustomTest {
         system.alarmCustom.changeValue2(1);
         java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
         java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
-        assertEquals(3, system.alarmCustom.getAlarm().getAlarmPointer()); // 2에서 포인터가 하나 증가하는 지 확인 (마지막이라 안 올라감)
+        assertEquals(3, system.alarmCustom.getAlarm().getAlarmPointer()); // 2에서 포인터가 하나 증가하는 지 확인
+
+        system.alarmCustom.changeValue2(1);
+        java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(3, system.alarmCustom.getAlarm().getAlarmPointer()); // 3에서 포인터가 하나 증가하는 지 확인 (마지막이라 안 올라감)
 
 
         system.alarmCustom.changeValue2(-1);
@@ -76,7 +81,7 @@ public class AlarmCustomTest {
         system.alarmCustom.changeValue2(-1);
         java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
         java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
-        assertEquals(0, system.alarmCustom.getAlarm().getAlarmPointer()); // 0에서 포인터가 하나 감소하는 지 확인
+        assertEquals(0, system.alarmCustom.getAlarm().getAlarmPointer()); // 0에서 포인터가 하나 감소하는 지 확인 (0 미만으로 안 내려감)
     }
 
     @Test

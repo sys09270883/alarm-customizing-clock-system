@@ -7,8 +7,8 @@ public class AlarmCustomView extends DefaultLayout {
     final static int ALARM_LIST_HEIGHT = 135;
     final static int _WIDTH = 60;
     final static int _HEIGHT = 60;
-    final static String VOLUME_IMG_NAME = "src/main/resources/soundimage.jpg";
-    final static String INTERVAL_IMG_NAME = "src/main/resources/intervalimage.jpg";
+    final static String VOLUME_IMG_NAME = "soundimage.jpg";
+    final static String INTERVAL_IMG_NAME = "intervalimage.jpg";
     final static int DISPLAY_AMT = 3;
 
     ImageIcon volumeImage;
@@ -25,7 +25,7 @@ public class AlarmCustomView extends DefaultLayout {
     public AlarmCustomView(System system) {
         super(system);
 
-        volumeImage = new ImageIcon(VOLUME_IMG_NAME);
+        volumeImage = new ImageIcon(getClass().getResource(VOLUME_IMG_NAME));
         volumeImage = new ImageIcon(volumeImage.getImage()
                 .getScaledInstance(_WIDTH, _HEIGHT, Image.SCALE_SMOOTH));
         volumeLabel = new JLabel(volumeImage);
@@ -45,7 +45,7 @@ public class AlarmCustomView extends DefaultLayout {
 
         displaySegment(430, 165, _WIDTH, _HEIGHT, "0");
 
-        intervalImage = new ImageIcon(INTERVAL_IMG_NAME);
+        intervalImage = new ImageIcon(getClass().getResource(INTERVAL_IMG_NAME));
         intervalImage = new ImageIcon(intervalImage.getImage()
                 .getScaledInstance(_WIDTH, _HEIGHT, Image.SCALE_SMOOTH));
         intervalLabel = new JLabel(intervalImage);

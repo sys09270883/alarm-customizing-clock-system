@@ -62,7 +62,6 @@ public class D_day extends Function {
         Calendar d_dayDateCal = Calendar.getInstance();
         d_dayDateCal.set(date.getYear(), date.getMonth()-1, date.getDay());
 
-
         if(curDateCal.before(d_dayDateCal)) {
             // 현재 시간이 설정 시간과 같거나 현재 시간이 설정 시간보다 과거라면, d-day로 설정할 수 있음.
             long curDateTime = curDateCal.getTimeInMillis() / (60*60*24*1000);
