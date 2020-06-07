@@ -15,8 +15,8 @@ public class DefaultLayout extends JLayeredPane {
     final static int PADDING = 5;
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
-    final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
-    final static String CLOCK_BORDER_IMG_NAME = "src/main/resources/clocklayout2.jpg";
+    final static String CLOCK_IMG_NAME = "clocklayout.jpg";
+    final static String CLOCK_BORDER_IMG_NAME = "clocklayout2.jpg";
 
     protected static int layer = 3;
     protected JPanel mainPanel;
@@ -38,12 +38,12 @@ public class DefaultLayout extends JLayeredPane {
 
         this.system = system;
 
-        clockImage = new ImageIcon(CLOCK_IMG_NAME);
+        clockImage = new ImageIcon(getClass().getResource(CLOCK_IMG_NAME));
         clockImage = new ImageIcon(clockImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
         clockLabel = new JLabel(clockImage);
         clockLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
-        clockBorderedImage = new ImageIcon(CLOCK_BORDER_IMG_NAME);
+        clockBorderedImage = new ImageIcon(getClass().getResource(CLOCK_BORDER_IMG_NAME));
         clockBorderedImage = new ImageIcon(clockBorderedImage.getImage()
                 .getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
         clockBorderedLabel = new JLabel(clockBorderedImage);

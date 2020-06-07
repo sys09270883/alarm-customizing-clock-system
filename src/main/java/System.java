@@ -175,7 +175,6 @@ public class System extends Function {
         }
     }
 
-
     public void selectBtnLongPressed() {
         lastOperateTime = java.lang.System.currentTimeMillis();
         if (updateStatus() > -1)
@@ -463,7 +462,6 @@ public class System extends Function {
                     }
                     GUI.functionSelectingView.setCurTime1(str);
                 }
-
 
                 break;
             case 2: // stopwatch

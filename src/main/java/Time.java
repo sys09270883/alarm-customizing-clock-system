@@ -134,6 +134,7 @@ class Time implements Runnable {
                                     }
                                 }
                             }
+                            secondChangedListener.conditionSatisfied();
                         }
                     }
                     else {
@@ -153,6 +154,7 @@ class Time implements Runnable {
                                 sec = TIME_BOTTOM_LIMIT;
                                 if (dateChangedListener != null)
                                     dateChangedListener.conditionSatisfied();
+
                             }
                             secondChangedListener.conditionSatisfied();
                         }
