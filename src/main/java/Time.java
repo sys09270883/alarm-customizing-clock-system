@@ -103,7 +103,7 @@ class Time implements Runnable {
                 Thread.sleep(10);
                 long cur = System.currentTimeMillis();
                 if(cur - std >= 1000) {
-                    if(timeFlag == 1) {
+                    if(timeFlag >= 1) {
                         synchronized (hmsLock) {
                             ++sec;
                             if (sec > SECOND_TOP_LIMIT) {
@@ -114,15 +114,23 @@ class Time implements Runnable {
                                 min = TIME_BOTTOM_LIMIT;
                                 ++hour;
                             }
-                            if (hour > HOUR_TOP_LIMIT) {
-                                hour = TIME_BOTTOM_LIMIT;
-                                min = TIME_BOTTOM_LIMIT;
-                                sec = TIME_BOTTOM_LIMIT;
-                                if (dateChangedListener != null) {
-                                    dateChangedListener.conditionSatisfied();
+                            if (timeFlag == 1) {
+                                if (hour > HOUR_TOP_LIMIT) {
+                                    hour = TIME_BOTTOM_LIMIT;
+                                    min = TIME_BOTTOM_LIMIT;
+                                    sec = TIME_BOTTOM_LIMIT;
+                                    if (dateChangedListener != null) {
+                                        dateChangedListener.conditionSatisfied();
+                                    }
+                                }
+                                secondChangedListener.conditionSatisfied();
+                            } else if (timeFlag == 2) {
+                                if (hour > TIMER_HOUR_TOP_LIMIT) {
+                                    hour = TIMER_HOUR_TOP_LIMIT;
+                                    min = MINUTE_TOP_LIMIT;
+                                    sec = SECOND_TOP_LIMIT;
                                 }
                             }
-                            secondChangedListener.conditionSatisfied();
                         }
                     }
                     else {
@@ -142,7 +150,6 @@ class Time implements Runnable {
                                 sec = TIME_BOTTOM_LIMIT;
                                 if (dateChangedListener != null)
                                     dateChangedListener.conditionSatisfied();
-
                             }
                             secondChangedListener.conditionSatisfied();
                         }
