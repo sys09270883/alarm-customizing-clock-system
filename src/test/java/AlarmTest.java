@@ -43,9 +43,6 @@ public class AlarmTest  {
         }
 
         time.setTime(alarmSettingValue[0], alarmSettingValue[1], alarmSettingValue[2]);
-/*        AlarmData alarmData = new AlarmData();
-        alarmData.setAlarmTime(time);*/
-
 
         // 잘 저장 되었는 지 확인.
         assert(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime().equals(time.getCurrentTime()));

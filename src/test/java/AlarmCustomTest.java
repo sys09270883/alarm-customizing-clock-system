@@ -14,7 +14,6 @@ public class AlarmCustomTest {
         system.alarmCustom = new AlarmCustom(system);
     }
 
-
     @Test
     public void ControlAlarmListTest() {
         // alarm 리스트 설정
@@ -70,12 +69,10 @@ public class AlarmCustomTest {
         java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
         java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
         assertEquals(0, system.alarmCustom.getAlarm().getAlarmPointer()); // 0에서 포인터가 하나 감소하는 지 확인
-
     }
 
     @Test
     public void SetAlarmIntervalTest() {
-
 
         AlarmCustom alarmCustom = system.alarmCustom;
 
@@ -184,7 +181,6 @@ public class AlarmCustomTest {
 
         java.lang.System.out.println(system.alarm.getAlarmList()[0].getInterval());
         java.lang.System.out.println(system.alarm.getAlarmList()[0].getVolume());
-
     }
 
 
