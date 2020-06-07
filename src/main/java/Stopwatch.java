@@ -22,7 +22,7 @@ public class Stopwatch extends Function {
         for(int i=0; i<10; i++) {
             stopwatchRecord[i] = null;
         }
-        stopwatch = new Time(1);
+        stopwatch = new Time(2);
         stopwatch.setTime(0, 0, 0);
         stopwatch.setSecondListener(() -> {
                     String time = stopwatch.getCurrentTime();
