@@ -16,20 +16,20 @@ public class DefaultLayout extends JLayeredPane {
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
     final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
-    final static String TOTAL_BORDER_IMG_NAME = "src/main/resources/totalborder.jpg";
+    final static String CLOCK_BORDER_IMG_NAME = "src/main/resources/clocklayout2.jpg";
 
     protected static int layer = 3;
     protected JPanel mainPanel;
     System system;
     ImageIcon clockImage;
+    ImageIcon clockBorderedImage;
     JButton startBtn;
     JButton resetBtn;
     JButton selectBtn;
     JButton modeBtn;
     JLabel clockLabel;
+    JLabel clockBorderedLabel;
     Long start, end;
-    ImageIcon totalBorderImage;
-    JLabel totalBorder;
 
     public DefaultLayout(System system) {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -38,21 +38,21 @@ public class DefaultLayout extends JLayeredPane {
 
         this.system = system;
 
-        totalBorderImage = new ImageIcon(TOTAL_BORDER_IMG_NAME);
-        totalBorderImage = new ImageIcon(totalBorderImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
-        totalBorder = new JLabel(totalBorderImage);
-        totalBorder.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-
         clockImage = new ImageIcon(CLOCK_IMG_NAME);
         clockImage = new ImageIcon(clockImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
         clockLabel = new JLabel(clockImage);
         clockLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
+        clockBorderedImage = new ImageIcon(CLOCK_BORDER_IMG_NAME);
+        clockBorderedImage = new ImageIcon(clockBorderedImage.getImage()
+                .getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
+        clockBorderedLabel = new JLabel(clockBorderedImage);
+        clockBorderedLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+
         startBtn = new JButton("START");
         startBtn.setBounds(PADDING_X, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
         setBtn(startBtn);
         startBtn.addActionListener(event -> system.startBtnPressed());
-
 
         resetBtn = new JButton("RESET");
         resetBtn.setBounds(FRAME_WIDTH - PADDING_X - BTN_WIDTH, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
@@ -137,7 +137,11 @@ public class DefaultLayout extends JLayeredPane {
         }
     }
 
-    protected void setTotalBorder() {
-
+    public void setClockDisplay(boolean isBordered) {
+        remove(mainPanel);
+        mainPanel.remove(isBordered ? clockLabel : clockBorderedLabel);
+        mainPanel.add(isBordered ? clockBorderedLabel : clockLabel);
+        add(mainPanel, new Integer(0));
     }
+
 }

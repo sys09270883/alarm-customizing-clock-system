@@ -4,6 +4,7 @@ import java.lang.Runnable;
 
 class Time implements Runnable {
 
+    public final int TIMER_HOUR_TOP_LIMIT = 99;
     public final int HOUR_TOP_LIMIT = 23;
     public final int MINUTE_TOP_LIMIT = 59;
     public final int SECOND_TOP_LIMIT = 59;

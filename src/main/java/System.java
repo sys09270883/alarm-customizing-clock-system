@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
  */
 public class System extends Function {
 
-    // 6개 중 4개 인스턴스만 갖고있음.
-    // 알람, 알람커스텀은 항상 둘 다 포함되거나 포함되지 않아야 한다.
+    // 6�� �� 4�� �ν��Ͻ��� ��������.
+    // �˶�, �˶�Ŀ������ �׻� �� �� ���Եǰų� ���Ե��� �ʾƾ� �Ѵ�.
     public GUI GUI;
     public TimeKeeping timeKeeping;
     public Stopwatch stopwatch;
@@ -21,7 +21,7 @@ public class System extends Function {
     private int functionNumIdx = 0;
     private int[] functionNum;
     private int selectedFid;
-    private int status; // 비트마스킹: 0b00 0b01 0b10 0b11
+    private int status; // ��Ʈ����ŷ: 0b00 0b01 0b10 0b11
     private int type;
     private Thread checkTimeOut;
     private long lastOperateTime;
@@ -59,10 +59,7 @@ public class System extends Function {
         startCheckTimeOut();
     }
 
-    public static void main(String[] args) {
-        System system = new System();
-        system.startBorder();
-    }
+    public static void main(String[] args) { new System(); }
 
     public int getStatus() { return this.status; }
 
@@ -249,7 +246,7 @@ public class System extends Function {
                     GUI.functionSelectingView.borderPanel.setVisible(true);
                 }
                 break;
-            case 2: // 스탑워치
+            case 2: // ��ž��ġ
                 if (stopwatch.getMode() == 0) {
                     stopwatch.requestRecordCheckMode();
                     GUI.stopwatchView.borderPanel.setVisible(true);
@@ -295,7 +292,7 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping에서 현재시간 설정하는 것
+            case 1: // timekeeping���� ����ð� �����ϴ� ��
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     return;
                 } else if (timeKeeping.getMode() == 1 && mode == 0) {
@@ -363,9 +360,9 @@ public class System extends Function {
                 }
                 break;
             case 3: // timer
-                if (timer.getMode() == 0) {     // 타이머가 기본 화면일 때
+                if (timer.getMode() == 0) {     // Ÿ�̸Ӱ� �⺻ ȭ���� ��
                     timer.requestStartTimer();
-                } else if (timer.getMode() == 1) {  // 타이머 설정 모드
+                } else if (timer.getMode() == 1) {  // Ÿ�̸� ���� ���
                     timer.changeValue(1);
                     int[] tsv = timer.getTimeSettingValue();
                     GUI.timerView.setHour(String.format("%02d", tsv[0]));
@@ -378,7 +375,7 @@ public class System extends Function {
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
-                    // 아무것도 없음.
+                    // �ƹ��͵� ����.
                 } else {
                     d_day.changeValue(1);
                     int[] curDate = d_day.getDateSettingValue();
@@ -388,10 +385,10 @@ public class System extends Function {
                 }
                 break;
             case 5: // alarm
-                if (alarm.getMode() == 0)   // 기본값
+                if (alarm.getMode() == 0)   // �⺻��
                     return;
-                    // GUI에 반영해야 함.
-                else if (alarm.getMode() == 1) { // 알람 설정
+                    // GUI�� �ݿ��ؾ� ��.
+                else if (alarm.getMode() == 1) { // �˶� ����
                     alarm.changeValue(1);
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
@@ -414,15 +411,15 @@ public class System extends Function {
 
                     GUI.alarmView.setAlarm(str1 + str2 + str3);
 
-                } else if (alarm.getMode() == 2) // 포인터 조종
+                } else if (alarm.getMode() == 2) // ������ ����
                 {
                     alarm.changeValue2(1);
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer >= segmentPointer[1]) {    // 같을 때
-                        // 구간포인터의 해당하는 구간을 띄워주면 됨.
+                    if (alarmPointer >= segmentPointer[1]) {    // ���� ��
+                        // ������������ �ش��ϴ� ������ ����ָ� ��.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
                             StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
@@ -434,25 +431,25 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmView.setAlarmList2(str);   // 18자리
+                        GUI.alarmView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmView.setBorderPanel(alarmPointer - segmentPointer[0]);
                 }
                 break;
             case 6: // alarm custom
-                if (alarmCustom.getMode() == 0) // 기본모드
+                if (alarmCustom.getMode() == 0) // �⺻���
                 {
 
-                } else if (alarmCustom.getMode() == 1) { // 알람 리스트 조회 모드
+                } else if (alarmCustom.getMode() == 1) { // �˶� ����Ʈ ��ȸ ���
                     alarmCustom.changeValue2(1);
 
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer >= segmentPointer[1]) {    // 같을 때
-                        // 구간포인터의 해당하는 구간을 띄워주면 됨.
+                    if (alarmPointer >= segmentPointer[1]) {    // ���� ��
+                        // ������������ �ش��ϴ� ������ ����ָ� ��.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
                             StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
@@ -464,13 +461,13 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList2(str);   // 18자리
+                        GUI.alarmCustomView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
 
 
-                } else if (alarmCustom.getMode() == 2) // 알람 인터벌, 볼륨 설정
+                } else if (alarmCustom.getMode() == 2) // �˶� ���͹�, ���� ����
                 {
                     alarmCustom.changeValue(1);
                     int[] csvArr = alarmCustom.getCustomSettingValue();
@@ -487,10 +484,10 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping에서 현재시간 설정하는 것
+            case 1: // timekeeping���� ����ð� �����ϴ� ��
                 if (timeKeeping.getMode() == 0 && mode == 0)
                     return;
-                    // GUI에 반영해야 함.
+                    // GUI�� �ݿ��ؾ� ��.
                 else if (timeKeeping.getMode() == 1 && mode == 0) {
                     timeKeeping.changeValue(-1);
                     int type = timeKeeping.getType();
@@ -570,7 +567,7 @@ public class System extends Function {
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
-                    // 아무것도 없음.
+                    // �ƹ��͵� ����.
                 } else {
                     d_day.changeValue(-1);
                     int[] curDate = d_day.getDateSettingValue();
@@ -582,8 +579,8 @@ public class System extends Function {
             case 5: // alarm
                 if (alarm.getMode() == 0)
                     return;
-                    // GUI에 반영해야 함.
-                else if (alarm.getMode() == 1) { // 알람 설정
+                    // GUI�� �ݿ��ؾ� ��.
+                else if (alarm.getMode() == 1) { // �˶� ����
                     alarm.changeValue(-1);
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
@@ -606,15 +603,15 @@ public class System extends Function {
 
                     GUI.alarmView.setAlarm(str1 + str2 + str3);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
-                } else if (alarm.getMode() == 2) // 포인터 조종
+                } else if (alarm.getMode() == 2) // ������ ����
                 {
                     alarm.changeValue2(-1);
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer <= segmentPointer[0]) {    // 같을 때
-                        // 구간포인터의 해당하는 구간을 띄워주면 됨.
+                    if (alarmPointer <= segmentPointer[0]) {    // ���� ��
+                        // ������������ �ش��ϴ� ������ ����ָ� ��.
 //                        java.lang.System.out.println("[" + segmentPointer[0] + ", " + segmentPointer[1] + "]");
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
@@ -628,27 +625,27 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmView.setAlarmList2(str);   // 18자리
+                        GUI.alarmView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmView.setBorderPanel(alarmPointer - segmentPointer[0]);
                 }
                 break;
             case 6: // alarm custom
-                if (alarmCustom.getMode() == 0) // 알람 포인터
+                if (alarmCustom.getMode() == 0) // �˶� ������
                 {
                     alarm.movePointer(-1);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 }
-                // GUI에 반영해야 함.
+                // GUI�� �ݿ��ؾ� ��.
                 else if (alarmCustom.getMode() == 1) {
                     alarmCustom.changeValue2(-1);
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer <= segmentPointer[0]) {    // 같을 때
-                        // 구간포인터의 해당하는 구간을 띄워주면 됨.
+                    if (alarmPointer <= segmentPointer[0]) {    // ���� ��
+                        // ������������ �ش��ϴ� ������ ����ָ� ��.
 //                        java.lang.System.out.println("[" + segmentPointer[0] + ", " + segmentPointer[1] + "]");
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
@@ -662,11 +659,11 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList2(str);   // 18자리
+                        GUI.alarmCustomView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
-                } else if (alarmCustom.getMode() == 2) { // 알람 간격, 볼륨 설정
+                } else if (alarmCustom.getMode() == 2) { // �˶� ����, ���� ����
                     alarmCustom.changeValue(-1);
                     int[] csvArr = alarmCustom.getCustomSettingValue();
                     GUI.alarmCustomView.setAlarmInterval(String.valueOf(csvArr[1]));
@@ -682,7 +679,7 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping에서 현재시간 설정하는 것
+            case 1: // timekeeping���� ����ð� �����ϴ� ��
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     timeKeeping.requestTimeSettingMode();
                     GUI.timekeepingView.borderPanel.setVisible(true);
@@ -877,7 +874,7 @@ public class System extends Function {
                         GUI.alarmView.borderPanel.setBounds(x + 2 * w, y, w, h);
                     }
 
-                } else { // 알람 리스트 확인모드
+                } else { // �˶� ����Ʈ Ȯ�θ��
                     alarm.requestDeleteAlarm();
 
                     int alarmPointer = alarm.getAlarmPointer();
@@ -919,7 +916,7 @@ public class System extends Function {
                 break;
             case 6: // alarm custom
                 alarmCustom.changeType();
-                if (alarmCustom.getMode() == 1) { // 알람 리스트 조회 모드
+                if (alarmCustom.getMode() == 1) { // �˶� ����Ʈ ��ȸ ���
                     alarmCustom.requestIntervalSettingMode();
 
                     GUI.alarmCustomView.borderPanel.setBounds(
@@ -927,16 +924,16 @@ public class System extends Function {
                     );
                     GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
-                } else if (alarmCustom.getMode() == 2) { // 볼륨, 인터벌 설정 끝날때
+                } else if (alarmCustom.getMode() == 2) { // ����, ���͹� ���� ������
                     int acType = alarmCustom.getType();
 
-                    if (acType == 2) {  // 볼륨
+                    if (acType == 2) {  // ����
                         alarmCustom.requestVolumeSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
                                 430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
                         );
                         GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
-                    } else if (acType == 1) { // 인터벌
+                    } else if (acType == 1) { // ���͹�
                         alarmCustom.requestIntervalSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
                                 550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
@@ -954,17 +951,17 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping에서 현재시간 설정하는 것
+            case 1: // timekeeping���� ����ð� �����ϴ� ��
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     nextFunction();
                 } else if (timeKeeping.getMode() == 0 && mode == 1) {
-                    // 5, 6은 세트
+                    // 5, 6�� ��Ʈ
                     setFunction();
 
                     changeMode(-1);
                     GUI.setView(GUI.timekeepingView);
                 } else {
-                    // 저장을 하면 d-day를 다시 계산하면 됨.
+                    // ������ �ϸ� d-day�� �ٽ� ����ϸ� ��.
                     timeKeeping.requestSave();
                     try {
                         GUI.timekeepingView.borderPanel.setVisible(false);
@@ -1155,7 +1152,7 @@ public class System extends Function {
             hs.add(cacheValue[i]);
         }
         if (hs.size() == 3) {
-            if ((hs.contains(5) && hs.contains(6)) || (!hs.contains(5) && !hs.contains(6))) {   // 성공
+            if ((hs.contains(5) && hs.contains(6)) || (!hs.contains(5) && !hs.contains(6))) {   // ����
                 functionNum[1] = cacheValue[1];
                 functionNum[2] = cacheValue[2];
                 functionNum[3] = cacheValue[3];
@@ -1232,21 +1229,21 @@ public class System extends Function {
     }
 
     public void drawTotalBorder() {
-        GUI.timekeepingView.totalBorder.setVisible(true);
-        GUI.stopwatchView.totalBorder.setVisible(true);
-        GUI.timerView.totalBorder.setVisible(true);
-        GUI.d_dayView.totalBorder.setVisible(true);
-        GUI.alarmView.totalBorder.setVisible(true);
-        GUI.alarmCustomView.totalBorder.setVisible(true);
+        GUI.timekeepingView.setClockDisplay(true);
+        GUI.stopwatchView.setClockDisplay(true);
+        GUI.timerView.setClockDisplay(true);
+        GUI.d_dayView.setClockDisplay(true);
+        GUI.alarmView.setClockDisplay(true);
+        GUI.alarmCustomView.setClockDisplay(true);
     }
 
     public void removeTotalBorder() {
-        GUI.timekeepingView.totalBorder.setVisible(false);
-        GUI.stopwatchView.totalBorder.setVisible(false);
-        GUI.timerView.totalBorder.setVisible(false);
-        GUI.d_dayView.totalBorder.setVisible(false);
-        GUI.alarmView.totalBorder.setVisible(false);
-        GUI.alarmCustomView.totalBorder.setVisible(false);
+        GUI.timekeepingView.setClockDisplay(false);
+        GUI.stopwatchView.setClockDisplay(false);
+        GUI.timerView.setClockDisplay(false);
+        GUI.d_dayView.setClockDisplay(false);
+        GUI.alarmView.setClockDisplay(false);
+        GUI.alarmCustomView.setClockDisplay(false);
     }
 
     public void startBorder() {
