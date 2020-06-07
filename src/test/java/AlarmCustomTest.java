@@ -22,12 +22,16 @@ public class AlarmCustomTest {
         system.alarm.addTimeToAlarmList(time);
 
         Time time2 = new Time(2);
-        time2.setTime(1,2,3);
+        time2.setTime(1,2,4);
         system.alarm.addTimeToAlarmList(time2);
 
         Time time3 = new Time(2);
-        time3.setTime(1,2,3);
+        time3.setTime(1,2,5);
         system.alarm.addTimeToAlarmList(time3);
+
+        Time time4 = new Time(2);
+        time4.setTime(1,2,6);
+        system.alarm.addTimeToAlarmList(time4);
 
 
         system.alarmCustom.requestAlarmSelectMode();
@@ -43,17 +47,21 @@ public class AlarmCustomTest {
         java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
         assertEquals(1, system.alarmCustom.getAlarm().getAlarmPointer()); // 0에서 포인터가 하나 증가하는 지 확인
 
+        system.alarmCustom.changeValue2(1);
+        java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
+        java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
+        assertEquals(2, system.alarmCustom.getAlarm().getAlarmPointer()); // 1에서 포인터가 하나 증가하는 지 확인
 
         system.alarmCustom.changeValue2(1);
         java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
         java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
-        assertEquals(1, system.alarmCustom.getAlarm().getAlarmPointer()); // 1에서 포인터가 하나 증가하는 지 확인
+        assertEquals(3, system.alarmCustom.getAlarm().getAlarmPointer()); // 2에서 포인터가 하나 증가하는 지 확인 (마지막이라 안 올라감)
 
-        system.alarmCustom.changeValue2(1);
+
+        system.alarmCustom.changeValue2(-1);
         java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
         java.lang.System.out.println(system.alarmCustom.getAlarm().getSegmentPointer());
-        assertEquals(2, system.alarmCustom.getAlarm().getAlarmPointer()); // 2에서 포인터가 하나 증가하는 지 확인 (마지막이라 안 올라감)
-
+        assertEquals(2, system.alarmCustom.getAlarm().getAlarmPointer()); // 3에서 포인터가 하나 감소하는 지 확인
 
         system.alarmCustom.changeValue2(-1);
         java.lang.System.out.println(system.alarmCustom.getAlarm().getAlarmPointer());
