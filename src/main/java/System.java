@@ -59,9 +59,7 @@ public class System extends Function {
         startCheckTimeOut();
     }
 
-    public static void main(String[] args) {
-        new System();
-    }
+    public static void main(String[] args) { new System(); }
 
     public int getStatus() { return this.status; }
 
@@ -71,38 +69,89 @@ public class System extends Function {
 
     public void startCheckTimeOut() {
         checkTimeOut = new Thread(() -> {
-            Function curFunction;
-            switch (functionNum[functionNumIdx]) {
-                case 1:
-                    curFunction = timeKeeping;
-                    break;
-                case 2:
-                    curFunction = stopwatch;
-                    break;
-                case 3:
-                    curFunction = timer;
-                    break;
-                case 4:
-                    curFunction = d_day;
-                    break;
-                case 5:
-                    curFunction = alarm;
-                    break;
-                case 6:
-                    curFunction = alarmCustom;
-                    break;
-                default:
-                    curFunction = null;
-            }
+            while(true) {
+                Function curFunction;
+                switch (functionNum[functionNumIdx]) {
+                    case 1:
+                        curFunction = timeKeeping;
+                        break;
+                    case 2:
+                        curFunction = stopwatch;
+                        break;
+                    case 3:
+                        curFunction = timer;
+                        break;
+                    case 4:
+                        curFunction = d_day;
+                        break;
+                    case 5:
+                        curFunction = alarm;
+                        break;
+                    case 6:
+                        curFunction = alarmCustom;
+                        break;
+                    default:
+                        curFunction = null;
+                }
 
-            while (curFunction.getMode() == 1) {
                 try {
-                    Thread.sleep(1000);
-                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
-                        curFunction.cancel();
-                    }
+                    Thread.sleep(10);
+                    if (curFunction.getMode() != 1 && this.getMode() != 1) continue;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }
+                while (curFunction.getMode() == 1 || this.getMode() == 1) {
+                    try {
+                        Thread.sleep(1000);
+                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                            modeBtnLongPressed();
+//                            if(!timeKeeping.equals(curFunction))
+//                                curFunction.cancel();
+//
+//                            if (timeKeeping.equals(curFunction)) {
+//                                if(this.getMode() == 1 && timeKeeping.getMode() == 0) {
+//                                    this.cancel();
+//                                    GUI.functionSelectingView.borderPanel.setVisible(false);
+//                                    GUI.setView(GUI.timekeepingView);
+//                                }
+//                                else if(this.getMode() == 0 && timeKeeping.getMode() == 1){
+//                                    timeKeeping.cancel();
+//                                    GUI.timekeepingView.borderPanel.setVisible(false);
+//                                }
+//                                GUI.timekeepingView.borderPanel.setVisible(false);
+//                            }
+//                            else if(timer != null && timer.equals(curFunction)) {
+//                                GUI.timerView.borderPanel.setVisible(false);
+//                                String tmp = timer.getTimer().getCurrentTime();
+//                                StringTokenizer st = new StringTokenizer(tmp, " ");
+//                                GUI.timerView.setHour(String.format("%02d", Integer.parseInt(st.nextToken())));
+//                                GUI.timerView.setMinute(String.format("%02d", Integer.parseInt(st.nextToken())));
+//                                GUI.timerView.setSecond(String.format("%02d", Integer.parseInt(st.nextToken())));
+//                            }
+//                            else if(d_day != null && d_day.equals(curFunction)) {
+//                                GUI.d_dayView.borderPanel.setVisible(false);
+//                                if (d_day.getD_day() == -1) {
+//                                    GUI.d_dayView.setYear("  ");
+//                                    GUI.d_dayView.setMonth("NO");
+//                                    GUI.d_dayView.setDate("NE");
+//                                } else {
+//                                    String curDate = d_day.getD_dayDate().getCurrentDate();
+//                                    StringTokenizer st = new StringTokenizer(curDate, " ");
+//                                    GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+//                                    GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+//                                    GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+//                                }
+//                            }
+//                            else if(alarm != null && alarm.equals(curFunction)) {
+//                                GUI.alarmView.borderPanel.setVisible(false);
+//                            }
+//                            else if(alarmCustom != null && alarmCustom.equals(curFunction)) {
+//                                GUI.alarmCustomView.borderPanel.setVisible(false);
+//                            }
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -117,7 +166,7 @@ public class System extends Function {
         switch (selectedFid) {
             case 1:
                 if (timeKeeping.getMode() == 0 && mode == 1) {
-                    cancel();
+                    this.cancel();
                     GUI.setView(GUI.timekeepingView);
                 } else if (timeKeeping.getMode() == 1 && mode == 0) {
                     timeKeeping.cancel();
