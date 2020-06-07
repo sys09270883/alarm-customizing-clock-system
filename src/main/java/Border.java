@@ -3,26 +3,21 @@
  */
 public class Border {
 
-    /**
-     * Default constructor
-     */
+    private boolean borderState;
+
     public Border(System system) {
+
     }
 
-    public boolean isBorderState() {
+    public boolean getBorderState() {
         return borderState;
     }
 
-    private boolean borderState;
-
     public void stopBorder() {
-        // TODO implement here
+        borderState = false;
     }
 
-    /**
-     *
-     */
     public void startBorder() {
-        // TODO implement here
+        borderState = true;
     }
 }
