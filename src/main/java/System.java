@@ -59,7 +59,10 @@ public class System extends Function {
         startCheckTimeOut();
     }
 
-    public static void main(String[] args) { new System(); }
+    public static void main(String[] args) {
+        System system = new System();
+        system.GUI.timekeepingView.toggleClockDisplay(true);
+    }
 
     public int getStatus() { return this.status; }
 

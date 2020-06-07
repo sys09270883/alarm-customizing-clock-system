@@ -16,16 +16,19 @@ public class DefaultLayout extends JLayeredPane {
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
     final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
+    final static String CLOCK_BORDER_IMG_NAME = "src/main/resources/clocklayout2.jpg";
 
     protected static int layer = 3;
     protected JPanel mainPanel;
     System system;
     ImageIcon clockImage;
+    ImageIcon clockBorderedImage;
     JButton startBtn;
     JButton resetBtn;
     JButton selectBtn;
     JButton modeBtn;
     JLabel clockLabel;
+    JLabel clockBorderedLabel;
     Long start, end;
 
     public DefaultLayout(System system) {
@@ -40,11 +43,16 @@ public class DefaultLayout extends JLayeredPane {
         clockLabel = new JLabel(clockImage);
         clockLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
+        clockBorderedImage = new ImageIcon(CLOCK_BORDER_IMG_NAME);
+        clockBorderedImage = new ImageIcon(clockBorderedImage.getImage()
+                .getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
+        clockBorderedLabel = new JLabel(clockBorderedImage);
+        clockBorderedLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+
         startBtn = new JButton("START");
         startBtn.setBounds(PADDING_X, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
         setBtn(startBtn);
         startBtn.addActionListener(event -> system.startBtnPressed());
-
 
         resetBtn = new JButton("RESET");
         resetBtn.setBounds(FRAME_WIDTH - PADDING_X - BTN_WIDTH, PADDING_Y, BTN_WIDTH, BTN_HEIGHT);
@@ -127,6 +135,20 @@ public class DefaultLayout extends JLayeredPane {
             add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), new Integer(layer));
             x += w;
         }
+    }
+
+    public void toggleClockDisplay(boolean flag) {
+        remove(mainPanel);
+        mainPanel = new JPanel();
+        mainPanel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+        mainPanel.setLayout(null);
+        mainPanel.add(startBtn);
+        mainPanel.add(resetBtn);
+        mainPanel.add(selectBtn);
+        mainPanel.add(modeBtn);
+        mainPanel.setVisible(true);
+        mainPanel.add(flag ? clockBorderedLabel : clockLabel);
+        add(mainPanel, new Integer(0));
     }
 
 }
