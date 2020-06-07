@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
  */
 public class System extends Function {
 
-    // 6°³ Áß 4°³ ÀÎ½ºÅÏ½º¸¸ °®°íÀÖÀ½.
-    // ¾Ë¶÷, ¾Ë¶÷Ä¿½ºÅÒÀº Ç×»ó µÑ ´Ù Æ÷ÇÔµÇ°Å³ª Æ÷ÇÔµÇÁö ¾Ê¾Æ¾ß ÇÑ´Ù.
+    // 6ï¿½ï¿½ ï¿½ï¿½ 4ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+    // ï¿½Ë¶ï¿½, ï¿½Ë¶ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×»ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ°Å³ï¿½ ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ ï¿½Ê¾Æ¾ï¿½ ï¿½Ñ´ï¿½.
     public GUI GUI;
     public TimeKeeping timeKeeping;
     public Stopwatch stopwatch;
@@ -21,7 +21,7 @@ public class System extends Function {
     private int functionNumIdx = 0;
     private int[] functionNum;
     private int selectedFid;
-    private int status; // ºñÆ®¸¶½ºÅ·: 0b00 0b01 0b10 0b11
+    private int status; // ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½Å·: 0b00 0b01 0b10 0b11
     private int type;
     private Thread checkTimeOut;
     private long lastOperateTime;
@@ -59,10 +59,7 @@ public class System extends Function {
         startCheckTimeOut();
     }
 
-    public static void main(String[] args) {
-        System system = new System();
-        system.startBorder();
-    }
+    public static void main(String[] args) { new System(); }
 
     public int getStatus() { return this.status; }
 
@@ -249,7 +246,7 @@ public class System extends Function {
                     GUI.functionSelectingView.borderPanel.setVisible(true);
                 }
                 break;
-            case 2: // ½ºÅ¾¿öÄ¡
+            case 2: // ï¿½ï¿½Å¾ï¿½ï¿½Ä¡
                 if (stopwatch.getMode() == 0) {
                     stopwatch.requestRecordCheckMode();
                     GUI.stopwatchView.borderPanel.setVisible(true);
@@ -295,7 +292,7 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping¿¡¼­ ÇöÀç½Ã°£ ¼³Á¤ÇÏ´Â °Í
+            case 1: // timekeepingï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     return;
                 } else if (timeKeeping.getMode() == 1 && mode == 0) {
@@ -363,22 +360,22 @@ public class System extends Function {
                 }
                 break;
             case 3: // timer
-                if (timer.getMode() == 0) {     // Å¸ÀÌ¸Ó°¡ ±âº» È­¸éÀÏ ¶§
+                if (timer.getMode() == 0) {     // Å¸ï¿½Ì¸Ó°ï¿½ ï¿½âº» È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                     timer.requestStartTimer();
-                } else if (timer.getMode() == 1) {  // Å¸ÀÌ¸Ó ¼³Á¤ ¸ðµå
+                } else if (timer.getMode() == 1) {  // Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
                     timer.changeValue(1);
                     int[] tsv = timer.getTimeSettingValue();
                     GUI.timerView.setHour(String.format("%02d", tsv[0]));
                     GUI.timerView.setMinute(String.format("%02d", tsv[1]));
                     GUI.timerView.setSecond(String.format("%02d", tsv[2]));
-                } else {    // Å¸ÀÌ¸Ó ½ÇÇàÁßÀÏ ¶§
+                } else {    // Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
                 }
 
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
-                    // ¾Æ¹«°Íµµ ¾øÀ½.
+                    // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½.
                 } else {
                     d_day.changeValue(1);
                     int[] curDate = d_day.getDateSettingValue();
@@ -388,10 +385,10 @@ public class System extends Function {
                 }
                 break;
             case 5: // alarm
-                if (alarm.getMode() == 0)   // ±âº»°ª
+                if (alarm.getMode() == 0)   // ï¿½âº»ï¿½ï¿½
                     return;
-                    // GUI¿¡ ¹Ý¿µÇØ¾ß ÇÔ.
-                else if (alarm.getMode() == 1) { // ¾Ë¶÷ ¼³Á¤
+                    // GUIï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½.
+                else if (alarm.getMode() == 1) { // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½
                     alarm.changeValue(1);
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
@@ -414,15 +411,15 @@ public class System extends Function {
 
                     GUI.alarmView.setAlarm(str1 + str2 + str3);
 
-                } else if (alarm.getMode() == 2) // Æ÷ÀÎÅÍ Á¶Á¾
+                } else if (alarm.getMode() == 2) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     alarm.changeValue2(1);
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer >= segmentPointer[1]) {    // °°À» ¶§
-                        // ±¸°£Æ÷ÀÎÅÍÀÇ ÇØ´çÇÏ´Â ±¸°£À» ¶ç¿öÁÖ¸é µÊ.
+                    if (alarmPointer >= segmentPointer[1]) {    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
                             StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
@@ -434,25 +431,25 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmView.setAlarmList2(str);   // 18ÀÚ¸®
+                        GUI.alarmView.setAlarmList2(str);   // 18ï¿½Ú¸ï¿½
                     }
 
                     GUI.alarmView.setBorderPanel(alarmPointer - segmentPointer[0]);
                 }
                 break;
             case 6: // alarm custom
-                if (alarmCustom.getMode() == 0) // ±âº»¸ðµå
+                if (alarmCustom.getMode() == 0) // ï¿½âº»ï¿½ï¿½ï¿½
                 {
 
-                } else if (alarmCustom.getMode() == 1) { // ¾Ë¶÷ ¸®½ºÆ® Á¶È¸ ¸ðµå
+                } else if (alarmCustom.getMode() == 1) { // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¸ ï¿½ï¿½ï¿½
                     alarmCustom.changeValue2(1);
 
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer >= segmentPointer[1]) {    // °°À» ¶§
-                        // ±¸°£Æ÷ÀÎÅÍÀÇ ÇØ´çÇÏ´Â ±¸°£À» ¶ç¿öÁÖ¸é µÊ.
+                    if (alarmPointer >= segmentPointer[1]) {    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
                             StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
@@ -464,13 +461,13 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList2(str);   // 18ÀÚ¸®
+                        GUI.alarmCustomView.setAlarmList2(str);   // 18ï¿½Ú¸ï¿½
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
 
 
-                } else if (alarmCustom.getMode() == 2) // ¾Ë¶÷ ÀÎÅÍ¹ú, º¼·ý ¼³Á¤
+                } else if (alarmCustom.getMode() == 2) // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½Í¹ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     alarmCustom.changeValue(1);
                     int[] csvArr = alarmCustom.getCustomSettingValue();
@@ -487,10 +484,10 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping¿¡¼­ ÇöÀç½Ã°£ ¼³Á¤ÇÏ´Â °Í
+            case 1: // timekeepingï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
                 if (timeKeeping.getMode() == 0 && mode == 0)
                     return;
-                    // GUI¿¡ ¹Ý¿µÇØ¾ß ÇÔ.
+                    // GUIï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½.
                 else if (timeKeeping.getMode() == 1 && mode == 0) {
                     timeKeeping.changeValue(-1);
                     int type = timeKeeping.getType();
@@ -570,7 +567,7 @@ public class System extends Function {
                 break;
             case 4: // d-day
                 if (d_day.getMode() == 0) {
-                    // ¾Æ¹«°Íµµ ¾øÀ½.
+                    // ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½.
                 } else {
                     d_day.changeValue(-1);
                     int[] curDate = d_day.getDateSettingValue();
@@ -582,8 +579,8 @@ public class System extends Function {
             case 5: // alarm
                 if (alarm.getMode() == 0)
                     return;
-                    // GUI¿¡ ¹Ý¿µÇØ¾ß ÇÔ.
-                else if (alarm.getMode() == 1) { // ¾Ë¶÷ ¼³Á¤
+                    // GUIï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½.
+                else if (alarm.getMode() == 1) { // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½
                     alarm.changeValue(-1);
                     type = alarm.getType();
                     int[] alarmSettingValue = alarm.getAlarmSettingValue();
@@ -606,15 +603,15 @@ public class System extends Function {
 
                     GUI.alarmView.setAlarm(str1 + str2 + str3);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
-                } else if (alarm.getMode() == 2) // Æ÷ÀÎÅÍ Á¶Á¾
+                } else if (alarm.getMode() == 2) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     alarm.changeValue2(-1);
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer <= segmentPointer[0]) {    // °°À» ¶§
-                        // ±¸°£Æ÷ÀÎÅÍÀÇ ÇØ´çÇÏ´Â ±¸°£À» ¶ç¿öÁÖ¸é µÊ.
+                    if (alarmPointer <= segmentPointer[0]) {    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½.
 //                        java.lang.System.out.println("[" + segmentPointer[0] + ", " + segmentPointer[1] + "]");
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
@@ -628,27 +625,27 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmView.setAlarmList2(str);   // 18ÀÚ¸®
+                        GUI.alarmView.setAlarmList2(str);   // 18ï¿½Ú¸ï¿½
                     }
 
                     GUI.alarmView.setBorderPanel(alarmPointer - segmentPointer[0]);
                 }
                 break;
             case 6: // alarm custom
-                if (alarmCustom.getMode() == 0) // ¾Ë¶÷ Æ÷ÀÎÅÍ
+                if (alarmCustom.getMode() == 0) // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 {
                     alarm.movePointer(-1);
                     GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 }
-                // GUI¿¡ ¹Ý¿µÇØ¾ß ÇÔ.
+                // GUIï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½.
                 else if (alarmCustom.getMode() == 1) {
                     alarmCustom.changeValue2(-1);
                     int alarmPointer = alarm.getAlarmPointer();
                     int[] segmentPointer = alarm.getSegmentPointer();
                     AlarmData[] alarmList = alarm.getAlarmList();
 
-                    if (alarmPointer <= segmentPointer[0]) {    // °°À» ¶§
-                        // ±¸°£Æ÷ÀÎÅÍÀÇ ÇØ´çÇÏ´Â ±¸°£À» ¶ç¿öÁÖ¸é µÊ.
+                    if (alarmPointer <= segmentPointer[0]) {    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+                        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½.
 //                        java.lang.System.out.println("[" + segmentPointer[0] + ", " + segmentPointer[1] + "]");
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
@@ -662,11 +659,11 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList2(str);   // 18ÀÚ¸®
+                        GUI.alarmCustomView.setAlarmList2(str);   // 18ï¿½Ú¸ï¿½
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
-                } else if (alarmCustom.getMode() == 2) { // ¾Ë¶÷ °£°Ý, º¼·ý ¼³Á¤
+                } else if (alarmCustom.getMode() == 2) { // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     alarmCustom.changeValue(-1);
                     int[] csvArr = alarmCustom.getCustomSettingValue();
                     GUI.alarmCustomView.setAlarmInterval(String.valueOf(csvArr[1]));
@@ -682,7 +679,7 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping¿¡¼­ ÇöÀç½Ã°£ ¼³Á¤ÇÏ´Â °Í
+            case 1: // timekeepingï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     timeKeeping.requestTimeSettingMode();
                     GUI.timekeepingView.borderPanel.setVisible(true);
@@ -877,7 +874,7 @@ public class System extends Function {
                         GUI.alarmView.borderPanel.setBounds(x + 2 * w, y, w, h);
                     }
 
-                } else { // ¾Ë¶÷ ¸®½ºÆ® È®ÀÎ¸ðµå
+                } else { // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® È®ï¿½Î¸ï¿½ï¿½
                     alarm.requestDeleteAlarm();
 
                     int alarmPointer = alarm.getAlarmPointer();
@@ -919,7 +916,7 @@ public class System extends Function {
                 break;
             case 6: // alarm custom
                 alarmCustom.changeType();
-                if (alarmCustom.getMode() == 1) { // ¾Ë¶÷ ¸®½ºÆ® Á¶È¸ ¸ðµå
+                if (alarmCustom.getMode() == 1) { // ï¿½Ë¶ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½È¸ ï¿½ï¿½ï¿½
                     alarmCustom.requestIntervalSettingMode();
 
                     GUI.alarmCustomView.borderPanel.setBounds(
@@ -927,16 +924,16 @@ public class System extends Function {
                     );
                     GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
-                } else if (alarmCustom.getMode() == 2) { // º¼·ý, ÀÎÅÍ¹ú ¼³Á¤ ³¡³¯¶§
+                } else if (alarmCustom.getMode() == 2) { // ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Í¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     int acType = alarmCustom.getType();
 
-                    if (acType == 2) {  // º¼·ý
+                    if (acType == 2) {  // ï¿½ï¿½ï¿½ï¿½
                         alarmCustom.requestVolumeSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
                                 430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
                         );
                         GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
-                    } else if (acType == 1) { // ÀÎÅÍ¹ú
+                    } else if (acType == 1) { // ï¿½ï¿½ï¿½Í¹ï¿½
                         alarmCustom.requestIntervalSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
                                 550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
@@ -954,17 +951,17 @@ public class System extends Function {
         if (updateStatus() > -1)
             return;
         switch (selectedFid) {
-            case 1: // timekeeping¿¡¼­ ÇöÀç½Ã°£ ¼³Á¤ÇÏ´Â °Í
+            case 1: // timekeepingï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½
                 if (timeKeeping.getMode() == 0 && mode == 0) {
                     nextFunction();
                 } else if (timeKeeping.getMode() == 0 && mode == 1) {
-                    // 5, 6Àº ¼¼Æ®
+                    // 5, 6ï¿½ï¿½ ï¿½ï¿½Æ®
                     setFunction();
 
                     changeMode(-1);
                     GUI.setView(GUI.timekeepingView);
                 } else {
-                    // ÀúÀåÀ» ÇÏ¸é d-day¸¦ ´Ù½Ã °è»êÇÏ¸é µÊ.
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¸ï¿½ d-dayï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½.
                     timeKeeping.requestSave();
                     try {
                         GUI.timekeepingView.borderPanel.setVisible(false);
@@ -1155,7 +1152,7 @@ public class System extends Function {
             hs.add(cacheValue[i]);
         }
         if (hs.size() == 3) {
-            if ((hs.contains(5) && hs.contains(6)) || (!hs.contains(5) && !hs.contains(6))) {   // ¼º°ø
+            if ((hs.contains(5) && hs.contains(6)) || (!hs.contains(5) && !hs.contains(6))) {   // ï¿½ï¿½ï¿½ï¿½
                 functionNum[1] = cacheValue[1];
                 functionNum[2] = cacheValue[2];
                 functionNum[3] = cacheValue[3];
@@ -1232,21 +1229,21 @@ public class System extends Function {
     }
 
     public void drawTotalBorder() {
-        GUI.timekeepingView.totalBorder.setVisible(true);
-        GUI.stopwatchView.totalBorder.setVisible(true);
-        GUI.timerView.totalBorder.setVisible(true);
-        GUI.d_dayView.totalBorder.setVisible(true);
-        GUI.alarmView.totalBorder.setVisible(true);
-        GUI.alarmCustomView.totalBorder.setVisible(true);
+        GUI.timekeepingView.setClockDisplay(true);
+        GUI.stopwatchView.setClockDisplay(true);
+        GUI.timerView.setClockDisplay(true);
+        GUI.d_dayView.setClockDisplay(true);
+        GUI.alarmView.setClockDisplay(true);
+        GUI.alarmCustomView.setClockDisplay(true);
     }
 
     public void removeTotalBorder() {
-        GUI.timekeepingView.totalBorder.setVisible(false);
-        GUI.stopwatchView.totalBorder.setVisible(false);
-        GUI.timerView.totalBorder.setVisible(false);
-        GUI.d_dayView.totalBorder.setVisible(false);
-        GUI.alarmView.totalBorder.setVisible(false);
-        GUI.alarmCustomView.totalBorder.setVisible(false);
+        GUI.timekeepingView.setClockDisplay(false);
+        GUI.stopwatchView.setClockDisplay(false);
+        GUI.timerView.setClockDisplay(false);
+        GUI.d_dayView.setClockDisplay(false);
+        GUI.alarmView.setClockDisplay(false);
+        GUI.alarmCustomView.setClockDisplay(false);
     }
 
     public void startBorder() {

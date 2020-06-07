@@ -30,8 +30,6 @@ public class DefaultLayout extends JLayeredPane {
     JLabel clockLabel;
     JLabel clockBorderedLabel;
     Long start, end;
-    ImageIcon totalBorderImage;
-    JLabel totalBorder;
 
     public DefaultLayout(System system) {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -39,11 +37,6 @@ public class DefaultLayout extends JLayeredPane {
         setLayout(null);
 
         this.system = system;
-
-        totalBorderImage = new ImageIcon(TOTAL_BORDER_IMG_NAME);
-        totalBorderImage = new ImageIcon(totalBorderImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
-        totalBorder = new JLabel(totalBorderImage);
-        totalBorder.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
         clockImage = new ImageIcon(CLOCK_IMG_NAME);
         clockImage = new ImageIcon(clockImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
@@ -144,17 +137,10 @@ public class DefaultLayout extends JLayeredPane {
         }
     }
 
-    public void toggleClockDisplay(boolean flag) {
+    public void setClockDisplay(boolean isBordered) {
         remove(mainPanel);
-        mainPanel = new JPanel();
-        mainPanel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-        mainPanel.setLayout(null);
-        mainPanel.add(startBtn);
-        mainPanel.add(resetBtn);
-        mainPanel.add(selectBtn);
-        mainPanel.add(modeBtn);
-        mainPanel.setVisible(true);
-        mainPanel.add(flag ? clockBorderedLabel : clockLabel);
+        mainPanel.remove(isBordered ? clockLabel : clockBorderedLabel);
+        mainPanel.add(isBordered ? clockBorderedLabel : clockLabel);
         add(mainPanel, new Integer(0));
     }
 
