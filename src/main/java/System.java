@@ -1255,6 +1255,14 @@ public class System extends Function {
         return -1;
     }
 
+    public int getFunctionNumIdx() {
+        return this.functionNumIdx;
+    }
+
+    public int[] getFunctionNum() {
+        return functionNum;
+    }
+
     public void nextFunction() {
         functionNumIdx = (functionNumIdx + 1) % 4;
         selectedFid = functionNum[functionNumIdx];
