@@ -30,6 +30,8 @@ public class DefaultLayout extends JLayeredPane {
     JLabel clockLabel;
     JLabel clockBorderedLabel;
     Long start, end;
+    ImageIcon totalBorderImage;
+    JLabel totalBorder;
 
     public DefaultLayout(System system) {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -37,6 +39,11 @@ public class DefaultLayout extends JLayeredPane {
         setLayout(null);
 
         this.system = system;
+
+        totalBorderImage = new ImageIcon(TOTAL_BORDER_IMG_NAME);
+        totalBorderImage = new ImageIcon(totalBorderImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
+        totalBorder = new JLabel(totalBorderImage);
+        totalBorder.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
         clockImage = new ImageIcon(CLOCK_IMG_NAME);
         clockImage = new ImageIcon(clockImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));

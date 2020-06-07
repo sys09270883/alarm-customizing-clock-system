@@ -42,34 +42,34 @@ public class D_dayTest {
     }
 
     @Test
-    public void blinkDdayTest() {
+    public void borderDdayTest() {
         D_day d_day = system.d_day;
 
-        d_day.changeValue(0);
-        d_day.changeType();
-        d_day.changeValue(0);
-        d_day.changeType();
-        d_day.changeValue(0);
-        d_day.requestSave();
+        Date date = new Date();
+        date.setDate(2020, 6,8);
+        d_day.setDate(date);
+        java.lang.System.out.println(d_day.getD_day());
+
+        system.timeKeeping.getCurTime().setTime(23, 59, 59);
 
         try {
-            Thread.sleep(1100); // 1초가 흐른게 되네요
+            Thread.sleep(2000); // 1초가 흐른게 되네요
         } catch(InterruptedException e) {
             java.lang.System.out.println(e.getMessage());
         }
 
-        assertTrue(system.border.isBorderState());
+        assertTrue(system.border.getBorderState());
     }
 
     @Test
-    public void stopDdayBlinkTest() {
+    public void stopDdayBorderTest() {
         D_day d_day = system.d_day;
 
-        system.border.startBorder();
-        assertTrue(system.border.isBorderState());
+        system.startBorder();
+        assertTrue(system.border.getBorderState());
 
-        d_day.requestStopDdayBorder();
-        assertFalse(system.border.isBorderState());
+        system.stopBorder();
+        assertFalse(system.border.getBorderState());
     }
 
     @Test
