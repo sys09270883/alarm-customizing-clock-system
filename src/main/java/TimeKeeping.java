@@ -36,6 +36,12 @@ public class TimeKeeping extends Function {
         curTime.setDateListener(() -> {
             curDate.raiseDate();
             setDayOfTheWeek();
+
+            if(system.d_day.getD_day() != -1) {
+                if(system.d_day.getD_dayDate().getCurrentDate().equals(curDate.getCurrentDate())) {
+                    system.startBorder();
+                }
+            }
         });
 
         curTime.setSecondListener(() -> {

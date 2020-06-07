@@ -27,6 +27,7 @@ public class D_day extends Function {
     private int mode;
     private int type;
     private System system;
+    private Thread borderThread;
 
     public void requestDdaySettingMode() {
         changeMode(-1); // d-day setting mode로 변경
@@ -83,10 +84,6 @@ public class D_day extends Function {
     }
 
     public Date getD_dayDate() { return d_dayDate; }
-
-    public void requestStopDdayBorder() {
-        system.border.stopBorder();
-    }
 
     public void requestDeleteDday() {
         String str = system.timeKeeping.getCurDate().getCurrentDate();

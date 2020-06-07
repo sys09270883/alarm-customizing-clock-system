@@ -16,6 +16,7 @@ public class DefaultLayout extends JLayeredPane {
     final static int BTN_WIDTH = 100;
     final static int BTN_HEIGHT = 50;
     final static String CLOCK_IMG_NAME = "src/main/resources/clocklayout.jpg";
+    final static String TOTAL_BORDER_IMG_NAME = "src/main/resources/totalborder.jpg";
 
     protected static int layer = 3;
     protected JPanel mainPanel;
@@ -27,6 +28,8 @@ public class DefaultLayout extends JLayeredPane {
     JButton modeBtn;
     JLabel clockLabel;
     Long start, end;
+    ImageIcon totalBorderImage;
+    JLabel totalBorder;
 
     public DefaultLayout(System system) {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -34,6 +37,11 @@ public class DefaultLayout extends JLayeredPane {
         setLayout(null);
 
         this.system = system;
+
+        totalBorderImage = new ImageIcon(TOTAL_BORDER_IMG_NAME);
+        totalBorderImage = new ImageIcon(totalBorderImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
+        totalBorder = new JLabel(totalBorderImage);
+        totalBorder.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
         clockImage = new ImageIcon(CLOCK_IMG_NAME);
         clockImage = new ImageIcon(clockImage.getImage().getScaledInstance(FRAME_WIDTH, FRAME_HEIGHT, Image.SCALE_SMOOTH));
@@ -129,4 +137,7 @@ public class DefaultLayout extends JLayeredPane {
         }
     }
 
+    protected void setTotalBorder() {
+
+    }
 }

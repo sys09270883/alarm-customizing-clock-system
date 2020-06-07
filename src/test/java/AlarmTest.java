@@ -38,9 +38,8 @@ public class AlarmTest  {
 
         // 순서대로 시, 분, 초 입력
         for (int i = 0 ; i < 3 ; i++)
-        {
             alarmSettingValue[i] = 2;
-        }
+
 
         time.setTime(alarmSettingValue[0], alarmSettingValue[1], alarmSettingValue[2]);
 

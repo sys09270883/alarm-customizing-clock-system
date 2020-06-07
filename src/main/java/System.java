@@ -59,7 +59,10 @@ public class System extends Function {
         startCheckTimeOut();
     }
 
-    public static void main(String[] args) { new System(); }
+    public static void main(String[] args) {
+        System system = new System();
+        system.startBorder();
+    }
 
     public int getStatus() { return this.status; }
 
@@ -1228,28 +1231,61 @@ public class System extends Function {
         // TODO implement here
     }
 
+    public void drawTotalBorder() {
+        GUI.timekeepingView.totalBorder.setVisible(true);
+        GUI.stopwatchView.totalBorder.setVisible(true);
+        GUI.timerView.totalBorder.setVisible(true);
+        GUI.d_dayView.totalBorder.setVisible(true);
+        GUI.alarmView.totalBorder.setVisible(true);
+        GUI.alarmCustomView.totalBorder.setVisible(true);
+    }
+
+    public void removeTotalBorder() {
+        GUI.timekeepingView.totalBorder.setVisible(false);
+        GUI.stopwatchView.totalBorder.setVisible(false);
+        GUI.timerView.totalBorder.setVisible(false);
+        GUI.d_dayView.totalBorder.setVisible(false);
+        GUI.alarmView.totalBorder.setVisible(false);
+        GUI.alarmCustomView.totalBorder.setVisible(false);
+    }
+
+    public void startBorder() {
+        border.startBorder();
+        status |= 2;
+        drawTotalBorder();
+    }
+
+    public void stopBorder() {
+        border.stopBorder();
+        removeTotalBorder();
+    }
+
     public void beepBuzzer(int interval, int volume) {
         status |= 1;
         buzzer.beepBuzzer(interval, volume);
     }
 
+    public void stopBuzzer() {
+        try {
+            buzzer.stopBuzzer();
+            buzzer.getBeepThread().join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int updateStatus() {
         if (status == 0b11) {
             status = 0b01;
-            border.stopBorder();
+            stopBorder();
             return 2;
         } else if (status == 0b10) {
             status = 0b00;
-            border.stopBorder();
+            stopBorder();
             return 1;
         } else if (status == 0b01) {
             status = 0b00;
-            try {
-                buzzer.stopBuzzer();
-                buzzer.getBeepThread().join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            stopBuzzer();
             return 0;
         }
         return -1;
