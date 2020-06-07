@@ -10,9 +10,12 @@ public class Alarm extends Function {
         fid = 5;
         curAlarm = new AlarmData();
         alarmList = new AlarmData[10];
+        for(int i=0; i<10; ++i)
+            alarmList[i] = null;
         mode = 0; // 기본 모드
         segmentPointer = new int[2];
         typeindex = 0;
+        this.system = system;
     }
 
     private AlarmData curAlarm;
@@ -22,6 +25,7 @@ public class Alarm extends Function {
     private int mode;
     private int typeindex; // 시분초 구분
     private int alarmSettingValue[] = {-1,-1,-1};
+    private System system;
 
     public int[] getAlarmSettingValue() {
        return this.alarmSettingValue;
@@ -43,9 +47,6 @@ public class Alarm extends Function {
         int size = getSize();
         if (size >= 10) {}// 꽉 찼으니 저장 안함.
         else {
-            Time newTime = new Time(0);
-            newTime.setTime(0, 0, 0);
-            curAlarm.setAlarmTime(newTime);
 
             for (int i = 0; i < size; i++) {
                 if (alarmList[i].getAlarmTime().equals(alarmTime))
@@ -56,7 +57,6 @@ public class Alarm extends Function {
                 alarmList[size] = new AlarmData();
             alarmList[size].setAlarmTime(alarmTime);
         }
-
     }
 
     public void requestDeleteAlarm() {
@@ -80,11 +80,10 @@ public class Alarm extends Function {
         alarmList[i] = null;
     }
 
-    public void requestStopAlarmBuzzer() {
-        // TODO implement here
-        Buzzer buzzer = new Buzzer();
-        buzzer.stopBuzzer();
-    }
+//    public void requestStopAlarmBuzzer() {
+//        // TODO implement here
+//        system.updateStatus();
+//    }
 
     public void movePointer(int diff) {
         // TODO implement here
@@ -94,7 +93,6 @@ public class Alarm extends Function {
             return;
 
         this.alarmPointer += diff;
-
 
         if(this.alarmPointer > size - 1)
         {

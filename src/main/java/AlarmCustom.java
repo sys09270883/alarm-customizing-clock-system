@@ -74,8 +74,8 @@ public class AlarmCustom extends Function {
     }
 
     public void requestSave() {
-        setCustom();
         type = 0;
+        setCustom();
         changeMode(0);
     }
 
@@ -143,9 +143,7 @@ public class AlarmCustom extends Function {
         return this.mode;
     }
 
-    public void setMode(int mode) {
-        this.mode = mode;
-    }
+    public void setMode(int mode) { this.mode = mode; }
 
     public int[] getCustomSettingValue() {
         return customSettingValue;
