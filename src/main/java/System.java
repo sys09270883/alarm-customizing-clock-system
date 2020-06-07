@@ -59,10 +59,6 @@ public class System extends Function {
         startCheckTimeOut();
     }
 
-    public static void main(String[] args) {
-        System system = new System();
-    }
-
     public int getStatus() { return this.status; }
 
     public void setFunctionNum(int[] functionNum) {
