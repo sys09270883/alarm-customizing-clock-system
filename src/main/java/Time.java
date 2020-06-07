@@ -123,12 +123,15 @@ class Time implements Runnable {
                                         dateChangedListener.conditionSatisfied();
                                     }
                                 }
-                                secondChangedListener.conditionSatisfied();
-                            } else if (timeFlag == 2) {
+                            }
+                            else if (timeFlag == 2) {
                                 if (hour > TIMER_HOUR_TOP_LIMIT) {
                                     hour = TIMER_HOUR_TOP_LIMIT;
                                     min = MINUTE_TOP_LIMIT;
                                     sec = SECOND_TOP_LIMIT;
+                                    if (dateChangedListener != null) {
+                                        dateChangedListener.conditionSatisfied();
+                                    }
                                 }
                             }
                         }

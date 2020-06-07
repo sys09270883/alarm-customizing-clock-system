@@ -40,6 +40,21 @@ public class TimeKeeping extends Function {
             if(system.d_day.getD_day() != -1) {
                 if(system.d_day.getD_dayDate().getCurrentDate().equals(curDate.getCurrentDate())) {
                     system.startBorder();
+                    Date date = new Date();
+                    date.setDate(0, 0, 0);
+                    system.d_day.setDate(date);
+                    if (system.d_day.getD_day() == -1) {
+                        system.GUI.d_dayView.setYear("  ");
+                        system.GUI.d_dayView.setMonth("NO");
+                        system.GUI.d_dayView.setDate("NE");
+                    } else {
+                        String curDate = system.d_day.getD_dayDate().getCurrentDate();
+                        StringTokenizer st = new StringTokenizer(curDate, " ");
+                        system.GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        system.GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        system.GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    }
+                    system.GUI.d_dayView.setDday("000");
                 }
             }
         });

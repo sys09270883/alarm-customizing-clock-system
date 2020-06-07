@@ -59,8 +59,6 @@ public class System extends Function {
         startCheckTimeOut();
     }
 
-    public static void main(String[] args) { new System(); }
-
     public int getStatus() { return this.status; }
 
     public void setFunctionNum(int[] functionNum) {
@@ -103,51 +101,8 @@ public class System extends Function {
                 while (curFunction.getMode() == 1 || this.getMode() == 1) {
                     try {
                         Thread.sleep(1000);
-                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
                             modeBtnLongPressed();
-//                            if(!timeKeeping.equals(curFunction))
-//                                curFunction.cancel();
-//
-//                            if (timeKeeping.equals(curFunction)) {
-//                                if(this.getMode() == 1 && timeKeeping.getMode() == 0) {
-//                                    this.cancel();
-//                                    GUI.functionSelectingView.borderPanel.setVisible(false);
-//                                    GUI.setView(GUI.timekeepingView);
-//                                }
-//                                else if(this.getMode() == 0 && timeKeeping.getMode() == 1){
-//                                    timeKeeping.cancel();
-//                                    GUI.timekeepingView.borderPanel.setVisible(false);
-//                                }
-//                                GUI.timekeepingView.borderPanel.setVisible(false);
-//                            }
-//                            else if(timer != null && timer.equals(curFunction)) {
-//                                GUI.timerView.borderPanel.setVisible(false);
-//                                String tmp = timer.getTimer().getCurrentTime();
-//                                StringTokenizer st = new StringTokenizer(tmp, " ");
-//                                GUI.timerView.setHour(String.format("%02d", Integer.parseInt(st.nextToken())));
-//                                GUI.timerView.setMinute(String.format("%02d", Integer.parseInt(st.nextToken())));
-//                                GUI.timerView.setSecond(String.format("%02d", Integer.parseInt(st.nextToken())));
-//                            }
-//                            else if(d_day != null && d_day.equals(curFunction)) {
-//                                GUI.d_dayView.borderPanel.setVisible(false);
-//                                if (d_day.getD_day() == -1) {
-//                                    GUI.d_dayView.setYear("  ");
-//                                    GUI.d_dayView.setMonth("NO");
-//                                    GUI.d_dayView.setDate("NE");
-//                                } else {
-//                                    String curDate = d_day.getD_dayDate().getCurrentDate();
-//                                    StringTokenizer st = new StringTokenizer(curDate, " ");
-//                                    GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
-//                                    GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
-//                                    GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
-//                                }
-//                            }
-//                            else if(alarm != null && alarm.equals(curFunction)) {
-//                                GUI.alarmView.borderPanel.setVisible(false);
-//                            }
-//                            else if(alarmCustom != null && alarmCustom.equals(curFunction)) {
-//                                GUI.alarmCustomView.borderPanel.setVisible(false);
-//                            }
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -745,9 +700,7 @@ public class System extends Function {
                 }
                 break;
             case 2: // stopwatch
-                if (stopwatch.getMode() == 0) {
-
-                } else {
+                if (stopwatch.getMode() == 0 || stopwatch.getMode() == 1) {
                     stopwatch.requestSaveRecord();
                     String[] tmp = stopwatch.getStopwatchRecord();
 
@@ -779,8 +732,9 @@ public class System extends Function {
                     }
 
                     GUI.stopwatchView.setStopwatchList(str[0] + str[1] + str[2]);
-                }
+                } else {
 
+                }
                 break;
             case 3: // timer
                 if (timer.getMode() == 0) {
