@@ -101,8 +101,8 @@ public class Timer extends Function {
             case 0:
                 if (timeSettingValue[type] < timer.TIME_BOTTOM_LIMIT)
                     timeSettingValue[type] = timer.TIME_BOTTOM_LIMIT;
-                else if (timeSettingValue[type] > timer.HOUR_TOP_LIMIT)
-                    timeSettingValue[type] = timer.HOUR_TOP_LIMIT;
+                else if (timeSettingValue[type] > timer.TIMER_HOUR_TOP_LIMIT)
+                    timeSettingValue[type] = timer.TIMER_HOUR_TOP_LIMIT;
                 break;
             case 1:
                 if (timeSettingValue[type] < timer.TIME_BOTTOM_LIMIT)

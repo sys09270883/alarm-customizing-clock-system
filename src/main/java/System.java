@@ -368,8 +368,8 @@ public class System extends Function {
                     GUI.timerView.setHour(String.format("%02d", tsv[0]));
                     GUI.timerView.setMinute(String.format("%02d", tsv[1]));
                     GUI.timerView.setSecond(String.format("%02d", tsv[2]));
-                } else {    // Ÿ�̸� �������� ��
-
+                } else {    // 타이머 실행중일 때
+                    timer.requestPauseTimer();
                 }
 
                 break;
