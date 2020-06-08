@@ -38,3 +38,8 @@ checkstyle {
     toolVersion = "8.32"
     ignoreFailures = true
 }
+
+pmd {
+    ignoreFailures = true
+    toolVersion = '6.24.0'
+}
