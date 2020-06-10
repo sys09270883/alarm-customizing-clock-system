@@ -40,7 +40,6 @@ public class AlarmTest  {
         for (int i = 0 ; i < 3 ; i++)
             alarmSettingValue[i] = 2;
 
-
         time.setTime(alarmSettingValue[0], alarmSettingValue[1], alarmSettingValue[2]);
 
         // 잘 저장 되었는 지 확인.
@@ -66,7 +65,7 @@ public class AlarmTest  {
         time3.setTime(3,3,3);
         alarm.addTimeToAlarmList(time3);
 
-        alarm.requestDeleteAlarm(); // " 2 2 2" 삭제
+        alarm.requestDeleteAlarm(); // " 1 1 1" 삭제
 
         assert(alarm.getAlarmList()[1].getAlarmTime().equals(time3)); // "3 3 3"
         assert(alarm.getAlarmList()[0].getAlarmTime().equals(time2));
@@ -84,7 +83,7 @@ public class AlarmTest  {
         alarm.addTimeToAlarmList(time);
 
         // 알람 커스텀된 간격, 볼륨 설정
-        alarm.getAlarmList()[0].setInterval(2);
+        alarm.getAlarmList()[0].setInterval(1);
         alarm.getAlarmList()[0].setVolume(2);
 
         //현재 시간 임의 설정
@@ -99,8 +98,8 @@ public class AlarmTest  {
         timeKeeping.changeValue(60);
         timeKeeping.requestSave(); // "23 59 59"
 
-        java.lang.System.out.println(timeKeeping.getCurTime().getCurrentTime());
-        java.lang.System.out.println(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime());
+//        java.lang.System.out.println(timeKeeping.getCurTime().getCurrentTime());
+//        java.lang.System.out.println(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime());
 
         // 현재 시각과 알람 시간이 같으면
         if(timeKeeping.getCurTime().getCurrentTime().equals(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime()))
@@ -108,17 +107,15 @@ public class AlarmTest  {
             system.beepBuzzer(alarm.getAlarmList()[0].getInterval(), alarm.getAlarmList()[0].getVolume()); // 버저 울리기.
             assertEquals(1, system.getStatus() & 1);
             // buzzer에서 interval과 volume을 get할 방법이 없음. -> getter로 신규 함수 추가해야함.
-            assertEquals(1000, system.buzzer.getInterval());
+            assertEquals(750, system.buzzer.getInterval());
             assertEquals(0.07, system.buzzer.getVolume());
         }
     }
 
     @Test
     public void StopAlarmBuzzerTest() {
-        Alarm alarm = system.alarm;
         system.beepBuzzer(1, 1);
         system.updateStatus();
-
         assertEquals(0, system.getStatus() & 0);
     }
 

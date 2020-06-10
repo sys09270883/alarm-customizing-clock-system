@@ -253,6 +253,10 @@ public class TimeKeeping extends Function {
         this.curDate = curDate;
     }
 
+    public void setD_day(int d_day) {
+        this.d_day = d_day;
+    }
+
     public void cancel() {
         changeMode(-1);
     }
