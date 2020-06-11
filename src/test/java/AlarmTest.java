@@ -101,6 +101,7 @@ public class AlarmTest  {
 //        java.lang.System.out.println(timeKeeping.getCurTime().getCurrentTime());
 //        java.lang.System.out.println(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime());
 
+
         // 현재 시각과 알람 시간이 같으면
         if(timeKeeping.getCurTime().getCurrentTime().equals(alarm.getAlarmList()[0].getTime().getCurrentTime()))
         {
