@@ -49,7 +49,7 @@ public class Alarm extends Function {
         else {
 
             for (int i = 0; i < size; i++) {
-                if (alarmList[i].getAlarmTime().equals(alarmTime))
+                if (alarmList[i].getTime().equals(alarmTime))
                     return;
             }
 

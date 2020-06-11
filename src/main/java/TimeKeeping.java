@@ -98,9 +98,20 @@ public class TimeKeeping extends Function {
                 }
 
                 // Alarm
+                if (system.alarm == null)
+                    return;
+
+                int alarmNum = system.alarm.getSize();
+                AlarmData[] alarmList = system.alarm.getAlarmList();
+                for (int i = 0; i < alarmNum; i++) {
+                    if (curTime.equals(alarmList[i].getTime())) { // 선택된 알람 인터벌이랑 볼륨
+                        system.beepBuzzer(alarmList[i].getInterval(), alarmList[i].getVolume());
+                        break;
+                    }
+                }
+
                 if (system.GUI != null) {
                     if (system.alarm != null) {
-                        int alarmNum = system.alarm.getSize();
                         system.GUI.timekeepingView.setAlarmNum(String.valueOf(alarmNum));
                     } else
                         system.GUI.timekeepingView.setAlarmNum("0");

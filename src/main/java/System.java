@@ -101,6 +101,12 @@ public class System extends Function {
                         Thread.sleep(1000);
                         if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
                             modeBtnLongPressed();
+                            if (status == 0) {
+
+                            }
+                            else {
+
+                            }
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -374,7 +380,7 @@ public class System extends Function {
                         // ������������ �ش��ϴ� ������ ����ָ� ��.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
@@ -404,7 +410,7 @@ public class System extends Function {
                         // ������������ �ش��ϴ� ������ ����ָ� ��.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
@@ -567,7 +573,7 @@ public class System extends Function {
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
@@ -601,7 +607,7 @@ public class System extends Function {
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
