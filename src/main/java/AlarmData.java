@@ -28,10 +28,6 @@ public class AlarmData {
         alarmTime.setTime(-1,-1,-1);
     }
 
-    public Time getAlarmTime() {
-        return alarmTime;
-    }
-
     public Time getTime(){
         return this.alarmTime;
     }
