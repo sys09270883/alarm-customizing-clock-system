@@ -43,7 +43,7 @@ public class AlarmTest  {
         time.setTime(alarmSettingValue[0], alarmSettingValue[1], alarmSettingValue[2]);
 
         // 잘 저장 되었는 지 확인.
-        assert(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime().equals(time.getCurrentTime()));
+        assert(alarm.getAlarmList()[0].getTime().getCurrentTime().equals(time.getCurrentTime()));
     }
 
 
@@ -67,8 +67,8 @@ public class AlarmTest  {
 
         alarm.requestDeleteAlarm(); // " 1 1 1" 삭제
 
-        assert(alarm.getAlarmList()[1].getAlarmTime().equals(time3)); // "3 3 3"
-        assert(alarm.getAlarmList()[0].getAlarmTime().equals(time2));
+        assert(alarm.getAlarmList()[1].getTime().equals(time3)); // "3 3 3"
+        assert(alarm.getAlarmList()[0].getTime().equals(time2));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class AlarmTest  {
 //        java.lang.System.out.println(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime());
 
         // 현재 시각과 알람 시간이 같으면
-        if(timeKeeping.getCurTime().getCurrentTime().equals(alarm.getAlarmList()[0].getAlarmTime().getCurrentTime()))
+        if(timeKeeping.getCurTime().getCurrentTime().equals(alarm.getAlarmList()[0].getTime().getCurrentTime()))
         {
             system.beepBuzzer(alarm.getAlarmList()[0].getInterval(), alarm.getAlarmList()[0].getVolume()); // 버저 울리기.
             assertEquals(1, system.getStatus() & 1);
