@@ -69,12 +69,14 @@ public class D_day extends Function {
 
             this.d_dayDate = date;
             this.d_day = (int)(d_dayDateTime - curDateTime);
+            system.timeKeeping.setD_day(d_day);
         }
         else {
             st = new StringTokenizer(curDate, " '");
             this.d_dayDate.setDate(Integer.parseInt(st.nextToken()),
                     Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
             this.d_day = -1;
+            system.timeKeeping.setD_day(d_day);
         }
     }
 

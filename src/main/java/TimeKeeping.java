@@ -269,6 +269,10 @@ public class TimeKeeping extends Function {
     public int getDayOfTheWeek() { return dayOfTheWeek; }
 
 
+    public void setD_day(int d_day) {
+        this.d_day = d_day;
+    }
+
     public void cancel() {
         changeMode(-1);
     }

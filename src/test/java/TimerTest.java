@@ -52,7 +52,6 @@ public class TimerTest {
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("2"));
-
     }
 
     @Test

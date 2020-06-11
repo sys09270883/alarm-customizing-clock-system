@@ -229,7 +229,8 @@ public class System extends Function {
             case 2: // ��ž��ġ
                 if (stopwatch.getMode() == 0) {
                     stopwatch.requestRecordCheckMode();
-                    GUI.stopwatchView.borderPanel.setVisible(true);
+                    if(stopwatch.getMode() == 2)
+                        GUI.stopwatchView.borderPanel.setVisible(true);
                 }
                 break;
             case 4: // d-day
@@ -304,10 +305,6 @@ public class System extends Function {
                     String[] tmp = stopwatch.getStopwatchRecord();
 
                     int curRecordPointer = stopwatch.getRecordPointer();
-                    if (curRecordPointer > 2 && tmp[0 + curRecordPointer] == null) {
-                        stopwatch.movePointer(-1);
-                        break;
-                    }
 
                     String[] str = new String[3];
                     if (tmp[0 + curRecordPointer] == null)

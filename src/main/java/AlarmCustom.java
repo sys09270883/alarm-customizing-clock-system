@@ -5,8 +5,8 @@ public class AlarmCustom extends Function {
     public final static int FID = 6;
     private int ALARM_TOP_LIMIT;
     private final int ALARM_BOTTOM_LIMIT = 0;
-    private final int INTERVAL_TOP_LIMIT = 3;
-    private final int INTERVAL_BOTTOM_LIMIT = 1;
+    private final int INTERVAL_TOP_LIMIT = 2;
+    private final int INTERVAL_BOTTOM_LIMIT = 0;
     private final int VOLUME_TOP_LIMIT = 4;
     private final int VOLUME_BOTTOM_LIMIT = 0;
     private int[] customSettingValue;
