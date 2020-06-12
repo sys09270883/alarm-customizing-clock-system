@@ -67,7 +67,7 @@ public class D_dayTest {
     }
 
     @Test
-    public void checkBound() {
+    public void checkInputException() {
         Date date = new Date();
         date.setDate(2099, 2, 31);
 
