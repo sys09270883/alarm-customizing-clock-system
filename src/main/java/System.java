@@ -53,6 +53,8 @@ public class System extends Function {
         border = new Border(this);
         cacheValue = new int[4];
         Arrays.fill(cacheValue, -1);
+
+        lastOperateTime = java.lang.System.currentTimeMillis();
     }
 
     public int getStatus() { return this.status; }
