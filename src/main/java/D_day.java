@@ -11,6 +11,10 @@ public class D_day extends Function {
         return dateSettingValue;
     }
 
+    public void setDateSettingValue(int[] dsv) {
+        this.dateSettingValue = dsv;
+    }
+
     private int dateSettingValue[] = {-1, -1, -1};
 
     public D_day(System system) {
