@@ -21,7 +21,7 @@ public class Buzzer implements Runnable {
     }
 
     public final int INTERVALS[] = {500, 750, 1000};
-    public final double VOLUMES[] = {0, 0.03, 0.07, 0.09, 0,11};
+    public final double VOLUMES[] = {0, 0.5, 1.0, 2.0, 3.0};    // legend
 
     private int interval;
     private double volume;

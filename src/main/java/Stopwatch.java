@@ -121,6 +121,7 @@ public class Stopwatch extends Function {
 
     public void cancel() {
         changeMode(0);
+        type = 0;
     }
 
     public void changeMode(int mode) {
