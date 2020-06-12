@@ -201,10 +201,37 @@ public class TimeKeeping extends Function {
                     timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
                 break;
             case 5:
-                if (timeSettingValue[type] < curDate.numOfDays[0])
-                    timeSettingValue[type] = curDate.numOfDays[0];
-                else if (timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
-                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
+                if(timeSettingValue[4] == 2) {
+                    int temp, year = timeSettingValue[3];
+                    int tmpNumOfDay;
+                    temp = year % 4;
+                    if (temp == 0) {
+                        temp = year % 100;
+                        if (temp == 0) {
+                            temp = year % 400;
+                            if (temp == 0) {
+                                tmpNumOfDay = 29;
+                            }
+                            else
+                                tmpNumOfDay = 28;
+                        }
+                        else {
+                            tmpNumOfDay = 29;
+                        }
+                    } else
+                        tmpNumOfDay = 28;
+
+                    if(timeSettingValue[type] < curDate.numOfDays[0])
+                        timeSettingValue[type] = curDate.numOfDays[0];
+                    else if(timeSettingValue[type] > tmpNumOfDay)
+                        timeSettingValue[type] = tmpNumOfDay;
+                }
+                else {
+                    if(timeSettingValue[type] < curDate.numOfDays[0])
+                        timeSettingValue[type] = curDate.numOfDays[0];
+                    else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[1]])
+                        timeSettingValue[type] = curDate.numOfDays[timeSettingValue[1]];
+                }
                 break;
         }
     }
