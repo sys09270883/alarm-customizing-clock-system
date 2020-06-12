@@ -134,10 +134,37 @@ public class D_day extends Function {
                     dateSettingValue[type] = d_dayDate.MONTH_TOP_LIMIT;
                 break;
             case 2:
-                if(dateSettingValue[type] < d_dayDate.numOfDays[0])
-                    dateSettingValue[type] = d_dayDate.numOfDays[0];
-                else if(dateSettingValue[type] > d_dayDate.numOfDays[dateSettingValue[1]])
-                    dateSettingValue[type] = d_dayDate.numOfDays[dateSettingValue[1]];
+                if(dateSettingValue[1] == 2) {
+                    int temp, year = dateSettingValue[0];
+                    int tmpNumOfDay;
+                    temp = year % 4;
+                    if (temp == 0) {
+                        temp = year % 100;
+                        if (temp == 0) {
+                            temp = year % 400;
+                            if (temp == 0) {
+                                tmpNumOfDay = 29;
+                            }
+                            else
+                                tmpNumOfDay = 28;
+                        }
+                        else {
+                            tmpNumOfDay = 29;
+                        }
+                    } else
+                        tmpNumOfDay = 28;
+
+                    if(dateSettingValue[type] < d_dayDate.numOfDays[0])
+                        dateSettingValue[type] = d_dayDate.numOfDays[0];
+                    else if(dateSettingValue[type] > tmpNumOfDay)
+                        dateSettingValue[type] = tmpNumOfDay;
+                }
+                else {
+                    if(dateSettingValue[type] < d_dayDate.numOfDays[0])
+                        dateSettingValue[type] = d_dayDate.numOfDays[0];
+                    else if(dateSettingValue[type] > d_dayDate.numOfDays[dateSettingValue[1]])
+                        dateSettingValue[type] = d_dayDate.numOfDays[dateSettingValue[1]];
+                }
                 break;
         }
     }
