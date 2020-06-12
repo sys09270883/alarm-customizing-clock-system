@@ -327,5 +327,6 @@ public class TimeKeeping extends Function {
 
     public void cancel() {
         changeMode(-1);
+        type = 0;
     }
 }

@@ -48,8 +48,9 @@ public class AlarmCustom extends Function {
 
     public void setCustom() {
         AlarmData[] alarmList = alarm.getAlarmList();
-        alarmList[customSettingValue[0]].setInterval(customSettingValue[1]);
-        alarmList[customSettingValue[0]].setVolume(customSettingValue[2]);
+        int alarmPointer = alarm.getAlarmPointer();
+        alarmList[alarmPointer].setInterval(customSettingValue[1]);
+        alarmList[alarmPointer].setVolume(customSettingValue[2]);
     }
 
     @Override
@@ -67,14 +68,19 @@ public class AlarmCustom extends Function {
         } else if (mode == 2)
         {
             if (this.mode == 1) {   // 선택된 알람에서 옴.
+                type = 1;
                 AlarmData[] tmp = alarm.getAlarmList();
-                customSettingValue[1] = tmp[customSettingValue[0]].getInterval();
-                customSettingValue[2] = tmp[customSettingValue[0]].getVolume();
+                int alarmPointer = alarm.getAlarmPointer();
+                customSettingValue[1] = tmp[alarmPointer].getInterval();
+                customSettingValue[2] = tmp[alarmPointer].getVolume();
             }
         }
         else {
             Arrays.fill(customSettingValue, -1);
             alarm.setAlarmPointer(0);
+            int[] tmp = {0, Math.max(alarm.getSize(), 2)};
+            alarm.setSegmentPointer(tmp);
+            type = 0;
         }
         this.mode = mode;
     }

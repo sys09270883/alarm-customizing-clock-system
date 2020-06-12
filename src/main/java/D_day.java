@@ -122,6 +122,7 @@ public class D_day extends Function {
 
     public void cancel() {
         changeMode(-1);
+        type = 0;
     }
 
     public void changeMode(int _mode) {
