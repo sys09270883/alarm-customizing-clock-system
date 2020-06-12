@@ -9,6 +9,7 @@ public class System extends Function {
 
     // 6�� �� 4�� �ν��Ͻ��� ��������.
     // �˶�, �˶�Ŀ������ �׻� �� �� ���Եǰų� ���Ե��� �ʾƾ� �Ѵ�.
+    final static int TIMED_OUT = 600_000;
     public GUI GUI;
     public TimeKeeping timeKeeping;
     public Stopwatch stopwatch;
@@ -69,7 +70,7 @@ public class System extends Function {
             while (true) {
                 try {
                     Thread.sleep(1000);
-                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= 3000) {
+                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= TIMED_OUT) {
                         lastOperateTime = java.lang.System.currentTimeMillis();
                         switch (selectedFid) {
                             case 1:
