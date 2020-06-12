@@ -105,9 +105,15 @@ public class Alarm extends Function {
 
     public void requestAlarmSelectMode() {
         // TODO implement here
-        segmentPointer[0] = 0;
-        segmentPointer[1] = Math.min(2, getSize() - 1);
-        changeMode(2);
+        
+        if( getSize() == 0) {
+            return;
+        }
+        else {
+            segmentPointer[0] = 0;
+            segmentPointer[1] = Math.min(2, getSize() - 1);
+            changeMode(2);
+        }
     }
 
     public void setAlarmPointer(int alarmPointer) {
