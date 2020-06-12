@@ -1007,7 +1007,7 @@ public class System extends Function {
                     else
                         GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
                     nextFunction();
-                } else {
+                } else {    // mode 1
                     d_day.requestSave();
                     GUI.d_dayView.borderPanel.setVisible(false);
                     String curDate = d_day.getD_dayDate().getCurrentDate();
