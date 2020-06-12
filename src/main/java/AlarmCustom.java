@@ -23,9 +23,15 @@ public class AlarmCustom extends Function {
     }
 
     public void requestAlarmSelectMode() {
-        int[] tmp = {0, Math.min(2, alarm.getSize() - 1)};
-        alarm.setSegmentPointer(tmp);
-        changeMode(1);
+        if(alarm.getSize() == 0)
+        {
+            return;
+        }
+        else {
+            int[] tmp = {0, Math.min(2, alarm.getSize() - 1)};
+            alarm.setSegmentPointer(tmp);
+            changeMode(1);
+        }
     }
 
     public Alarm getAlarm() {
