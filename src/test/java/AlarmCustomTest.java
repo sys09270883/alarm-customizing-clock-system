@@ -121,10 +121,10 @@ public class AlarmCustomTest {
         assertEquals(2, alarmCustom.getCustomSettingValue()[1]); // 또 한계값 2에 막혀 안 올라가는지 확인
 
         alarmCustom.changeValue(-1);
-        assertEquals(2, alarmCustom.getCustomSettingValue()[1]); // 2에서 값이 1 내려가는지 확인
+        assertEquals(1, alarmCustom.getCustomSettingValue()[1]); // 2에서 값이 1 내려가는지 확인
 
         alarmCustom.changeValue(-1);
-        assertEquals(1, alarmCustom.getCustomSettingValue()[1]); // 1에서 값이 1 내려가는지 확인
+        assertEquals(0, alarmCustom.getCustomSettingValue()[1]); // 1에서 값이 1 내려가는지 확인
 
         alarmCustom.changeValue(-1);
         assertEquals(0, alarmCustom.getCustomSettingValue()[1]); // 한계값 0에 막혀 값이 안 내려가는지 확인
@@ -157,7 +157,6 @@ public class AlarmCustomTest {
 
         alarmCustom.requestIntervalSettingMode(); // 알람 인터벌 설정 모드
         alarmCustom.changeType(); // type  0: 기본 -> 1 : 인터벌
-        alarmCustom.changeValue(1);
 
         alarmCustom.requestVolumeSettingMode(); // 알람 볼륨 설정 모드
         alarmCustom.changeType(); // type  1: 인터벌 -> 2 : 볼륨
@@ -205,7 +204,6 @@ public class AlarmCustomTest {
         // 저장이 잘 되는지 확인
         alarmCustom.setCustom();
 
-        // assert 로 바꾸기
         assert(system.alarm.getAlarmList()[0].getInterval() == 1);
         assert(system.alarm.getAlarmList()[0].getVolume() == 3);
     }
