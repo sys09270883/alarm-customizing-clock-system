@@ -38,28 +38,29 @@ public class TimeKeeping extends Function {
             setDayOfTheWeek();
 
             if(system.d_day.getD_day() != -1) {
+
+                system.d_day.setD_day(system.d_day.getD_day() - 1);
                 if(system.d_day.getD_dayDate().getCurrentDate().equals(curDate.getCurrentDate())) {
                     system.startBorder();
                     Date date = new Date();
                     date.setDate(0, 0, 0);
                     system.d_day.setDate(date);
-                    if (system.d_day.getD_day() == -1) {
-                        if (system.GUI != null) {
-                            system.GUI.d_dayView.setYear("  ");
-                            system.GUI.d_dayView.setMonth("NO");
-                            system.GUI.d_dayView.setDate("NE");
-                        }
-                    } else {
-                        String curDate = system.d_day.getD_dayDate().getCurrentDate();
-                        StringTokenizer st = new StringTokenizer(curDate, " ");
-                        if (system.GUI != null) {
-                            system.GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
-                            system.GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
-                            system.GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
-                        }
-                    }
-                    if (system.GUI != null)
+                    if (system.GUI != null) {
+                        system.GUI.d_dayView.setYear("  ");
+                        system.GUI.d_dayView.setMonth("NO");
+                        system.GUI.d_dayView.setDate("NE");
                         system.GUI.d_dayView.setDday("000");
+                    }
+                }
+                else {
+                    String curDate = system.d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+                    if (system.GUI != null) {
+                        system.GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        system.GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        system.GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        system.GUI.d_dayView.setDday(String.format("%03d", system.d_day.getD_day()));
+                    }
                 }
             }
         });
@@ -116,7 +117,6 @@ public class TimeKeeping extends Function {
                     } else
                         system.GUI.timekeepingView.setAlarmNum("0");
                 }
-
             }
         });
 
