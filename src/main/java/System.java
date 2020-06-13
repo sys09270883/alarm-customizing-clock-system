@@ -128,7 +128,7 @@ public class System extends Function {
                                 break;
                         }
                         GUI.setView(GUI.timekeepingView);
-                        functionNumIdx = 1;
+                        functionNumIdx = 0;
                         selectedFid = 1;
                     }
                 } catch (InterruptedException e) {
@@ -136,7 +136,6 @@ public class System extends Function {
                 }
             }
         });
-
         checkTimeOut.start();
     }
 
