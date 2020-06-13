@@ -229,8 +229,8 @@ public class TimeKeeping extends Function {
                 else {
                     if(timeSettingValue[type] < curDate.numOfDays[0])
                         timeSettingValue[type] = curDate.numOfDays[0];
-                    else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[1]])
-                        timeSettingValue[type] = curDate.numOfDays[timeSettingValue[1]];
+                    else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
+                        timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
                 }
                 break;
         }
@@ -250,7 +250,7 @@ public class TimeKeeping extends Function {
     }
 
     public void changeType() {
-        type = (type + 1) % TYPE_SIZE;
+            type = (type + 1) % TYPE_SIZE;
     }
 
     public void requestSave() {

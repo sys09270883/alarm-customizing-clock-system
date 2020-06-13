@@ -105,7 +105,6 @@ public class AlarmCustomTest {
         alarmCustom.getAlarm().movePointer(1); // 포인터 +1
 
         alarmCustom.requestIntervalSettingMode(); // 알람 인터벌 설정 모드
-        alarmCustom.changeType(); // type  0: 기본 -> 1 : 인터벌
 
         assertEquals(1, alarmCustom.getType());
         assertEquals(1, alarmCustom.getCustomSettingValue()[1]); // 초기값 2인지 확인
@@ -151,12 +150,11 @@ public class AlarmCustomTest {
         system.alarm.addTimeToAlarmList(time);
 
         alarmCustom.requestAlarmSelectMode(); // 알람 선택 모드 
-        assert(alarmCustom.getMode() == 1 );
+        assert(alarmCustom.getMode() == 1);
         
         alarmCustom.getAlarm().movePointer(1); // 포인터 +1
 
         alarmCustom.requestIntervalSettingMode(); // 알람 인터벌 설정 모드
-        alarmCustom.changeType(); // type  0: 기본 -> 1 : 인터벌
 
         alarmCustom.requestVolumeSettingMode(); // 알람 볼륨 설정 모드
         alarmCustom.changeType(); // type  1: 인터벌 -> 2 : 볼륨
