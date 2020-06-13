@@ -34,7 +34,9 @@ public class TimeKeepingTest {
             timekeeping.changeValue(2);
             timekeeping.changeType();
         }
+
         timekeeping.changeValue(2);
+
         timekeeping.requestSave();
 
         assert (time.toString().equals("23 57 32"));
