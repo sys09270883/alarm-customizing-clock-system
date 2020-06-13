@@ -7,14 +7,6 @@ public class D_day extends Function {
     final static int FID = 4;
     private final int TYPE_SIZE = 3;
 
-    public int[] getDateSettingValue() {
-        return dateSettingValue;
-    }
-
-    public void setDateSettingValue(int[] dsv) {
-        this.dateSettingValue = dsv;
-    }
-
     private int dateSettingValue[] = {-1, -1, -1};
 
     public D_day(System system) {
@@ -112,6 +104,8 @@ public class D_day extends Function {
         return d_day;
     }
 
+    public void setD_day(int d_day) {this.d_day = d_day;}
+
     public Date getD_dayDate() { return d_dayDate; }
 
     public void requestDeleteDday() {
@@ -198,5 +192,13 @@ public class D_day extends Function {
 
     public int getMode() {
         return this.mode;
+    }
+
+    public int[] getDateSettingValue() {
+        return dateSettingValue;
+    }
+
+    public void setDateSettingValue(int[] dsv) {
+        this.dateSettingValue = dsv;
     }
 }
