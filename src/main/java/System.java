@@ -9,6 +9,7 @@ public class System extends Function {
 
     // 6�� �� 4�� �ν��Ͻ��� ��������.
     // �˶�, �˶�Ŀ������ �׻� �� �� ���Եǰų� ���Ե��� �ʾƾ� �Ѵ�.
+    final static int TIMED_OUT = 600_000;
     public GUI GUI;
     public TimeKeeping timeKeeping;
     public Stopwatch stopwatch;
@@ -18,7 +19,7 @@ public class System extends Function {
     public AlarmCustom alarmCustom;
     public Buzzer buzzer;
     public Border border;
-    private int functionNumIdx = 0;
+    private int functionNumIdx;
     private int[] functionNum;
     private int selectedFid;
     private int status; // ��Ʈ����ŷ: 0b00 0b01 0b10 0b11
@@ -41,6 +42,7 @@ public class System extends Function {
         status = 0b00;
         type = 1;
         selectedFid = 1;
+        functionNumIdx = 0;
 
         timeKeeping = new TimeKeeping(this);
         stopwatch = new Stopwatch(this);
@@ -68,7 +70,7 @@ public class System extends Function {
             while (true) {
                 try {
                     Thread.sleep(1000);
-                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
+                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= TIMED_OUT) {
                         lastOperateTime = java.lang.System.currentTimeMillis();
                         switch (selectedFid) {
                             case 1:
@@ -894,9 +896,8 @@ public class System extends Function {
                 alarmCustom.changeType();
                 if (alarmCustom.getMode() == 1) { // �˶� ����Ʈ ��ȸ ���
                     alarmCustom.requestIntervalSettingMode();
-
                     GUI.alarmCustomView.borderPanel.setBounds(
-                            550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                        550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
                     );
                     GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
@@ -1006,7 +1007,7 @@ public class System extends Function {
                     else
                         GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
                     nextFunction();
-                } else {
+                } else {    // mode 1
                     d_day.requestSave();
                     GUI.d_dayView.borderPanel.setVisible(false);
                     String curDate = d_day.getD_dayDate().getCurrentDate();
@@ -1089,6 +1090,7 @@ public class System extends Function {
 
     public void cancel() {
         changeMode(-1);
+        type = 1;
     }
 
     public void changeMode(int _mode) {

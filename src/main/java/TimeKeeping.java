@@ -254,7 +254,32 @@ public class TimeKeeping extends Function {
     }
 
     public void requestSave() {
-        if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
+        if (timeSettingValue[4] == 2) {
+            int temp, year = timeSettingValue[3];
+            int tmpNumOfDay;
+            temp = year % 4;
+            if (temp == 0) {
+                temp = year % 100;
+                if (temp == 0) {
+                    temp = year % 400;
+                    if (temp == 0) {
+                        tmpNumOfDay = 29;
+                    }
+                    else
+                        tmpNumOfDay = 28;
+                }
+                else {
+                    tmpNumOfDay = 29;
+                }
+            } else
+                tmpNumOfDay = 28;
+
+            if (timeSettingValue[5] > tmpNumOfDay) {
+                changeMode(-1);
+                return;
+            }
+        }
+        else if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
             changeMode(-1);
             return;
         }
@@ -302,5 +327,6 @@ public class TimeKeeping extends Function {
 
     public void cancel() {
         changeMode(-1);
+        type = 0;
     }
 }

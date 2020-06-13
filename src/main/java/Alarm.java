@@ -141,6 +141,8 @@ public class Alarm extends Function {
                 alarmSettingValue[i] = -1;
             typeindex = 0;
             alarmPointer = 0;
+            segmentPointer[0] = 0;
+            segmentPointer[1] = Math.max(2, getSize());
         }
     }
 
