@@ -35,7 +35,7 @@ class Time implements Runnable {
 
     @Override
     public boolean equals(Object t) {
-        if (!(t instanceof Time))
+        if (t == null || !(t instanceof Time))
             return false;
         Time time = (Time)t;
         if (time.hour < 0 || time.hour > 23 || time.min < 0 || time.min > 59 || time.sec < 0 || time.sec > 59)
