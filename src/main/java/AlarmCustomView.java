@@ -11,6 +11,7 @@ public class AlarmCustomView extends DefaultLayout {
     final static String INTERVAL_IMG_NAME = "intervalimage.jpg";
     final static int DISPLAY_AMT = 3;
     final String NONE = "  NONE";
+    final String BLANK = "      ";
 
     ImageIcon volumeImage;
     ImageIcon intervalImage;
@@ -108,19 +109,19 @@ public class AlarmCustomView extends DefaultLayout {
     }
 
     public void setAlarmList(String str) {
-        if (str.substring(0, 6).equals("      "))
+        if (str.substring(0, 6).equals(BLANK))
             displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3, NONE, layer++);
         else
             displaySegment(350, 240, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3,
                     str.substring(0, 6), layer++);
 
-        if (str.substring(6, 12).equals("      "))
+        if (str.substring(6, 12).equals(BLANK))
             displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3, NONE, layer++);
         else
             displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3,
                     str.substring(6, 12), layer++);
 
-        if (str.substring(12, 18).equals("      "))
+        if (str.substring(12, 18).equals(BLANK))
             displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3 * 2, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3, NONE, layer++);
         else
             displaySegment(350, 240 + ALARM_LIST_HEIGHT / 3 * 2, ALARM_LIST_WIDTH, ALARM_LIST_HEIGHT / 3,
