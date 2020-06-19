@@ -41,9 +41,9 @@ public class AlarmView extends DefaultLayout {
         borderPanel.setBounds(350 - 5, 180 - 5,
                 (ALARM_WIDTH + 10) / 3, ALARM_HEIGHT + 10);
 
-        add(alarmListPanel, new Integer(1));
-        add(curAlarmPanel, new Integer(1));
-        add(borderPanel, new Integer(2));
+        add(alarmListPanel, Integer.valueOf(1));
+        add(curAlarmPanel, Integer.valueOf(1));
+        add(borderPanel, Integer.valueOf(2));
     }
 
     public void setBorderPanel(int idx) {
