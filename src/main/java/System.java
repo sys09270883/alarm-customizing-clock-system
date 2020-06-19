@@ -1088,8 +1088,8 @@ public class System extends Function {
                 } else if (alarmCustom.getMode() == 2) {
                     alarmCustom.requestSave();
                     GUI.alarmCustomView.borderPanel.setVisible(false);
-                    GUI.alarmCustomView.setAlarmVolume(" ");
-                    GUI.alarmCustomView.setAlarmInterval(" ");
+                    GUI.alarmCustomView.setAlarmVolume("0");
+                    GUI.alarmCustomView.setAlarmInterval("0");
                 }
 
                 break;
