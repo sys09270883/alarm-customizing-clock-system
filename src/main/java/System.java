@@ -51,7 +51,7 @@ public class System extends Function {
         alarmCustom = null;
 
         buzzer = new Buzzer();
-        border = new Border(this);
+        border = new Border();
         cacheValue = new int[4];
         Arrays.fill(cacheValue, -1);
 
