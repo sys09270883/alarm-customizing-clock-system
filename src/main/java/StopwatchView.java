@@ -40,9 +40,9 @@ public class StopwatchView extends DefaultLayout {
         borderPanel.setBounds(stopwatchListPanel.getX() - 5, stopwatchListPanel.getY() - 5,
                 STOPWATCH_WIDTH + 10, STOPWATCH_LIST_HEIGHT + 10);
 
-        add(stopwatchListPanel, new Integer(1));
-        add(curStopwatchPanel, new Integer(1));
-        add(borderPanel, new Integer(2));
+        add(stopwatchListPanel, Integer.valueOf(1));
+        add(curStopwatchPanel, Integer.valueOf(1));
+        add(borderPanel, Integer.valueOf(2));
     }
 
     public void setStopwatch(String str) { displaySegment(350, 180, STOPWATCH_WIDTH, STOPWATCH_HEIGHT, str, layer++); }
