@@ -90,7 +90,8 @@ public class Timer extends Function {
         try {
             timer.getTimeThread().join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
+            Thread.currentThread().interrupt();
         }
         changeMode(0);
     }
@@ -129,6 +130,8 @@ public class Timer extends Function {
                     timeSettingValue[type] = timer.TIME_BOTTOM_LIMIT;
                 else if (timeSettingValue[type] > timer.SECOND_TOP_LIMIT)
                     timeSettingValue[type] = timer.SECOND_TOP_LIMIT;
+                break;
+            default:
                 break;
         }
     }

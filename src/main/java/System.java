@@ -7,9 +7,9 @@ import java.util.StringTokenizer;
  */
 public class System extends Function {
 
-    // 6�� �� 4�� �ν��Ͻ��� ��������.
-    // �˶�, �˶�Ŀ������ �׻� �� �� ���Եǰų� ���Ե��� �ʾƾ� �Ѵ�.
     final static int TIMED_OUT = 600_000;
+    final String BLANK_SIX = "      ";
+    final String DEFAULT_VALUE = "000000";
     public GUI GUI;
     public TimeKeeping timeKeeping;
     public Stopwatch stopwatch;
@@ -127,13 +127,16 @@ public class System extends Function {
                                     GUI.alarmCustomView.borderPanel.setVisible(false);
                                 }
                                 break;
+                            default:
+                                break;
                         }
                         GUI.setView(GUI.timekeepingView);
                         functionNumIdx = 0;
                         selectedFid = 1;
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(java.lang.System.out);
+                    Thread.currentThread().interrupt();
                 }
             }
         });
@@ -200,6 +203,8 @@ public class System extends Function {
                     GUI.alarmCustomView.borderPanel.setVisible(false);
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -214,7 +219,7 @@ public class System extends Function {
 
                     GUI.setView(GUI.functionSelectingView);
                     GUI.functionSelectingView.setdDay("   ");
-                    GUI.functionSelectingView.setDate("      ");
+                    GUI.functionSelectingView.setDate(BLANK_SIX);
                     GUI.functionSelectingView.setAlarmNum(" ");
                     GUI.functionSelectingView.setCurTime2("  ");
                     GUI.functionSelectingView.setDayofweek("   ");
@@ -263,6 +268,8 @@ public class System extends Function {
                     }
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -310,7 +317,7 @@ public class System extends Function {
 
                     String[] str = new String[3];
                     if (tmp[0 + curRecordPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + curRecordPointer], " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -318,7 +325,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + curRecordPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + curRecordPointer], " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -327,7 +334,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + curRecordPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + curRecordPointer], " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -455,6 +462,8 @@ public class System extends Function {
                 }
 
                 break;
+            default:
+                break;
         }
     }
 
@@ -497,7 +506,7 @@ public class System extends Function {
                     String[] str = new String[3];
 
                     if (tmp[0 + curRecordPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + curRecordPointer], " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -505,7 +514,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + curRecordPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + curRecordPointer], " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -514,7 +523,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + curRecordPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + curRecordPointer], " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -525,7 +534,7 @@ public class System extends Function {
                     GUI.stopwatchView.setStopwatchList(str[0] + str[1] + str[2]);
                 } else {
                     stopwatch.requestResetStopwatch();
-                    GUI.stopwatchView.setStopwatch("000000");
+                    GUI.stopwatchView.setStopwatch(DEFAULT_VALUE);
                     GUI.stopwatchView.setStopwatchList("  NONE  NONE  NONE");
                 }
                 break;
@@ -640,6 +649,8 @@ public class System extends Function {
                     GUI.alarmCustomView.setAlarmVolume(String.valueOf(csvArr[2]));
                 }
                 break;
+            default:
+                break;
         }
 
     }
@@ -721,7 +732,7 @@ public class System extends Function {
 
                     String[] str = new String[3];
                     if (tmp[0] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0], " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -729,7 +740,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1], " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -738,7 +749,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2], " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -850,11 +861,11 @@ public class System extends Function {
                     AlarmData[] tmp = alarm.getAlarmList();
 
                     GUI.alarmView.borderPanel.setVisible(false);
-                    GUI.alarmView.setAlarm("000000");
+                    GUI.alarmView.setAlarm(BLANK_SIX);
 
                     String[] str = new String[3];
                     if (tmp[0 + alarmPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -862,7 +873,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + alarmPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -871,7 +882,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + alarmPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -888,7 +899,7 @@ public class System extends Function {
                 if (alarmCustom.getMode() == 1) { // �˶� ����Ʈ ��ȸ ���
                     alarmCustom.requestIntervalSettingMode();
                     GUI.alarmCustomView.borderPanel.setBounds(
-                        550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                        550, 165, GUI.alarmCustomView.ALARM_WIDTH, GUI.alarmCustomView.ALARM_HEIGHT
                     );
                     GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
@@ -898,17 +909,19 @@ public class System extends Function {
                     if (acType == 2) {  // ����
                         alarmCustom.requestVolumeSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
-                                430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                                430, 165, GUI.alarmCustomView.ALARM_WIDTH, GUI.alarmCustomView.ALARM_HEIGHT
                         );
                         GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
                     } else if (acType == 1) { // ���͹�
                         alarmCustom.requestIntervalSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
-                                550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                                550, 165, GUI.alarmCustomView.ALARM_WIDTH, GUI.alarmCustomView.ALARM_HEIGHT
                         );
                         GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     }
                 }
+                break;
+            default:
                 break;
         }
 
@@ -1030,11 +1043,11 @@ public class System extends Function {
                     AlarmData[] tmp = alarm.getAlarmList();
 
                     GUI.alarmView.borderPanel.setVisible(false);
-                    GUI.alarmView.setAlarm("000000");
+                    GUI.alarmView.setAlarm(BLANK_SIX);
 
                     String[] str = new String[3];
                     if (tmp[0 + alarmPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -1042,7 +1055,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + alarmPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -1051,7 +1064,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + alarmPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -1075,6 +1088,8 @@ public class System extends Function {
                     GUI.alarmCustomView.setAlarmInterval(" ");
                 }
 
+                break;
+            default:
                 break;
         }
     }
@@ -1193,10 +1208,6 @@ public class System extends Function {
         }
     }
 
-    public void selectFunction() {
-        // TODO implement here
-    }
-
     public void drawTotalBorder() {
         GUI.timekeepingView.setClockDisplay(true);
         GUI.stopwatchView.setClockDisplay(true);
@@ -1238,7 +1249,8 @@ public class System extends Function {
             buzzer.stopBuzzer();
             buzzer.getBeepThread().join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -1290,6 +1302,8 @@ public class System extends Function {
                     break;
                 case 6:
                     GUI.setView(GUI.alarmCustomView);
+                    break;
+                default:
                     break;
             }
         }

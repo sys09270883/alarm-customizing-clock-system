@@ -74,7 +74,6 @@ public class Alarm extends Function {
     }
 
     public void movePointer(int diff) {
-        // TODO implement here
         int size = this.getSize();
 
         if (size == 0)
@@ -184,6 +183,8 @@ public class Alarm extends Function {
                     alarmSettingValue[type] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
                 else if(alarmSettingValue[type] > curAlarm.getTime().SECOND_TOP_LIMIT)
                     alarmSettingValue[type] = curAlarm.getTime().SECOND_TOP_LIMIT;
+                break;
+            default:
                 break;
 
         }

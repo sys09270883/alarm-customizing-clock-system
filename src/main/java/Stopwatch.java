@@ -48,7 +48,8 @@ public class Stopwatch extends Function {
         try {
             stopwatch.getTimeThread().join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
+            Thread.currentThread().interrupt();
         }
         changeMode(0);
     }
@@ -150,6 +151,8 @@ public class Stopwatch extends Function {
                     timeSettingValue[type] = stopwatch.SECOND_TOP_LIMIT;
                 else if (timeSettingValue[type] > stopwatch.SECOND_TOP_LIMIT)
                     timeSettingValue[type] = stopwatch.TIME_BOTTOM_LIMIT;
+                break;
+            default:
                 break;
         }
     }

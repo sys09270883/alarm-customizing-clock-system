@@ -15,7 +15,7 @@ public class DefaultLayout extends JLayeredPane {
     final static String CLOCK_IMG_NAME = "clocklayout.jpg";
     final static String CLOCK_BORDER_IMG_NAME = "clocklayout2.jpg";
 
-    protected static int layer = 3;
+    protected int layer = 3;
     protected JPanel mainPanel;
     System system;
     ImageIcon clockImage;
@@ -109,7 +109,7 @@ public class DefaultLayout extends JLayeredPane {
         mainPanel.add(clockLabel);
         mainPanel.setVisible(true);
 
-        add(mainPanel, new Integer(0));
+        add(mainPanel, Integer.valueOf(0));
     }
 
     private static void setBtn(JButton btn) {
@@ -121,7 +121,7 @@ public class DefaultLayout extends JLayeredPane {
     protected void displaySegment(int x, int y, int w, int h, String str) {
         w /= str.length();
         for (int i = 0; i < str.length(); i++) {
-            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), new Integer(2));
+            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), Integer.valueOf(2));
             x += w;
         }
     }
@@ -129,7 +129,7 @@ public class DefaultLayout extends JLayeredPane {
     protected void displaySegment(int x, int y, int w, int h, String str, int layer) {
         w /= str.length();
         for (int i = 0; i < str.length(); i++) {
-            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), new Integer(layer));
+            add(new SegmentDisplay(x + PADDING, y + PADDING, w - 2 * PADDING, h - 2 * PADDING, str.charAt(i)), Integer.valueOf(layer));
             x += w;
         }
     }
@@ -138,7 +138,7 @@ public class DefaultLayout extends JLayeredPane {
         remove(mainPanel);
         mainPanel.remove(isBordered ? clockLabel : clockBorderedLabel);
         mainPanel.add(isBordered ? clockBorderedLabel : clockLabel);
-        add(mainPanel, new Integer(0));
+        add(mainPanel, Integer.valueOf(0));
     }
 
 }

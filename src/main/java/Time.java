@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.lang.System;
 import java.lang.Runnable;
+import java.util.Objects;
 
 class Time implements Runnable {
 
@@ -41,6 +42,11 @@ class Time implements Runnable {
         if (time.hour < 0 || time.hour > 23 || time.min < 0 || time.min > 59 || time.sec < 0 || time.sec > 59)
             return false;
         return hour == time.hour && min == time.min && sec == time.sec;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hour, min, sec);
     }
 
     public Time(int timeFlag) {
@@ -170,8 +176,8 @@ class Time implements Runnable {
                     std = cur;
                 }
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                e.printStackTrace(java.lang.System.out);
+                Thread.currentThread().interrupt();
             }
 
         }
